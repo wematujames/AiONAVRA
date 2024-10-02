@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Spacer from './Spacer'
-import { Text } from 'react-native-elements'
+import { Text } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native'
 
 const LinkInfo = ({title, to}) => {

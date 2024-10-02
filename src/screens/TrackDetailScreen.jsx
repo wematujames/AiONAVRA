@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import MapView, { Polyline } from 'react-native-maps';
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 
 const TrackDetailScreen = ({route}) => {
   const track = route.params;

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import React, { useContext } from 'react'
-import { Button, Input } from 'react-native-elements'
+import { Button, Input } from '@rneui/themed'
 import Spacer from './Spacer'
 import { Context as LocationContext } from '../context/track/locationContext'
 import useSaveTrack from '../hooks/useSaveTrack'

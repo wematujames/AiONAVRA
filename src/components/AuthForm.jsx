@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import Spacer from './Spacer';
-import { Button, Input, Text, } from 'react-native-elements';
+import { Button, Input, Text, } from '@rneui/themed';
 
 const AuthForm = ({errMsg, submitAction, link, formTitle}) => {
     const [signUp, setSignUp] = useState({
@@ -22,7 +22,7 @@ const AuthForm = ({errMsg, submitAction, link, formTitle}) => {
         <Spacer>
         {errMsg && <Text style={styles.errMsg}>{errMsg}</Text>}
         </Spacer>
-        <Input 
+        <Input
             label="Email" 
             value={signUp.email} 
             onChangeText={(val) => setSignUp(prev => ({...prev, email: val}))} 

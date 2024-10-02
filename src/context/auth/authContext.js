@@ -110,7 +110,7 @@ const actions = {
             payload: { token }
         });
 
-        navigate("Home");
+        navigate("SelectUserType");
     },
 
     logout : (dispatch) => async () => {

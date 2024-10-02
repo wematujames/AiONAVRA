@@ -7,7 +7,7 @@ import TrackListScreen from './TrackListScreen'
 import { MaterialCommunityIcons, Feather, FontAwesome5 } from "@expo/vector-icons"
 const Tab = createBottomTabNavigator()
 
-const HomeScreen = () => {
+const VisitorScreen = () => {
     
   return (
     <Tab.Navigator>
@@ -32,6 +32,6 @@ const HomeScreen = () => {
   )
 }
 
-export default HomeScreen
+export default VisitorScreen
 
 const styles = StyleSheet.create({})

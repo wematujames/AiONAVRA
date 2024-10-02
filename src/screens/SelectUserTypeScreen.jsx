@@ -2,9 +2,9 @@ import { SafeAreaView, StyleSheet } from 'react-native'
 import { useContext, useEffect, useLayoutEffect } from 'react'
 import { Context as AuthContext } from "../context/auth/authContext"
 import { useNavigation } from '@react-navigation/native'
-import { Text } from '@rneui/themed'
+import { Button } from '@rneui/themed'
 
-const SplashScreen = () => {
+const SelectUserTypeScreen = ({navigation}) => {
     const authContext = useContext(AuthContext);
 
     const { tryLogin } = authContext;
@@ -18,19 +18,21 @@ const SplashScreen = () => {
     });
 
     useEffect(() => {
-        tryLogin();
+        // tryLogin();
     }, []);
 
     //Lets check to see if user type is a visitor, admin, employee
 
   return (
     <SafeAreaView>
-        <Text> Splash screen </Text>
+        <Button title="Visitor" onPress={() => navigation.navigate("Visitor")} />
+        <Button title="Employee" onPress={() => navigation.navigate("Employee")}/>
+        <Button title="Administrator" onPress={() => navigation.navigate("Admin")}/>
     </SafeAreaView>
     )
 }
 
-export default SplashScreen
+export default SelectUserTypeScreen
 
 const styles = StyleSheet.create({
 
