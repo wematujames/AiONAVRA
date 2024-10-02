@@ -1,4 +1,4 @@
-import { NavigationContainer, ThemeProvider } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
@@ -11,13 +11,14 @@ import SplashScreen from './src/screens/SplashScreen';
 import EmployeeScreen from './src/screens/EmployeeScreen';
 import VisitorScreen from './src/screens/VisitorScreen';
 import SelectUserTypeScreen from './src/screens/SelectUserTypeScreen';
+import { PaperProvider } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
       <NavigationContainer ref={(navigator) => {setNavigation(navigator)}}>
-        <Stack.Navigator initialRouteName='SplashScreen'>
+        <Stack.Navigator initialRouteName='Admin'>
           {/* Splashscreen or initial screen */}
           <Stack.Screen name='SplashScreen' options={{headerBackVisible: false}} component={SplashScreen} />
 
@@ -38,15 +39,17 @@ function App() {
 export default function () {
   return (
     // <SafeAreaProvider>
-    <ThemeProvider>
+    // <ThemeProvider>
       <AuthProvider>
         <TrackProvider>
           <LocationProvider>
-            <App/>
+            <PaperProvider>
+              <App/>
+            </PaperProvider>
           </LocationProvider>
         </TrackProvider>
       </AuthProvider>
-      </ThemeProvider>
+      // </ThemeProvider>
     // </SafeAreaProvider>
   )
 }

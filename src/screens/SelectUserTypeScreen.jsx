@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet } from 'react-native'
 import { useContext, useEffect, useLayoutEffect } from 'react'
 import { Context as AuthContext } from "../context/auth/authContext"
 import { useNavigation } from '@react-navigation/native'
-import { Button } from '@rneui/themed'
+import { Button } from 'react-native-paper'
 
 const SelectUserTypeScreen = ({navigation}) => {
     const authContext = useContext(AuthContext);

@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useContext, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native'
 import { Context as TrackContext } from '../context/track/trackContext'
-import { ListItem } from '@rneui/themed'
+import { ListItem } from 'react-native-paper'
 
 const TrackListScreen = ({navigation}) => {
   const isFocused = useIsFocused()

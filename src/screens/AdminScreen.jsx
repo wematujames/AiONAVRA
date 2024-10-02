@@ -1,16 +1,16 @@
 import { StyleSheet } from 'react-native'
 import React from 'react'
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import CreateTrackScreen from './CreateTrackScreen'
 import AccountScreen from './AccountScreen'
 import TrackListScreen from './TrackListScreen'
 import { MaterialCommunityIcons, Feather, FontAwesome5 } from "@expo/vector-icons"
-const Tab = createBottomTabNavigator()
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation'
+const Tab = createMaterialBottomTabNavigator()
 
 const HomeScreen = () => {
     
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName='Account'>
         <Tab.Screen 
           name='CreateTrack' 
           component={CreateTrackScreen} 

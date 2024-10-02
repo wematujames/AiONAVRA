@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import Spacer from './Spacer';
-import { Button, Input, Text, } from '@rneui/themed';
+import { Button, Input, Text, } from 'react-native-paper';
 
 const AuthForm = ({errMsg, submitAction, link, formTitle}) => {
     const [signUp, setSignUp] = useState({

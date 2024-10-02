@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet } from 'react-native'
 import React, { useCallback, useContext } from 'react'
-import { Text } from '@rneui/themed'
+import { Text } from 'react-native-paper'
 import Map from '../components/Map'
 import { Context as LocationContext } from '../context/track/locationContext'
 import useLocation from '../hooks/useLocation'
