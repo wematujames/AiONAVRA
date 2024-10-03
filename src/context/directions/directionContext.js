@@ -8,6 +8,7 @@ const state = {
     {
       _id: 1,
       name: "An example notice title",
+      description: "Relax your self in this room",
       occupant: { name: "Wematu" },
       floor: "3",
       elevation: "stairs",

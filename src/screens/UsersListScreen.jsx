@@ -1,9 +1,13 @@
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { FAB, Searchbar } from "react-native-paper";
 import UserItem from "../components/UserItem";
+import { Context as UsersContext } from "../context/users/userContext";
 
 const UsersListScreen = ({ navigation }) => {
+  const usersContext = useContext(UsersContext);
+  const { state } = usersContext;
+
   return (
     <SafeAreaView style={styles.conatainer}>
       <Searchbar
@@ -15,9 +19,9 @@ const UsersListScreen = ({ navigation }) => {
       />
 
       <FlatList
-        data={[]}
+        data={state.users}
         keyExtractor={(i) => i._id}
-        renderItem={({ item }) => <UserItem routeItem={item} />}
+        renderItem={({ item }) => <UserItem user={item} />}
       />
 
       <FAB

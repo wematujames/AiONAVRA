@@ -8,12 +8,11 @@ const state = {
     {
       _id: 1,
       employeeId: "NRL0002",
-      username: "An example notice title",
+      username: "Weamtu James",
       createdAt: new Date().toISOString(),
-
       office: {
         _id: 1,
-        name: "An example notice title",
+        name: "Room 12",
         floor: "3",
         elevation: "stairs",
         eta: "3 mins",

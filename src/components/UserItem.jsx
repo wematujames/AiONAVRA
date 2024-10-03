@@ -1,6 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { List } from "react-native-paper";
 
 const UserItem = ({ user }) => {
   const navigation = useNavigation();
@@ -8,7 +9,11 @@ const UserItem = ({ user }) => {
     <TouchableOpacity
       onPress={() => navigation.navigate("UserDetail", { id: user._id })}
     >
-      <Text>UserItem</Text>
+      <List.Item
+        title={user.username}
+        description={user.employeeId}
+        left={(props) => <List.Icon {...props} icon="account" />}
+      />
     </TouchableOpacity>
   );
 };

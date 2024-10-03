@@ -1,9 +1,13 @@
 import { FlatList, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { FAB, Searchbar } from "react-native-paper";
 import RouteItem from "../components/RouteItem";
+import { Context as RouteContext } from "../context/directions/directionContext";
 
 const RouteListScreen = ({ navigation }) => {
+  const routeContext = useContext(RouteContext);
+  const { state } = routeContext;
+
   return (
     <View style={styles.conatainer}>
       <Searchbar
@@ -15,7 +19,7 @@ const RouteListScreen = ({ navigation }) => {
       />
 
       <FlatList
-        data={[]}
+        data={state.routes}
         keyExtractor={(i) => i._id}
         renderItem={({ item }) => <RouteItem routeItem={item} />}
       />

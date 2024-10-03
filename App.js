@@ -6,6 +6,9 @@ import { Provider as AuthProvider } from "./src/context/auth/authContext";
 import { Provider as LocationProvider } from "./src/context/track/locationContext";
 import { Provider as TrackProvider } from "./src/context/track/trackContext";
 import { Provider as NoticeProvider } from "./src/context/notices/noticeContext";
+import { Provider as UsersProvider } from "./src/context/users/userContext";
+import { Provider as DirectionsProvider } from "./src/context/directions/directionContext";
+import { Provider as FeedbackProvider } from "./src/context/feedback/feedbackContext";
 import { setNavigation } from "./src/utils/navigationRef";
 import SplashScreen from "./src/screens/SplashScreen";
 import EmployeeScreen from "./src/screens/EmployeeScreen";
@@ -19,6 +22,7 @@ import CreateUserScreen from "./src/screens/CreateUserScreen";
 import CreateRouteScreen from "./src/screens/CreateRouteScreen";
 import UserDetail from "./src/screens/UserDetail";
 import RouteDetailScreen from "./src/screens/RouteDetailScreen";
+import FeedbackDetailScreen from "./src/screens/FeedbackDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -99,12 +103,20 @@ function App() {
           component={UserDetail}
         />
         <Stack.Screen
-          name="RouteDetial"
+          name="RouteDetail"
           options={{
-            title: "Create Route",
+            title: "Route Details",
             headerShown: true,
           }}
           component={RouteDetailScreen}
+        />
+        <Stack.Screen
+          name="FeedbackDetail"
+          options={{
+            title: "Feedback Details",
+            headerShown: true,
+          }}
+          component={FeedbackDetailScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -124,15 +136,21 @@ export default function () {
   return (
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <NoticeProvider>
-          <TrackProvider>
-            <LocationProvider>
-              <PaperProvider>
-                <App />
-              </PaperProvider>
-            </LocationProvider>
-          </TrackProvider>
-        </NoticeProvider>
+        <UsersProvider>
+          <DirectionsProvider>
+            <FeedbackProvider>
+              <NoticeProvider>
+                <TrackProvider>
+                  <LocationProvider>
+                    <PaperProvider>
+                      <App />
+                    </PaperProvider>
+                  </LocationProvider>
+                </TrackProvider>
+              </NoticeProvider>
+            </FeedbackProvider>
+          </DirectionsProvider>
+        </UsersProvider>
       </AuthProvider>
     </ThemeProvider>
   );
