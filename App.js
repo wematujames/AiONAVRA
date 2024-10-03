@@ -23,6 +23,7 @@ import CreateRouteScreen from "./src/screens/CreateRouteScreen";
 import UserDetail from "./src/screens/UserDetail";
 import RouteDetailScreen from "./src/screens/RouteDetailScreen";
 import FeedbackDetailScreen from "./src/screens/FeedbackDetailScreen";
+import CreateNoticeScreen from "./src/screens/CreateNoticeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -117,6 +118,14 @@ function App() {
             headerShown: true,
           }}
           component={FeedbackDetailScreen}
+        />
+        <Stack.Screen
+          name="CreateNotice"
+          options={{
+            title: "Publish Notice",
+            headerShown: true,
+          }}
+          component={CreateNoticeScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

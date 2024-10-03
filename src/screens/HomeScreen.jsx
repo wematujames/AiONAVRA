@@ -5,7 +5,7 @@ import Notices from "../components/Notices";
 const HomeScreen = () => {
   return (
     <SafeAreaView>
-      <Notices />
+      <Notices enableAdd={true} />
     </SafeAreaView>
   );
 };
