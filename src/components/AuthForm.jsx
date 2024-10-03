@@ -15,7 +15,7 @@ const AuthForm = ({errMsg, submitAction, link, formTitle}) => {
         )
     }
   return (
-    <View style={styles.formContainer}>
+       <View style={styles.formContainer}>
         <Spacer>
             <Text h3>{formTitle}</Text>
         </Spacer>
