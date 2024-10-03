@@ -1,7 +1,7 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { List } from "react-native-paper";
+import { Chip, List, Text } from "react-native-paper";
 
 const RouteItem = ({ routeItem }) => {
   const navigation = useNavigation();
@@ -11,7 +11,14 @@ const RouteItem = ({ routeItem }) => {
       onPress={() => navigation.navigate("RouteDetail", { id: routeItem._id })}
     >
       <List.Item
-        title={routeItem.name}
+        title={() => (
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text variant="titleLarge">{routeItem.name}</Text>
+            <Chip icon="information">{routeItem.elevation}</Chip>
+          </View>
+        )}
         description={routeItem.description}
         left={(props) => <List.Icon {...props} icon="road-variant" />}
       />

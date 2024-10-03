@@ -75,6 +75,7 @@ function App() {
         <Stack.Screen
           name="NoticeDetail"
           options={{
+            title: "Notice Details",
             headerShown: true,
           }}
           component={NoticeDetailScreen}
