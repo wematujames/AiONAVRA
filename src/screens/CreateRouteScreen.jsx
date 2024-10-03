@@ -1,14 +1,15 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import React from "react";
+import CreateRouteForm from "../components/CreateRouteForm";
 
-const CreateRoute = () => {
+const CreateRouteScreen = () => {
   return (
     <SafeAreaView>
-      <Text>CreateRoute</Text>
+      <CreateRouteForm />
     </SafeAreaView>
   );
 };
 
-export default CreateRoute;
+export default CreateRouteScreen;
 
 const styles = StyleSheet.create({});

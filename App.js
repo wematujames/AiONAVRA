@@ -14,6 +14,11 @@ import SelectUserTypeScreen from "./src/screens/SelectUserTypeScreen";
 import { PaperProvider, ThemeProvider } from "react-native-paper";
 import NotificationsScreen from "./src/screens/NotificationsScreen";
 import NoticeDetailScreen from "./src/screens/NoticeDetailScreen";
+import { MD3LightTheme as DefaultTheme } from "react-native-paper";
+import CreateUserScreen from "./src/screens/CreateUserScreen";
+import CreateRouteScreen from "./src/screens/CreateRouteScreen";
+import UserDetail from "./src/screens/UserDetail";
+import RouteDetailScreen from "./src/screens/RouteDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,7 +48,7 @@ function App() {
         {/* Nested User type screen components */}
         <Stack.Screen
           name="Admin"
-          options={{ headerShown: true, headerBackVisible: false }}
+          options={{ headerShown: false, headerBackVisible: false }}
           component={AdminScreen}
         />
         <Stack.Screen
@@ -64,8 +69,42 @@ function App() {
         />
         <Stack.Screen
           name="NoticeDetail"
-          options={{ headerShown: true }}
+          options={{
+            headerShown: true,
+          }}
           component={NoticeDetailScreen}
+        />
+        <Stack.Screen
+          name="CreateUser"
+          options={{
+            title: "Create User",
+            headerShown: true,
+          }}
+          component={CreateUserScreen}
+        />
+        <Stack.Screen
+          name="CreateRoute"
+          options={{
+            title: "Create Route",
+            headerShown: true,
+          }}
+          component={CreateRouteScreen}
+        />
+        <Stack.Screen
+          name="UserDetail"
+          options={{
+            title: "User Details",
+            headerShown: true,
+          }}
+          component={UserDetail}
+        />
+        <Stack.Screen
+          name="RouteDetial"
+          options={{
+            title: "Create Route",
+            headerShown: true,
+          }}
+          component={RouteDetailScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -73,8 +112,17 @@ function App() {
 }
 
 export default function () {
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: "tomato",
+      secondary: "yellow",
+    },
+  };
+
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <AuthProvider>
         <NoticeProvider>
           <TrackProvider>

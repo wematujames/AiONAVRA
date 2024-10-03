@@ -1,7 +1,7 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import React, { useContext } from "react";
 import { Context as NoticeContext } from "../context/notices/noticeContext";
-import NoticeCard from "./NoticeCard";
+import Notice from "./NoticeItem";
 
 const Notices = () => {
   const noticeContext = useContext(NoticeContext);
@@ -9,21 +9,14 @@ const Notices = () => {
   const { state } = noticeContext;
 
   return (
-    <View style={styles.notices}>
-      <FlatList
-        keyExtractor={(i) => i._id}
-        data={state.notices}
-        renderItem={({ item }) => <NoticeCard notice={item} />}
-      />
-    </View>
+    <FlatList
+      keyExtractor={(i) => i._id}
+      data={state.notices}
+      renderItem={({ item }) => <Notice notice={item} />}
+    />
   );
 };
 
 export default Notices;
 
-const styles = StyleSheet.create({
-  notices: {
-    // marginVertical: 10,
-    // marginVertical: 10,
-  },
-});
+const styles = StyleSheet.create({});

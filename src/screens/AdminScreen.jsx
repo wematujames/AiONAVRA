@@ -1,34 +1,33 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import FeedbackListScreen from "./FeedbackListScreen";
-import CreateRouteScreen from "./CreateRouteScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import HomeScreen from "./HomeScreen";
+import UsersListScreen from "./UsersListScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
-import { DrawerToggleButton } from "@react-navigation/drawer";
+import RouteListScreen from "./RouteListScreen";
+
 const Drawer = createDrawerNavigator();
 
 const AdminScreen = ({}) => {
   const navigation = useNavigation();
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => <DrawerToggleButton tintColor="black" />,
-      headerRight: () => (
-        <TouchableOpacity onPress={() => navigation.navigate("Notifications")}>
-          <MaterialIcons size={20} name="notifications" />
-        </TouchableOpacity>
-      ),
-    });
-  });
-
   return (
     <Drawer.Navigator
       initialRouteName="Home"
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
         drawerType: "front",
+        headerTintColor: "black",
+        headerRight: () => (
+          <TouchableOpacity
+            style={{ marginRight: 15 }}
+            onPress={() => navigation.navigate("Notifications")}
+          >
+            <MaterialIcons size={20} name="notifications" />
+          </TouchableOpacity>
+        ),
       }}
     >
       <Drawer.Screen
@@ -41,11 +40,24 @@ const AdminScreen = ({}) => {
       />
 
       <Drawer.Screen
-        name="CreateRoute"
-        component={CreateRouteScreen}
+        name="RouteList"
+        component={RouteListScreen}
         options={{
-          title: "Create New Route",
-          drawerIcon: () => <MaterialIcons size={20} name="add" />,
+          headerShown: true,
+          title: "Routes",
+          drawerLabel: "Routes",
+          drawerIcon: () => <MaterialIcons size={20} name="alt-route" />,
+        }}
+      />
+
+      <Drawer.Screen
+        name="UsersListScreen"
+        component={UsersListScreen}
+        options={{
+          title: "Users",
+          drawerIcon: () => (
+            <MaterialIcons size={20} name="supervised-user-circle" />
+          ),
         }}
       />
 
