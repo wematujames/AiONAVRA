@@ -94,7 +94,7 @@ const actions = {
     await new Promise((res) => {
       setTimeout(() => {
         res();
-      }, 3000);
+      });
     });
 
     switch (typeOfUser) {
