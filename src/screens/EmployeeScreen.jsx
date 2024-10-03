@@ -1,38 +1,43 @@
 import { StyleSheet } from "react-native";
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import CreateTrackScreen from "./CreateTrackScreen";
-import AccountScreen from "./AccountScreen";
-import TrackListScreen from "./TrackListScreen";
 import {
   MaterialCommunityIcons,
   Feather,
-  FontAwesome5,
+  MaterialIcons,
 } from "@expo/vector-icons";
-const Tab = createBottomTabNavigator();
+import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
+import DirectionsScreen from "./DirectionsScreen";
+import EAppointmentsScreen from "./EAppointmentsScreen";
+import HomeScreen from "./HomeScreen";
+const Tab = createMaterialBottomTabNavigator();
 
 const EmployeeScreen = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="Account">
       <Tab.Screen
-        name="CreateTrack"
         options={{
-          title: "Create Track",
-          tabBarIcon: () => <MaterialCommunityIcons name="go-kart-track" />,
+          tabBarIcon: () => <Feather size={20} name="home" />,
         }}
-        component={CreateTrackScreen}
-      />
-       <Tab.Screen
-        options={{ tabBarIcon: () => <Feather name="user" /> }}
-        name="Account"
-        component={AccountScreen}
+        name="Home"
+        component={HomeScreen}
       />
       <Tab.Screen
-        name="Tracks"
-        component={TrackListScreen}
+        name="Directions"
         options={{
-          title: "Track List",
-          tabBarIcon: () => <FontAwesome5 name="list" />,
+          title: "Directions",
+          tabBarIcon: () => (
+            <MaterialCommunityIcons size={20} name="go-kart-track" />
+          ),
+        }}
+        component={DirectionsScreen}
+      />
+
+      <Tab.Screen
+        name="EAppointment"
+        component={EAppointmentsScreen}
+        options={{
+          title: "Appointments",
+          tabBarIcon: () => <MaterialIcons size={20} name="event" />,
         }}
       />
     </Tab.Navigator>

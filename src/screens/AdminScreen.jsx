@@ -1,43 +1,66 @@
-import { StyleSheet } from 'react-native'
-import React from 'react'
-import CreateTrackScreen from './CreateTrackScreen'
-import AccountScreen from './AccountScreen'
-import TrackListScreen from './TrackListScreen'
-import { MaterialCommunityIcons, Feather, FontAwesome5 } from "@expo/vector-icons"
-import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation'
+import { StyleSheet, TouchableOpacity } from "react-native";
+import React, { useLayoutEffect } from "react";
+import FeedbackListScreen from "./FeedbackListScreen";
+import CreateRouteScreen from "./CreateRouteScreen";
+import { MaterialIcons } from "@expo/vector-icons";
+import HomeScreen from "./HomeScreen";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { useNavigation } from "@react-navigation/native";
+import { DrawerToggleButton } from "@react-navigation/drawer";
+const Drawer = createDrawerNavigator();
 
-const Tab = createMaterialBottomTabNavigator();
+const AdminScreen = ({}) => {
+  const navigation = useNavigation();
 
-const HomeScreen = () => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <DrawerToggleButton tintColor="black" />,
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate("Notifications")}>
+          <MaterialIcons size={20} name="notifications" />
+        </TouchableOpacity>
+      ),
+    });
+  });
+
   return (
-          <Tab.Navigator initialRouteName='Account'>
-        <Tab.Screen 
-          name='CreateTrack' 
-          component={CreateTrackScreen} 
-          options={{
-            title: "Create Track",
-            tabBarIcon: () => <MaterialCommunityIcons name="go-kart-track"/> 
-          }} 
-        />
-        
-        <Tab.Screen 
-          name='Account' 
-          component={AccountScreen} 
-          options={{tabBarIcon: () => <Feather name="user"/> }} 
-        />
+    <Drawer.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+        drawerType: "front",
+      }}
+    >
+      <Drawer.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: "Home",
+          drawerIcon: () => <MaterialIcons size={20} name="home" />,
+        }}
+      />
 
-        <Tab.Screen 
-          name='Tracks' 
-          component={TrackListScreen} 
-          options={{
-            title: "Track List",
-            tabBarIcon: () => <FontAwesome5 name="list"/> 
-          }}
-        />
-    </Tab.Navigator>
-  )
-}
+      <Drawer.Screen
+        name="CreateRoute"
+        component={CreateRouteScreen}
+        options={{
+          title: "Create New Route",
+          drawerIcon: () => <MaterialIcons size={20} name="add" />,
+        }}
+      />
 
-export default HomeScreen
+      <Drawer.Screen
+        name="Feedback"
+        component={FeedbackListScreen}
+        options={{
+          title: "Feedback",
+          drawerIcon: () => <MaterialIcons size={20} name="feedback" />,
+        }}
+      />
+    </Drawer.Navigator>
+  );
+};
 
-const styles = StyleSheet.create({})
+export default AdminScreen;
+
+const styles = StyleSheet.create({});

@@ -1,39 +1,48 @@
-import { SafeAreaView, StyleSheet } from 'react-native'
-import { useContext, useEffect, useLayoutEffect } from 'react'
-import { Context as AuthContext } from "../context/auth/authContext"
-import { useNavigation } from '@react-navigation/native'
-import { Button } from 'react-native-paper'
+import { SafeAreaView, StyleSheet } from "react-native";
+import { useContext } from "react";
+import { Context as AuthContext } from "../context/auth/authContext";
+import { Button, Text } from "react-native-paper";
+import Spacer from "../components/Spacer";
 
-const SelectUserTypeScreen = ({navigation}) => {
-    const authContext = useContext(AuthContext);
-
-    const { tryLogin } = authContext;
-
-    const _navigation = useNavigation();
-    
-    useLayoutEffect(() => {
-        _navigation.setOptions({
-            header: () => null
-        });
-    });
-
-    useEffect(() => {
-        // tryLogin();
-    }, []);
-
-    //Lets check to see if user type is a visitor, admin, employee
+const SelectUserTypeScreen = ({ navigation }) => {
+  const authContext = useContext(AuthContext);
 
   return (
-    <SafeAreaView>
-        <Button title="Visitor" onPress={() => navigation.navigate("Visitor")} />
-        <Button title="Employee" onPress={() => navigation.navigate("Employee")}/>
-        <Button title="Administrator" onPress={() => navigation.navigate("Admin")}/>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.heading} variant="headlineMedium">
+        Select user Type
+      </Text>
+      <Spacer>
+        <Button mode="contained" onPress={() => navigation.navigate("Visitor")}>
+          Visitor
+        </Button>
+      </Spacer>
+      <Spacer>
+        <Button
+          mode="contained"
+          onPress={() => navigation.navigate("Employee")}
+        >
+          Employee
+        </Button>
+      </Spacer>
+      <Spacer>
+        <Button mode="contained" onPress={() => navigation.navigate("Admin")}>
+          Administrator
+        </Button>
+      </Spacer>
     </SafeAreaView>
-    )
-}
+  );
+};
 
-export default SelectUserTypeScreen
+export default SelectUserTypeScreen;
 
 const styles = StyleSheet.create({
-
+  heading: {
+    alignSelf: "center",
+  },
+  container: {
+    justifyContent: "center",
+    flex: 1,
+    marginBottom: 100,
+  },
 });
