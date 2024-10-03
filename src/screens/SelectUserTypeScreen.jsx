@@ -1,20 +1,14 @@
 import { StyleSheet } from "react-native";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Context as AuthContext } from "../context/auth/authContext";
-import { ActivityIndicator, Button, Text } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import Spacer from "../components/Spacer";
 import Center from "../components/Center";
 
-const SelectUserTypeScreen = ({ navigation }) => {
+const SelectUserTypeScreen = () => {
   const authContext = useContext(AuthContext);
 
-  const { state, authenticate } = authContext;
-
-  useEffect(() => {
-    authenticate(state.userType);
-  }, [state.userType]);
-
-  if (state.loading) return <ActivityIndicator size={50} />;
+  const { state, setUserType } = authContext;
 
   return (
     <Center>
@@ -25,7 +19,7 @@ const SelectUserTypeScreen = ({ navigation }) => {
         <Button
           mode="contained"
           onPress={() => {
-            authenticate("Visitor");
+            setUserType("Visitor");
           }}
         >
           Visitor
@@ -35,7 +29,7 @@ const SelectUserTypeScreen = ({ navigation }) => {
         <Button
           mode="contained"
           onPress={() => {
-            authenticate("Employee");
+            setUserType("Employee");
           }}
         >
           Employee
@@ -45,7 +39,7 @@ const SelectUserTypeScreen = ({ navigation }) => {
         <Button
           mode="contained"
           onPress={() => {
-            authenticate("Administrator");
+            setUserType("Admin");
           }}
         >
           Administrator

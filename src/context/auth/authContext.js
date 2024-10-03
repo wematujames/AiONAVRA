@@ -134,22 +134,20 @@ const actions = {
   },
 
   authenticate: (dispatch) => async (userType) => {
-    let typeOfUser = await AsyncStorage.getItem("userType");
+    let typeOfUser = await AsyncStorage.setItem("userType");
 
-    if (!typeOfUser && userType) {
-      await AsyncStorage.setItem("userType", userType);
-
-      typeOfUser = userType;
-    }
-
-    dispatch({ type: "SET_USER_TYPE", payload: userType });
+    if (userType) typeOfUser = userType;
 
     // get User information
     await new Promise((res) => {
       setTimeout(() => {
         res();
-      }, 20000);
+      }, 3000);
     });
+
+    if (!userType) return navigate("SelectUserType");
+
+    dispatch({ type: "SET_USER_TYPE", payload: userType });
 
     switch (userType) {
       case "Administrator":
@@ -164,6 +162,11 @@ const actions = {
     dispatch({ type: "SET_LOADING", payload: false });
 
     navigate(typeOfUser);
+  },
+
+  setUserType: (dispatch) => (userType) => {
+    dispatch({ type: "SET_USER_TYPE", payload: userType });
+    navigate("SplashScreen");
   },
 };
 
