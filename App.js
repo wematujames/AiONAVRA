@@ -5,6 +5,7 @@ import AdminScreen from "./src/screens/AdminScreen";
 import { Provider as AuthProvider } from "./src/context/auth/authContext";
 import { Provider as LocationProvider } from "./src/context/track/locationContext";
 import { Provider as TrackProvider } from "./src/context/track/trackContext";
+import { Provider as NoticeProvider } from "./src/context/notices/noticeContext";
 import { setNavigation } from "./src/utils/navigationRef";
 import SplashScreen from "./src/screens/SplashScreen";
 import EmployeeScreen from "./src/screens/EmployeeScreen";
@@ -12,6 +13,7 @@ import VisitorScreen from "./src/screens/VisitorScreen";
 import SelectUserTypeScreen from "./src/screens/SelectUserTypeScreen";
 import { PaperProvider, ThemeProvider } from "react-native-paper";
 import NotificationsScreen from "./src/screens/NotificationsScreen";
+import NoticeDetailScreen from "./src/screens/NoticeDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +62,11 @@ function App() {
           options={{ headerShown: true }}
           component={NotificationsScreen}
         />
+        <Stack.Screen
+          name="NoticeDetail"
+          options={{ headerShown: true }}
+          component={NoticeDetailScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -69,13 +76,15 @@ export default function () {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <TrackProvider>
-          <LocationProvider>
-            <PaperProvider>
-              <App />
-            </PaperProvider>
-          </LocationProvider>
-        </TrackProvider>
+        <NoticeProvider>
+          <TrackProvider>
+            <LocationProvider>
+              <PaperProvider>
+                <App />
+              </PaperProvider>
+            </LocationProvider>
+          </TrackProvider>
+        </NoticeProvider>
       </AuthProvider>
     </ThemeProvider>
   );

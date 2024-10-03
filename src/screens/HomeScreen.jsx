@@ -1,10 +1,11 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import React from "react";
+import Notices from "../components/Notices";
 
 const HomeScreen = () => {
   return (
     <SafeAreaView>
-      <Text>HomeScreen news, annoucements</Text>
+      <Notices />
     </SafeAreaView>
   );
 };

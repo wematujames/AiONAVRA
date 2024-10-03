@@ -8,7 +8,7 @@ export default (state, action) => {
         loading: false,
       };
 
-    case "SING_IN":
+    case "SIGN_IN":
       return {
         ...state,
         token: action.payload.token,
