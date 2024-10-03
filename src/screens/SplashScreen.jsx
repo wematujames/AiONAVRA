@@ -1,37 +1,32 @@
-import { SafeAreaView, StyleSheet } from 'react-native'
-import { useContext, useEffect, useLayoutEffect } from 'react'
-import { Context as AuthContext } from "../context/auth/authContext"
-import { useNavigation } from '@react-navigation/native'
-import { Text } from 'react-native-paper'
-
+import { StyleSheet } from "react-native";
+import { useContext, useEffect } from "react";
+import { Context as AuthContext } from "../context/auth/authContext";
+import { ActivityIndicator, Text } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Center from "../components/Center";
 const SplashScreen = () => {
-    const authContext = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
 
-    const { tryLogin } = authContext;
+  const { state, authenticate } = authContext;
 
-    const _navigation = useNavigation();
-    
-    useLayoutEffect(() => {
-        _navigation.setOptions({
-            header: () => null
-        });
-    });
+  useEffect(() => {
+    authenticate(state.userType);
+  }, [state.userType]);
 
-    useEffect(() => {
-        tryLogin();
-    }, []);
-
-    //Lets check to see if user type is a visitor, admin, employee
+  if (state.loading)
+    return (
+      <Center>
+        <ActivityIndicator size={50} />
+      </Center>
+    );
 
   return (
     <SafeAreaView>
-        <Text> Splash screen </Text>
+      <Text> Splash screen </Text>
     </SafeAreaView>
-    )
-}
+  );
+};
 
-export default SplashScreen
+export default SplashScreen;
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});

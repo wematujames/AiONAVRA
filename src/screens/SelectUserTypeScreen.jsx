@@ -1,36 +1,57 @@
-import { SafeAreaView, StyleSheet } from "react-native";
-import { useContext } from "react";
+import { StyleSheet } from "react-native";
+import { useContext, useEffect } from "react";
 import { Context as AuthContext } from "../context/auth/authContext";
-import { Button, Text } from "react-native-paper";
+import { ActivityIndicator, Button, Text } from "react-native-paper";
 import Spacer from "../components/Spacer";
+import Center from "../components/Center";
 
 const SelectUserTypeScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
 
+  const { state, authenticate } = authContext;
+
+  useEffect(() => {
+    authenticate(state.userType);
+  }, [state.userType]);
+
+  if (state.loading) return <ActivityIndicator size={50} />;
+
   return (
-    <SafeAreaView style={styles.container}>
+    <Center>
       <Text style={styles.heading} variant="headlineMedium">
-        Select user Type
+        Select Type Of User
       </Text>
       <Spacer>
-        <Button mode="contained" onPress={() => navigation.navigate("Visitor")}>
+        <Button
+          mode="contained"
+          onPress={() => {
+            authenticate("Visitor");
+          }}
+        >
           Visitor
         </Button>
       </Spacer>
       <Spacer>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate("Employee")}
+          onPress={() => {
+            authenticate("Employee");
+          }}
         >
           Employee
         </Button>
       </Spacer>
       <Spacer>
-        <Button mode="contained" onPress={() => navigation.navigate("Admin")}>
+        <Button
+          mode="contained"
+          onPress={() => {
+            authenticate("Administrator");
+          }}
+        >
           Administrator
         </Button>
       </Spacer>
-    </SafeAreaView>
+    </Center>
   );
 };
 
@@ -39,10 +60,5 @@ export default SelectUserTypeScreen;
 const styles = StyleSheet.create({
   heading: {
     alignSelf: "center",
-  },
-  container: {
-    justifyContent: "center",
-    flex: 1,
-    marginBottom: 100,
   },
 });

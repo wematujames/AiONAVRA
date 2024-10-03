@@ -26,7 +26,7 @@ function App() {
         {/* Splashscreen or initial screen */}
         <Stack.Screen
           name="SplashScreen"
-          options={{ headerBackVisible: false }}
+          options={{ headerShown: false }}
           component={SplashScreen}
         />
 

@@ -38,6 +38,15 @@ const reducer = (state, action) => {
         errMsg: action.payload.msg,
       };
 
+    case "SET_USER_TYPE":
+      return { ...state, userType: action.payload };
+
+    case "SET_LOADING":
+      return { ...state, loading: action.payload };
+
+    case "NO_USER_TYPE":
+      return { ...state, loading: action.payload };
+
     case "CLEAR_AUTH_ERROR":
       return { ...state, errMsg: "" };
 
@@ -52,6 +61,10 @@ const setErrorMsg = (dispatch, err) => {
   setTimeout(() => {
     dispatch({ type: "CLEAR_AUTH_ERROR" });
   }, 3000);
+};
+
+const setLoading = (dispatch) => async (isLoading) => {
+  dispatch({ type: "SET_LOADING", payload: isLoading });
 };
 
 const actions = {
@@ -119,6 +132,39 @@ const actions = {
 
     navigate("SignIn");
   },
+
+  authenticate: (dispatch) => async (userType) => {
+    let typeOfUser = await AsyncStorage.getItem("userType");
+
+    if (!typeOfUser && userType) {
+      await AsyncStorage.setItem("userType", userType);
+
+      typeOfUser = userType;
+    }
+
+    dispatch({ type: "SET_USER_TYPE", payload: userType });
+
+    // get User information
+    await new Promise((res) => {
+      setTimeout(() => {
+        res();
+      }, 20000);
+    });
+
+    switch (userType) {
+      case "Administrator":
+
+      case "Vististor":
+
+      case "Employee":
+
+      default:
+    }
+
+    dispatch({ type: "SET_LOADING", payload: false });
+
+    navigate(typeOfUser);
+  },
 };
 
 const state = {
@@ -126,6 +172,7 @@ const state = {
   isAuthenticated: false,
   token: null,
   loading: true,
+  userType: "",
 };
 
 const { Provider, Context } = createDataContext(reducer, actions, state);
