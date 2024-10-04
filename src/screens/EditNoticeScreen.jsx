@@ -13,7 +13,7 @@ const EditNoticeScreen = ({ route }) => {
   return (
     <SafeAreaView>
       <NoticeForm
-        routeDetail={noticeDetails}
+        noticeDetail={noticeDetails}
         onSubmit={updateNotice}
         title="Update Notice"
       />

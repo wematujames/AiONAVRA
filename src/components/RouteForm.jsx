@@ -17,7 +17,7 @@ import {
 } from "react-native-paper";
 import Spacer from "./Spacer";
 
-const routeDetail = {
+const routeDetailDefault = {
   name: "",
   description: "",
   occupant: "",
@@ -28,7 +28,11 @@ const routeDetail = {
   createdAt: new Date().toISOString(),
 };
 
-const RouteForm = ({ onSubmit, title, routeDetail = { ...routeDetail } }) => {
+const RouteForm = ({
+  onSubmit,
+  title,
+  routeDetail = { ...routeDetailDefault },
+}) => {
   const theme = useTheme();
 
   const [route, setRoute] = useState(routeDetail);
@@ -71,6 +75,7 @@ const RouteForm = ({ onSubmit, title, routeDetail = { ...routeDetail } }) => {
           label="Route description"
           placeholder="The CEO's Office"
           mode="outlined"
+          multiline
         />
         <TextInput
           value={route.floor}

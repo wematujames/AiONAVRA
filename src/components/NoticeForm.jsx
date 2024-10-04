@@ -56,22 +56,23 @@ const CreateNoticeForm = ({
         <Divider bold horizontalInset />
 
         <TextInput
-          value={notice.name}
+          value={notice.title}
           onChangeText={(val) => setNotice((p) => ({ ...p, title: val }))}
           style={styles.textInput}
           clearButtonMode="always"
           label="Title"
-          placeholder="Room 112"
+          placeholder="Word form home!!!"
           mode="outlined"
         />
         <TextInput
-          value={notice.description}
+          value={notice.content}
           onChangeText={(val) => setNotice((p) => ({ ...p, content: val }))}
           style={styles.textInput}
           clearButtonMode="always"
           label="Content"
           placeholder="Effective the start of next month..."
           mode="outlined"
+          multiline
         />
         <TextInput
           value={notice.priority}

@@ -44,10 +44,8 @@ const actions = {
     }
   },
 
-  updateNotice: (dispatch) => async (id, update) => {
+  updateNotice: (dispatch) => async (update, id) => {
     dispatch({ type: "SET_LOADING", payload: true });
-
-    await officeNavApi.get("/notices/" + id, update);
 
     dispatch({ type: "UPDATE_NOTICE" });
 
@@ -57,7 +55,7 @@ const actions = {
   deleteNotice: (dispatch) => async (id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    await officeNavApi.get("/notices/" + id);
+    await officeNavApi.delete("/notices/" + id);
 
     dispatch({ type: "DELETE_NOTICE" });
 
