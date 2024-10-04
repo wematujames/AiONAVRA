@@ -8,9 +8,7 @@ const RouteItem = ({ routeItem }) => {
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("RouteDetail", { routeDetail: routeItem })
-      }
+      onPress={() => navigation.navigate("RouteDetail", { id: routeItem.id })}
     >
       <List.Item
         title={() => (

@@ -5,6 +5,7 @@ import actions from "./actions";
 const state = {
   loading: true,
   routes: [],
+  route: {},
   direction: null,
 };
 
