@@ -1,25 +1,44 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useContext } from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
+import React, { useContext, useEffect } from "react";
+import ContentAction from "../components/ContentAction";
+import { Context as AuthContext } from "../context/auth/authContext";
 import { Context as NoticeContext } from "../context/notices/noticeContext";
+import { useIsFocused } from "@react-navigation/native";
+import Spinner from "../components/Spinner";
+import { Text } from "react-native-paper";
 
-const NoticeDetailScreen = ({ route }) => {
+const NoticeDetail = ({ navigation, route }) => {
+  const { id: noticeId } = route.params;
+
+  const isFocused = useIsFocused();
+  const authContext = useContext(AuthContext);
   const noticeContext = useContext(NoticeContext);
 
-  const { state } = noticeContext;
+  const { state: authState } = authContext;
+  const { deleteNotice, getNotice, state: noticeState } = noticeContext;
 
-  const { id } = route.params;
-
-  const notice = state.notices.find((i) => i._id === id);
+  useEffect(() => {
+    getNotice(noticeId);
+  }, [isFocused, noticeId]);
 
   return (
-    <View>
-      <Text>Notice Id {notice._id}</Text>
-      <Text>Title: {notice.title}</Text>
-      <Text>Content: {notice.content}</Text>
-    </View>
+    <Spinner loading={noticeState.loading}>
+      <SafeAreaView>
+        <Text>{noticeState.notice.title}</Text>
+        <ContentAction
+          showFAB={authState.userType === "Admin"}
+          onEdit={() =>
+            navigation.navigate("EditNotice", {
+              noticeDetails: noticeState.notice,
+            })
+          }
+          onDelete={() => deleteNotice(noticeState.notice.id)}
+        />
+      </SafeAreaView>
+    </Spinner>
   );
 };
 
-export default NoticeDetailScreen;
+export default NoticeDetail;
 
 const styles = StyleSheet.create({});

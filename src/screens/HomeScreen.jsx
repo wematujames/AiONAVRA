@@ -1,11 +1,14 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import React from "react";
-import Notices from "../components/Notices";
-
+import React, { useContext } from "react";
+import NoticeList from "../components/NoticeList";
+import { Context as AuthContext } from "../context/auth/authContext";
 const HomeScreen = () => {
+  const authContext = useContext(AuthContext);
+  const { state } = authContext;
+
   return (
     <SafeAreaView>
-      <Notices enableAdd={true} />
+      <NoticeList enableAdd={state.userType === "Admin"} />
     </SafeAreaView>
   );
 };

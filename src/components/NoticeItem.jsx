@@ -18,7 +18,7 @@ const NoticeCard = ({ notice }) => {
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate("NoticeDetail", { id: notice._id })}
+      onPress={() => navigation.navigate("NoticeDetail", { id: notice.id })}
     >
       <Card mode="contained">
         <Card.Title
