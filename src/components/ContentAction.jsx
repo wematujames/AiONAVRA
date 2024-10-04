@@ -27,7 +27,7 @@ const ContentAction = ({ showFAB, onEdit, onDelete }) => {
           {
             icon: "delete",
             label: "Delete",
-            onPress: () => onDelete,
+            onPress: onDelete,
           },
         ]}
       />

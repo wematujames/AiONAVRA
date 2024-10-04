@@ -119,7 +119,7 @@ const RouteForm = ({ onSubmit, title, routeDetail = { ...routeDetail } }) => {
           mode="outlined"
         />
         <Spacer />
-        <TouchableOpacity onPress={() => onSubmit(route)}>
+        <TouchableOpacity onPress={() => onSubmit(route, route.id)}>
           <Button style={{ borderRadius: 10 }} mode="contained">
             Save Route
           </Button>

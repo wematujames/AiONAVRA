@@ -12,12 +12,11 @@ const actions = {
   getRoutes: (dispatch) => async () => {
     setLoading(true);
 
-    // get User information
-    await new Promise((res) => {
-      setTimeout(() => {
-        res();
-      }, 1000);
-    });
+    // await new Promise((res) => {
+    //   setTimeout(() => {
+    //     res();
+    //   });
+    // });
 
     const res = await officeNavApi.get("routes");
 
@@ -32,7 +31,7 @@ const actions = {
     dispatch({ type: "GET_ROUTE", payload: res.data });
   },
 
-  updateRoute: (dispatch) => async (id, data) => {
+  updateRoute: (dispatch) => async (data, id) => {
     setLoading(true);
 
     const res = await officeNavApi.put("routes/" + id, data);
@@ -40,7 +39,7 @@ const actions = {
     dispatch({ type: "UPDATE_ROUTE", payload: res.data });
   },
 
-  deleteRoute: (dispatch) => async (id, data) => {
+  deleteRoute: (dispatch) => async (id) => {
     setLoading(true);
 
     const res = await officeNavApi.delete("routes/" + id);
