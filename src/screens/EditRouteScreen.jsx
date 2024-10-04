@@ -3,18 +3,24 @@ import React, { useContext } from "react";
 import { Context as RouteContext } from "../context/directions/directionContext";
 import RouteForm from "../components/RouteForm";
 
-const CreateRouteScreen = () => {
+const EditRouteScreen = ({ route }) => {
+  const { routeDetail } = route.params;
+
   const routeContext = useContext(RouteContext);
 
-  const { createRoute, loading } = routeContext;
+  const { updateRoute } = routeContext;
 
   return (
     <SafeAreaView>
-      <RouteForm onSubmit={createRoute} title="Enter Route Details" />
+      <RouteForm
+        routeDetail={routeDetail}
+        onSubmit={updateRoute}
+        title="Update Route"
+      />
     </SafeAreaView>
   );
 };
 
-export default CreateRouteScreen;
+export default EditRouteScreen;
 
 const styles = StyleSheet.create({});

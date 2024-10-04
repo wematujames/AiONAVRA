@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Divider,
@@ -16,24 +16,22 @@ import {
   useTheme,
 } from "react-native-paper";
 import Spacer from "./Spacer";
-import { Context as RouteContext } from "../context/directions/directionContext";
 
-const CreateRouteForm = () => {
+const routeDetail = {
+  name: "",
+  description: "",
+  occupant: "",
+  floor: "",
+  elevation: "",
+  eta: "",
+  directions: "",
+  createdAt: new Date().toISOString(),
+};
+
+const RouteForm = ({ onSubmit, title, routeDetail = { ...routeDetail } }) => {
   const theme = useTheme();
-  const routeContext = useContext(RouteContext);
 
-  const [route, setRoute] = useState({
-    name: "",
-    description: "Rela",
-    occupant: "",
-    floor: "",
-    elevation: "",
-    eta: "",
-    directions: "",
-    createdAt: new Date().toISOString(),
-  });
-
-  const { state, createRoute } = routeContext;
+  const [route, setRoute] = useState(routeDetail);
 
   return (
     <KeyboardAvoidingView
@@ -52,7 +50,7 @@ const CreateRouteForm = () => {
             style={{ marginLeft: 10, color: theme.colors.primary }}
             variant="headlineMedium"
           >
-            Enter Route Details
+            {title}
           </Text>
         </View>
         <Divider bold horizontalInset />
@@ -121,9 +119,9 @@ const CreateRouteForm = () => {
           mode="outlined"
         />
         <Spacer />
-        <TouchableOpacity onPress={() => console.log(route)}>
+        <TouchableOpacity onPress={() => onSubmit(route)}>
           <Button style={{ borderRadius: 10 }} mode="contained">
-            Create Route
+            Save Route
           </Button>
         </TouchableOpacity>
       </ScrollView>
@@ -131,7 +129,7 @@ const CreateRouteForm = () => {
   );
 };
 
-export default CreateRouteForm;
+export default RouteForm;
 
 const styles = StyleSheet.create({
   formContainer: {

@@ -1,35 +1,50 @@
 import { FlatList, StyleSheet, View } from "react-native";
-import React, { useContext } from "react";
-import { FAB, Searchbar } from "react-native-paper";
+import React, { useContext, useEffect } from "react";
+import { Searchbar } from "react-native-paper";
 import RouteItem from "../components/RouteItem";
 import { Context as RouteContext } from "../context/directions/directionContext";
+import { Context as AuthContext } from "../context/auth/authContext";
+import { useIsFocused } from "@react-navigation/native";
+import Spinner from "../components/Spinner";
+import AddContentFAB from "../components/AddContentFAB";
 
 const RouteListScreen = ({ navigation }) => {
   const routeContext = useContext(RouteContext);
-  const { state } = routeContext;
+  const authContext = useContext(AuthContext);
+  const isFocused = useIsFocused();
+
+  const { state, getRoutes } = routeContext;
+  const {
+    state: { userType },
+  } = authContext;
+
+  useEffect(() => {
+    getRoutes();
+  }, [isFocused]);
 
   return (
-    <View style={styles.conatainer}>
-      <Searchbar
-        autoCapitalize="none"
-        autoCorrect={false}
-        mode="bar"
-        clearButtonMode="always"
-        style={styles.searchBar}
-      />
+    <Spinner loading={state.loading}>
+      <View style={styles.conatainer}>
+        <Searchbar
+          autoCapitalize="none"
+          autoCorrect={false}
+          mode="bar"
+          clearButtonMode="always"
+          style={styles.searchBar}
+        />
 
-      <FlatList
-        data={state.routes}
-        keyExtractor={(i) => i._id}
-        renderItem={({ item }) => <RouteItem routeItem={item} />}
-      />
+        <FlatList
+          data={state.routes}
+          keyExtractor={(i) => i.id}
+          renderItem={({ item }) => <RouteItem routeItem={item} />}
+        />
 
-      <FAB
-        style={styles.fab}
-        onPress={() => navigation.navigate("CreateRoute")}
-        icon="plus"
-      />
-    </View>
+        <AddContentFAB
+          showFAB={userType === "Admin"}
+          onAdd={() => navigation.navigate("CreateRoute")}
+        />
+      </View>
+    </Spinner>
   );
 };
 
@@ -43,7 +58,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     margin: 16,
     right: 0,
-    bottom: 0,
+    bottom: 35,
   },
   searchBar: {
     borderRadius: 10,

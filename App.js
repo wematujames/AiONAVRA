@@ -24,6 +24,7 @@ import UserDetail from "./src/screens/UserDetail";
 import RouteDetailScreen from "./src/screens/RouteDetailScreen";
 import FeedbackDetailScreen from "./src/screens/FeedbackDetailScreen";
 import CreateNoticeScreen from "./src/screens/CreateNoticeScreen";
+import EditRouteScreen from "./src/screens/EditRouteScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -95,6 +96,14 @@ function App() {
             headerShown: true,
           }}
           component={CreateRouteScreen}
+        />
+        <Stack.Screen
+          name="EditRoute"
+          options={{
+            title: "Update Route",
+            headerShown: true,
+          }}
+          component={EditRouteScreen}
         />
         <Stack.Screen
           name="UserDetail"

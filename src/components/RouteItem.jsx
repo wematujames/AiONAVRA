@@ -8,7 +8,9 @@ const RouteItem = ({ routeItem }) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("RouteDetail", { id: routeItem._id })}
+      onPress={() =>
+        navigation.navigate("RouteDetail", { routeDetail: routeItem })
+      }
     >
       <List.Item
         title={() => (
@@ -19,7 +21,7 @@ const RouteItem = ({ routeItem }) => {
             <Chip icon="information">{routeItem.elevation}</Chip>
           </View>
         )}
-        description={routeItem.description}
+        description={routeItem.description.substring(0, 100)}
         left={(props) => <List.Icon {...props} icon="road-variant" />}
       />
     </TouchableOpacity>

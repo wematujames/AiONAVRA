@@ -20,7 +20,7 @@ const UsersListScreen = ({ navigation }) => {
 
       <FlatList
         data={state.users}
-        keyExtractor={(i) => i._id}
+        keyExtractor={(i) => i.id}
         renderItem={({ item }) => <UserItem user={item} />}
       />
 
