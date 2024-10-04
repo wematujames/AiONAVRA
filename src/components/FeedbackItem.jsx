@@ -1,18 +1,14 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { List } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
 
 const FeedbackItem = ({ feedback }) => {
-  const navigation = useNavigation();
+  const [expand, setExpand] = useState(false);
 
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("FeedbackDetail", { id: feedback._id })
-      }
-    >
+    <TouchableOpacity onPress={() => setExpand(!expand)}>
       <List.Item
+        descriptionNumberOfLines={expand ? 0 : 4}
         title={"Rating " + feedback.rating}
         description={feedback.description}
         left={(props) => (

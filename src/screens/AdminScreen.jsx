@@ -15,7 +15,7 @@ const AdminScreen = ({}) => {
 
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="FeedbackList"
       screenOptions={{
         headerShown: true,
         drawerType: "front",
@@ -62,7 +62,7 @@ const AdminScreen = ({}) => {
       />
 
       <Drawer.Screen
-        name="Feedback"
+        name="FeedbackList"
         component={FeedbackListScreen}
         options={{
           title: "Feedback",

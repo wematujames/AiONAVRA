@@ -22,7 +22,6 @@ import CreateUserScreen from "./src/screens/CreateUserScreen";
 import CreateRouteScreen from "./src/screens/CreateRouteScreen";
 import UserDetail from "./src/screens/UserDetail";
 import RouteDetailScreen from "./src/screens/RouteDetailScreen";
-import FeedbackDetailScreen from "./src/screens/FeedbackDetailScreen";
 import CreateNoticeScreen from "./src/screens/CreateNoticeScreen";
 import EditRouteScreen from "./src/screens/EditRouteScreen";
 import EditNoticeScreen from "./src/screens/EditNoticeScreen";
@@ -121,14 +120,6 @@ function App() {
             headerShown: true,
           }}
           component={RouteDetailScreen}
-        />
-        <Stack.Screen
-          name="FeedbackDetail"
-          options={{
-            title: "Feedback Details",
-            headerShown: true,
-          }}
-          component={FeedbackDetailScreen}
         />
         <Stack.Screen
           name="CreateNotice"
