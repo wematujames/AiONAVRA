@@ -21,9 +21,9 @@ const NoticeCard = ({ notice }) => {
             </Text>
           }
           right={() => (
-            <Text style={styles.priorityChip}>
-              <MaterialCommunityIcons name="star" size={12} /> {notice.priority}
-            </Text>
+            <Button mode="text" style={styles.priorityChip}>
+              <MaterialCommunityIcons name="star" size={16} /> {notice.priority}
+            </Button>
           )}
         />
         <Divider style={{ marginTop: -20, marginBottom: 10 }} />
@@ -35,11 +35,11 @@ const NoticeCard = ({ notice }) => {
         </Card.Content>
         <Divider style={{ marginTop: 15, marginBottom: -10 }} />
         <Card.Actions style={styles.actions}>
-          <Text style={styles.createdByText}>
+          <Button mode="text" style={styles.createdByText}>
             <MaterialCommunityIcons name="account" size={16} />{" "}
             {createdBy.fName} {createdBy.lName} •{" "}
             {new Date(notice.createdAt).toLocaleDateString()}
-          </Text>
+          </Button>
 
           <Button
             compact
@@ -75,9 +75,10 @@ const styles = StyleSheet.create({
   createdByText: {
     color: "#888",
     fontSize: 12,
+    marginLeft: -5,
   },
   content: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#333",
     lineHeight: 20,
   },
@@ -87,6 +88,5 @@ const styles = StyleSheet.create({
   priorityChip: {
     marginRight: 10,
     fontWeight: "bold",
-    alignSelf: "center",
   },
 });
