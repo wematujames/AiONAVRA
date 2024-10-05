@@ -1,8 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Card, Chip, Text, Avatar, Divider } from "react-native-paper";
-
+import { Card, Text, Avatar, Button } from "react-native-paper";
 const RouteItem = ({ routeItem }) => {
   const navigation = useNavigation();
 
@@ -17,58 +16,72 @@ const RouteItem = ({ routeItem }) => {
       style={styles.container}
     >
       <Card mode="contained" style={styles.card}>
-        <Card.Content>
-          {/* Header with Name and Elevation Chip */}
-          <View style={styles.headerContainer}>
-            <Text variant="titleLarge" style={styles.title}>
-              {routeItem.name}
-            </Text>
-            <Chip icon="stairs" mode="outlined" style={styles.chip}>
-              {routeItem.elevation}
-            </Chip>
+        <View style={styles.headerContainer}>
+          <View style={styles.header}>
+            <Avatar.Icon
+              size={30}
+              icon="road"
+              label={routeItem.name.substring(0, 2).toUpperCase()}
+              style={styles.avatar}
+            />
+            <View style={styles.userInfo}>
+              <Text style={styles.userName}>{routeItem.name}</Text>
+              <Text style={styles.routeMeta}>
+                Floor {routeItem.floor} • ETA {routeItem.eta}
+              </Text>
+            </View>
           </View>
-          <Divider style={{ marginBottom: 10 }} />
+          <View style={styles.ratingContainer}>
+            <Button mode="text" icon="stairs" style={styles.chip}>
+              {routeItem.elevation}
+            </Button>
+          </View>
+        </View>
 
-          {/* Description */}
+        {/* <Card.Content>
           <Text variant="bodyMedium" style={styles.description}>
-            {routeItem.description.length > 100
-              ? `${routeItem.description.substring(0, 97)}...`
+            {routeItem.description.length > 50
+              ? `${routeItem.description.substring(0, 50)}...`
               : routeItem.description}
           </Text>
+        </Card.Content> */}
 
-          {/* Info Section */}
-          <View style={styles.infoContainer}>
-            {/* Occupant Information */}
-            <View style={styles.occupantContainer}>
-              <Avatar.Text
-                size={28}
-                label={
-                  routeItem.occupant?.fName?.[0] +
-                  routeItem.occupant?.lName?.[0]
-                }
-                style={styles.avatar}
-              />
-              <Text style={styles.infoText}>{getOccupantName()}</Text>
-            </View>
-
-            {/* Floor and ETA */}
-            <View style={styles.rightInfoContainer}>
-              <Text style={styles.infoText}>Floor: {routeItem.floor}</Text>
-              <Text style={styles.infoText}>ETA: {routeItem.eta}</Text>
-            </View>
-          </View>
-        </Card.Content>
+        <View style={styles.infoContainer}>
+          <Button icon="account" mode="text" style={styles.infoText}>
+            {getOccupantName()}
+          </Button>
+          <Button mode="text" style={styles.infoText}>
+            {routeItem.occupant?.fName && "Out of office"}
+          </Button>
+        </View>
       </Card>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  routeMeta: {
+    color: "#666",
+  },
+  userName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  ratingContainer: {
+    flexDirection: "row",
+    marginVertical: 5,
+  },
   container: {
     marginVertical: 5,
-    // paddingHorizontal: 5,
   },
   card: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderRadius: 5,
     backgroundColor: "#faf9f6",
   },
@@ -76,44 +89,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 8,
-  },
-  title: {
-    flex: 1,
-    fontWeight: "bold",
-    fontSize: 18,
-    color: "#2c3e50",
-  },
-  chip: {
-    backgroundColor: "#ecf0f1",
-    borderRadius: 16,
-    fontSize: 14,
-    paddingHorizontal: 8,
   },
   description: {
     color: "#7f8c8d",
     fontSize: 14,
-    marginBottom: 12,
+    marginBottom: 5,
   },
   infoContainer: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
-    alignItems: "center",
-  },
-  occupantContainer: {
-    flexDirection: "row",
-    alignItems: "center",
   },
   avatar: {
-    marginRight: 8,
-    backgroundColor: "#3498db",
-  },
-  infoText: {
-    fontSize: 14,
-    color: "#34495e",
-  },
-  rightInfoContainer: {
-    alignItems: "flex-end",
+    marginRight: 10,
   },
 });
 

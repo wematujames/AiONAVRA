@@ -15,7 +15,7 @@ const AdminScreen = ({}) => {
 
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="RouteList"
       screenOptions={{
         headerShown: true,
         drawerType: "front",
