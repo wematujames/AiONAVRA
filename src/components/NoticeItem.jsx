@@ -1,8 +1,8 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
-import { Button, Card, Divider, Text, Chip } from "react-native-paper";
+import { Button, Card, Divider, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 const NoticeCard = ({ notice }) => {
   const navigation = useNavigation();
 
@@ -13,36 +13,38 @@ const NoticeCard = ({ notice }) => {
       style={styles.card}
       onPress={() => navigation.navigate("NoticeDetail", { id: notice.id })}
     >
-      <Card mode="elevated" style={styles.cardStyle}>
+      <Card mode="contained" style={styles.cardStyle}>
         <Card.Title
           title={
             <Text variant="titleLarge" style={styles.title}>
               {notice.title}
             </Text>
           }
-          subtitle={
-            <Text style={styles.createdByText}>
-              By {createdBy.fName} {createdBy.lName} |{" "}
-              {new Date(notice.createdAt).toLocaleDateString()}
-            </Text>
-          }
           right={() => (
-            <Chip mode="outlined" style={styles.priorityChip}>
-              {notice.priority}
-            </Chip>
+            <Text style={styles.priorityChip}>
+              <MaterialCommunityIcons name="star" size={12} /> {notice.priority}
+            </Text>
           )}
         />
-        <Divider style={{ marginTop: -5, marginBottom: 10 }} />
+        <Divider style={{ marginTop: -20, marginBottom: 10 }} />
         <Card.Content>
           <Text style={styles.content}>
             {notice.content.substring(0, 150)}
             {notice.content.length > 150 && "..."}
           </Text>
         </Card.Content>
+        <Divider style={{ marginTop: 15, marginBottom: -10 }} />
         <Card.Actions style={styles.actions}>
+          <Text style={styles.createdByText}>
+            <MaterialCommunityIcons name="account" size={16} />{" "}
+            {createdBy.fName} {createdBy.lName} •{" "}
+            {new Date(notice.createdAt).toLocaleDateString()}
+          </Text>
+
           <Button
             compact
             mode="text"
+            style={{ marginLeft: "auto" }}
             onPress={() =>
               navigation.navigate("NoticeDetail", { id: notice.id })
             }
@@ -59,24 +61,21 @@ export default NoticeCard;
 
 const styles = StyleSheet.create({
   card: {
-    marginVertical: 10,
-    marginHorizontal: 5,
-    elevation: 5,
+    marginVertical: 5,
   },
   cardStyle: {
-    borderRadius: 15,
-    backgroundColor: "#ffffff",
+    borderRadius: 5,
+    backgroundColor: "#faf9f6",
   },
   title: {
     fontWeight: "bold",
     fontSize: 18,
+    alignSelf: "center",
   },
   createdByText: {
     color: "#888",
-    marginTop: 5,
     fontSize: 12,
   },
-
   content: {
     fontSize: 14,
     color: "#333",
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
   },
   priorityChip: {
     marginRight: 10,
-    // backgroundColor: theme.colors.primary,
-    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
   },
 });

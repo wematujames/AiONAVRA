@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Card, Chip, Text, Avatar } from "react-native-paper";
+import { Card, Chip, Text, Avatar, Divider } from "react-native-paper";
 
 const RouteItem = ({ routeItem }) => {
   const navigation = useNavigation();
@@ -16,7 +16,7 @@ const RouteItem = ({ routeItem }) => {
       onPress={() => navigation.navigate("RouteDetail", { id: routeItem.id })}
       style={styles.container}
     >
-      <Card mode="elevated" style={styles.card}>
+      <Card mode="contained" style={styles.card}>
         <Card.Content>
           {/* Header with Name and Elevation Chip */}
           <View style={styles.headerContainer}>
@@ -27,6 +27,7 @@ const RouteItem = ({ routeItem }) => {
               {routeItem.elevation}
             </Chip>
           </View>
+          <Divider style={{ marginBottom: 10 }} />
 
           {/* Description */}
           <Text variant="bodyMedium" style={styles.description}>
@@ -64,16 +65,12 @@ const RouteItem = ({ routeItem }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 12,
-    paddingHorizontal: 16,
+    marginVertical: 5,
+    // paddingHorizontal: 5,
   },
   card: {
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
-    backgroundColor: "#fff",
+    borderRadius: 5,
+    backgroundColor: "#faf9f6",
   },
   headerContainer: {
     flexDirection: "row",

@@ -16,8 +16,9 @@ const FeedbackListScreen = () => {
 
   return (
     <Spinner loading={state.loading}>
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={state.feedbacks}
           keyExtractor={(i) => i.id}
           renderItem={({ item }) => <FeedbackItem feedback={item} />}

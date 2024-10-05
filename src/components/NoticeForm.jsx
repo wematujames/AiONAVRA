@@ -1,11 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import {
   Button,
@@ -21,7 +14,6 @@ const notice = {
   title: "",
   content: "",
   priority: "",
-  createdAt: "",
 };
 
 const CreateNoticeForm = ({
@@ -33,64 +25,53 @@ const CreateNoticeForm = ({
   const [notice, setNotice] = useState(noticeDetail);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
-    >
-      <ScrollView
-        style={{
-          ...styles.formContainer,
-          backgroundColor: theme.colors.background,
-        }}
-      >
-        <View style={styles.title}>
-          <Icon source="details" color={theme.colors.primary} size={25} />
-          <Text
-            style={{ marginLeft: 10, color: theme.colors.primary }}
-            variant="headlineMedium"
-          >
-            {title}
-          </Text>
-        </View>
+    <View style={styles.formContainer}>
+      <View style={styles.header}>
+        <Icon source="form-select" color={theme.colors.primary} size={25} />
+        <Text style={styles.headerText} variant="headlineMedium">
+          {title}
+        </Text>
+      </View>
 
-        <Divider bold horizontalInset />
+      <Divider style={styles.divider} bold />
 
-        <TextInput
-          value={notice.title}
-          onChangeText={(val) => setNotice((p) => ({ ...p, title: val }))}
-          style={styles.textInput}
-          clearButtonMode="always"
-          label="Title"
-          placeholder="Word form home!!!"
-          mode="outlined"
-        />
-        <TextInput
-          value={notice.content}
-          onChangeText={(val) => setNotice((p) => ({ ...p, content: val }))}
-          style={styles.textInput}
-          clearButtonMode="always"
-          label="Content"
-          placeholder="Effective the start of next month..."
-          mode="outlined"
-          multiline
-        />
-        <TextInput
-          value={notice.priority}
-          onChangeText={(val) => setNotice((p) => ({ ...p, priority: val }))}
-          style={styles.textInput}
-          clearButtonMode="always"
-          label="Priority Tag"
-          placeholder="Urgent, General"
-          mode="outlined"
-        />
-        <Spacer />
-        <TouchableOpacity onPress={() => onSubmit(notice, notice.id)}>
-          <Button style={{ borderRadius: 10 }} mode="contained">
-            Save Notice
-          </Button>
-        </TouchableOpacity>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      <TextInput
+        value={notice.title}
+        onChangeText={(val) => setNotice((p) => ({ ...p, title: val }))}
+        style={styles.textInput}
+        label="Title"
+        placeholder="Enter notice title"
+        mode="outlined"
+        theme={{ colors: { primary: theme.colors.primary } }}
+      />
+      <TextInput
+        value={notice.content}
+        onChangeText={(val) => setNotice((p) => ({ ...p, content: val }))}
+        style={styles.textInput}
+        label="Content"
+        placeholder="Enter notice content"
+        mode="outlined"
+        multiline
+        numberOfLines={4}
+        theme={{ colors: { primary: theme.colors.primary } }}
+      />
+      <TextInput
+        value={notice.priority}
+        onChangeText={(val) => setNotice((p) => ({ ...p, priority: val }))}
+        style={styles.textInput}
+        label="Priority Tag"
+        placeholder="Urgent, General"
+        mode="outlined"
+        theme={{ colors: { primary: theme.colors.primary } }}
+      />
+      <Spacer />
+      <TouchableOpacity onPress={() => onSubmit(notice, notice.id)}>
+        <Button style={styles.submitButton} mode="contained">
+          Save Notice
+        </Button>
+      </TouchableOpacity>
+      <Spacer />
+    </View>
   );
 };
 
@@ -98,17 +79,30 @@ export default CreateNoticeForm;
 
 const styles = StyleSheet.create({
   formContainer: {
-    backgroundColor: "red",
-    padding: 5,
-    height: "100%",
+    flex: 1,
+    paddingTop: "20%",
+    marginBottom: 200,
   },
-  title: {
+  header: {
     flexDirection: "row",
-    alignSelf: "center",
-    marginVertical: 10,
     alignItems: "center",
+
+    alignSelf: "center",
+  },
+  headerText: {
+    marginLeft: 10,
+    color: "#333",
+    fontWeight: "bold",
+  },
+  divider: {
+    marginVertical: 10,
   },
   textInput: {
-    marginVertical: 5,
+    marginVertical: 10,
+    backgroundColor: "#FFF",
+  },
+  submitButton: {
+    borderRadius: 10,
+    marginTop: 10,
   },
 });

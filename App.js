@@ -145,6 +145,7 @@ function App() {
 export default function () {
   const theme = {
     ...DefaultTheme,
+
     colors: {
       ...DefaultTheme.colors,
       primary: "tomato",

@@ -32,7 +32,7 @@ const RouteDetail = ({ navigation, route }) => {
     <Spinner loading={routeState.loading}>
       <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Card style={styles.card}>
+          <Card mode="contained" style={styles.card}>
             <Card.Title
               title={name}
               titleStyle={styles.title}
@@ -110,13 +110,11 @@ export default RouteDetail;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#faf9f6",
   },
   card: {
-    borderRadius: 10,
-    elevation: 4,
-    backgroundColor: "#fff",
+    paddingTop: "40%",
+    backgroundColor: "#faf9f6",
     marginBottom: 20,
     padding: 10,
   },
