@@ -1,24 +1,97 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import { List } from "react-native-paper";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Card, Text, Avatar, List } from "react-native-paper";
+import { formatDistanceToNow } from "date-fns";
+import { FontAwesome } from "@expo/vector-icons";
 
 const FeedbackItem = ({ feedback }) => {
   const [expand, setExpand] = useState(false);
+  const { rating, description, createdAt, user } = feedback;
 
   return (
     <TouchableOpacity onPress={() => setExpand(!expand)}>
-      <List.Item
-        descriptionNumberOfLines={expand ? 0 : 4}
-        title={"Rating " + feedback.rating}
-        description={feedback.description}
-        left={(props) => (
-          <List.Icon {...props} icon="book-information-variant" />
-        )}
-      />
+      <Card style={styles.card}>
+        <View style={styles.header}>
+          <Avatar.Text
+            size={45}
+            label={`${user.fName[0]}${user.lName[0]}`}
+            style={styles.avatar}
+          />
+
+          <View style={styles.userInfo}>
+            <Text style={styles.userName}>
+              {user.fName} {user.lName}
+            </Text>
+            <Text style={styles.userDetails}>
+              {user.userType} • {formatDistanceToNow(new Date(createdAt))} ago
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.ratingContainer}>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <FontAwesome
+              key={i}
+              name={i < rating ? "star" : "star-o"}
+              size={18}
+              color={i < rating ? "#FFD700" : "#ccc"}
+              style={styles.star}
+            />
+          ))}
+        </View>
+        <List.Item
+          contentStyle={{ marginTop: -35 }}
+          descriptionStyle={styles.description}
+          descriptionNumberOfLines={expand ? 0 : 3}
+          description={description}
+        />
+      </Card>
     </TouchableOpacity>
   );
 };
 
-export default FeedbackItem;
+const styles = StyleSheet.create({
+  card: {
+    marginVertical: 10,
+    marginHorizontal: 16,
+    padding: 20,
+    borderRadius: 10,
+    elevation: 3, // Shadow for Android
+    backgroundColor: "#fff",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  avatar: {
+    marginRight: 15,
+  },
+  userInfo: {
+    flex: 1,
+  },
+  userName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  userDetails: {
+    fontSize: 12,
+    color: "#666",
+  },
+  ratingContainer: {
+    flexDirection: "row",
+    marginVertical: 8,
+  },
+  star: {
+    marginHorizontal: 2,
+  },
+  description: {
+    fontSize: 14,
+    color: "#555",
+    marginTop: 10,
+    lineHeight: 20,
+    margin: -15,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default FeedbackItem;

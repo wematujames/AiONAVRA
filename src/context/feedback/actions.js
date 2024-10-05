@@ -24,7 +24,7 @@ const actions = {
       dispatch({ type: "SET_LOADING", payload: true });
 
       const res = await officeNavApi.get("/feedbacks");
-
+      console.log("feedbacks", res.data);
       dispatch({ type: "GET_FEEDBACKS", payload: res.data });
     } catch (error) {
       // console.log(error.response.data);

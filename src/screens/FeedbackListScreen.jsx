@@ -10,11 +10,10 @@ const FeedbackListScreen = () => {
   const feedbackContext = useContext(FeedbackContext);
   const { state, getFeedbacks } = feedbackContext;
 
-  console.log(feedbackContext);
   useEffect(() => {
     getFeedbacks();
   }, [isFocused]);
-  console.log(state.feedbacks);
+
   return (
     <Spinner loading={state.loading}>
       <SafeAreaView>
