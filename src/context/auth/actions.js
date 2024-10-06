@@ -100,14 +100,14 @@ const actions = {
       case "Admin":
         return navigate(typeOfUser);
 
-      case "Vististor":
+      case "Visitor":
         return navigate(typeOfUser);
 
       case "Employee":
         return navigate(typeOfUser);
 
       default:
-      // navigate("SelectUserType");r
+        navigate("SelectUserType");
     }
   },
 

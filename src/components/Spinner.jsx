@@ -1,12 +1,12 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator } from "react-native";
 
 const Spinner = ({ children, loading }) => {
   if (loading) {
     return (
       <View style={styles.spinner}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#663399" />
       </View>
     );
   }

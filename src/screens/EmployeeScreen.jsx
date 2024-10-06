@@ -14,6 +14,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 const EmployeeScreen = () => {
   useLayoutEffect(() => {});
+
   return (
     <Tab.Navigator
       initialRouteName="EAppointments"
