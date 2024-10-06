@@ -1,34 +1,41 @@
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { FAB, Searchbar } from "react-native-paper";
 import UserItem from "../components/UserItem";
 import { Context as UsersContext } from "../context/users/userContext";
+import Spinner from "../components/Spinner";
 
 const UsersListScreen = ({ navigation }) => {
   const usersContext = useContext(UsersContext);
-  const { state } = usersContext;
+  const { state, getUsers } = usersContext;
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <SafeAreaView style={styles.conatainer}>
-      <Searchbar
-        autoCapitalize="none"
-        autoCorrect={false}
-        mode="bar"
-        clearButtonMode="always"
-        style={styles.searchBar}
-      />
+      <Spinner loading={state.loading}>
+        <Searchbar
+          autoCapitalize="none"
+          autoCorrect={false}
+          mode="bar"
+          clearButtonMode="always"
+          style={styles.searchBar}
+        />
 
-      <FlatList
-        data={state.users}
-        keyExtractor={(i) => i.id}
-        renderItem={({ item }) => <UserItem user={item} />}
-      />
+        <FlatList
+          data={state.users}
+          keyExtractor={(i) => i.id}
+          renderItem={({ item }) => <UserItem user={item} />}
+        />
 
-      <FAB
-        style={styles.fab}
-        onPress={() => navigation.navigate("CreateUser")}
-        icon="plus"
-      />
+        <FAB
+          style={styles.fab}
+          onPress={() => navigation.navigate("CreateUser")}
+          icon="plus"
+        />
+      </Spinner>
     </SafeAreaView>
   );
 };
