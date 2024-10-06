@@ -74,7 +74,7 @@ const EnquiriesScreen = () => {
 
       {state.loading && (
         <View style={styles.typingIndicatorContainer}>
-          <ActivityIndicator size="small" color="#007AFF" />
+          <ActivityIndicator size="small" color="#663399" />
           <Text style={styles.typingText}>Bot is typing...</Text>
         </View>
       )}
@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
   },
   botMessage: {
     alignSelf: "flex-start",
-    // backgroundColor: "#e1e1e1",
     backgroundColor: "#e1e1e1",
   },
   userText: {
@@ -160,6 +159,6 @@ const styles = StyleSheet.create({
   typingText: {
     marginLeft: 10,
     fontSize: 14,
-    color: "#007AFF",
+    color: "#663399",
   },
 });
