@@ -25,7 +25,8 @@ import RouteDetailScreen from "./src/screens/RouteDetailScreen";
 import CreateNoticeScreen from "./src/screens/CreateNoticeScreen";
 import EditRouteScreen from "./src/screens/EditRouteScreen";
 import EditNoticeScreen from "./src/screens/EditNoticeScreen";
-
+import { TouchableOpacity } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -44,14 +45,13 @@ function App() {
         />
 
         {/* Auth */}
+        <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen
           name="SelectUserType"
           options={{ headerBackVisible: false }}
           component={SelectUserTypeScreen}
         />
-        <Stack.Screen name="SignIn" component={SignInScreen} />
 
-        {/* Nested User type screen components */}
         <Stack.Screen
           name="Admin"
           options={{ headerShown: false, headerBackVisible: false }}
@@ -59,12 +59,36 @@ function App() {
         />
         <Stack.Screen
           name="Employee"
-          options={{ headerShown: true, headerBackVisible: false }}
+          options={({ navigation }) => ({
+            title: "Home",
+            headerShown: true,
+            headerBackVisible: false,
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notifications")}
+              >
+                <MaterialIcons size={20} name="notifications" />
+              </TouchableOpacity>
+            ),
+          })}
           component={EmployeeScreen}
         />
         <Stack.Screen
           name="Visitor"
-          options={{ headerShown: true, headerBackVisible: false }}
+          options={({ navigation }) => ({
+            title: "Home",
+            headerShown: true,
+            headerBackVisible: false,
+            headerShown: true,
+            headerRight: () => (
+              <TouchableOpacity
+                style={{ marginRight: 15 }}
+                onPress={() => navigation.navigate("Notifications")}
+              >
+                <MaterialIcons size={20} name="notifications" />
+              </TouchableOpacity>
+            ),
+          })}
           component={VisitorScreen}
         />
 

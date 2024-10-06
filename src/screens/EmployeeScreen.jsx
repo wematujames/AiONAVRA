@@ -1,19 +1,33 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import {
   MaterialCommunityIcons,
   Feather,
   MaterialIcons,
 } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
-import DirectionsScreen from "./DirectionsScreen";
+import RouteListScreen from "./RouteListScreen";
 import EAppointmentsScreen from "./EAppointmentsScreen";
 import HomeScreen from "./HomeScreen";
 const Tab = createMaterialBottomTabNavigator();
 
 const EmployeeScreen = () => {
+  useLayoutEffect(() => {});
   return (
-    <Tab.Navigator initialRouteName="Account">
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: true,
+        headerRight: () => (
+          <TouchableOpacity
+            style={{ marginRight: 15 }}
+            onPress={() => navigation.navigate("Notifications")}
+          >
+            <MaterialIcons size={20} name="notifications" />
+          </TouchableOpacity>
+        ),
+      }}
+    >
       <Tab.Screen
         options={{
           tabBarIcon: () => <Feather size={20} name="home" />,
@@ -29,7 +43,7 @@ const EmployeeScreen = () => {
             <MaterialCommunityIcons size={20} name="go-kart-track" />
           ),
         }}
-        component={DirectionsScreen}
+        component={RouteListScreen}
       />
 
       <Tab.Screen

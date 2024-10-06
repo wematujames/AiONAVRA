@@ -90,7 +90,6 @@ const actions = {
 
     dispatch({ type: "SET_USER_TYPE", payload: typeOfUser });
 
-    // get User information
     await new Promise((res) => {
       setTimeout(() => {
         res();
