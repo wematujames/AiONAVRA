@@ -5,65 +5,69 @@ import { MaterialIcons } from "@expo/vector-icons";
 import HomeScreen from "./HomeScreen";
 import UsersListScreen from "./UsersListScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { useNavigation } from "@react-navigation/native";
 import RouteListScreen from "./RouteListScreen";
 import NotificationsIcon from "../components/NoficationsIcon";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Drawer = createDrawerNavigator();
 
 const AdminScreen = ({}) => {
-  const navigation = useNavigation();
-
   return (
-    <Drawer.Navigator
-      initialRouteName="UsersListScreen"
-      screenOptions={{
-        headerShown: true,
-        drawerType: "front",
-        headerTintColor: "black",
-        headerRight: () => <NotificationsIcon />,
-      }}
-    >
-      <Drawer.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          title: "Home",
-          drawerIcon: () => <MaterialIcons size={20} name="home" />,
-        }}
-      />
-
-      <Drawer.Screen
-        name="RouteList"
-        component={RouteListScreen}
-        options={{
+    <SafeAreaView style={{ flex: 1 }}>
+      <Drawer.Navigator
+        initialRouteName="UsersListScreen"
+        screenOptions={{
+          drawerLabel: "Home",
           headerShown: true,
-          title: "Routes",
-          drawerLabel: "Routes",
-          drawerIcon: () => <MaterialIcons size={20} name="alt-route" />,
+          drawerType: "front",
+          headerTintColor: "black",
+          headerRight: () => <NotificationsIcon />,
+          // drawerStyle: {
+          //   height: "90%", // Adjust this to limit the drawer height
+          // },
         }}
-      />
+      >
+        <Drawer.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: "Home",
+            drawerIcon: () => <MaterialIcons size={20} name="home" />,
+          }}
+        />
 
-      <Drawer.Screen
-        name="UsersListScreen"
-        component={UsersListScreen}
-        options={{
-          title: "Users",
-          drawerIcon: () => (
-            <MaterialIcons size={20} name="supervised-user-circle" />
-          ),
-        }}
-      />
+        <Drawer.Screen
+          name="RouteList"
+          component={RouteListScreen}
+          options={{
+            headerShown: true,
+            title: "Routes",
+            drawerLabel: "Routes",
+            drawerIcon: () => <MaterialIcons size={20} name="alt-route" />,
+          }}
+        />
 
-      <Drawer.Screen
-        name="FeedbackList"
-        component={FeedbackListScreen}
-        options={{
-          title: "Feedback",
-          drawerIcon: () => <MaterialIcons size={20} name="feedback" />,
-        }}
-      />
-    </Drawer.Navigator>
+        <Drawer.Screen
+          name="UsersListScreen"
+          component={UsersListScreen}
+          options={{
+            title: "Users",
+            drawerIcon: () => (
+              <MaterialIcons size={20} name="supervised-user-circle" />
+            ),
+          }}
+        />
+
+        <Drawer.Screen
+          name="FeedbackList"
+          component={FeedbackListScreen}
+          options={{
+            title: "Feedback",
+            drawerIcon: () => <MaterialIcons size={20} name="feedback" />,
+          }}
+        />
+      </Drawer.Navigator>
+    </SafeAreaView>
   );
 };
 
