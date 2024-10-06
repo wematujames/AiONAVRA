@@ -7,15 +7,16 @@ import {
 } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import RouteListScreen from "./RouteListScreen";
-import EAppointmentsScreen from "./EAppointmentsScreen";
+import AppointmentsScreen from "./AppointmentsScreen";
 import HomeScreen from "./HomeScreen";
+
 const Tab = createMaterialBottomTabNavigator();
 
 const EmployeeScreen = () => {
   useLayoutEffect(() => {});
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="EAppointments"
       screenOptions={{
         headerShown: true,
         headerRight: () => (
@@ -47,8 +48,8 @@ const EmployeeScreen = () => {
       />
 
       <Tab.Screen
-        name="EAppointment"
-        component={EAppointmentsScreen}
+        name="EAppointments"
+        component={AppointmentsScreen}
         options={{
           title: "Appointments",
           tabBarIcon: () => <MaterialIcons size={20} name="event" />,

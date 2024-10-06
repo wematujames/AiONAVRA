@@ -7,13 +7,13 @@ export default (state, action) => {
       return {
         ...state,
         loading: false,
-        routes: action.payload,
+        appointments: action.payload,
       };
 
     case "GET_APPOINTMENT":
       return {
         ...state,
-        route: action.payload,
+        appointment: action.payload,
         loading: false,
       };
 

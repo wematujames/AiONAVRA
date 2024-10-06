@@ -1,12 +1,13 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
+import { StyleSheet } from "react-native";
+import AppointmentList from "../components/AppoinmentList";
+import { Context as AuthContext } from "../context/auth/authContext";
 
 const AppointmentsScreen = () => {
-  return (
-    <SafeAreaView>
-      <Text>AppointmentsScreen</Text>
-    </SafeAreaView>
-  );
+  const authContext = useContext(AuthContext);
+  const { state } = authContext;
+
+  return <AppointmentList enableAdd={state.userType === "Visitor"} />;
 };
 
 export default AppointmentsScreen;

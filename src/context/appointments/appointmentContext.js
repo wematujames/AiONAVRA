@@ -4,9 +4,8 @@ import actions from "./actions";
 
 const state = {
   loading: true,
-  routes: [],
-  route: {},
-  direction: null,
+  appointments: [],
+  appointment: null,
 };
 
 const { Provider, Context } = createDataContext(reducer, actions, state);

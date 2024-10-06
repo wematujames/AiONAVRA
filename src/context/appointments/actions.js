@@ -21,7 +21,7 @@ const actions = {
   getAppointments: (dispatch) => async () => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.get("/apppointments");
+    const res = await officeNavApi.get("/appointments");
 
     dispatch({ type: "GET_APPOINTMENTS", payload: res.data });
   },
@@ -29,7 +29,7 @@ const actions = {
   getAppointment: (dispatch) => async (id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.get("/apppointment/" + id);
+    const res = await officeNavApi.get("/appointments/" + id);
 
     dispatch({ type: "GET_APPOINTMENT", payload: res.data });
   },
@@ -37,7 +37,7 @@ const actions = {
   updateAppointment: (dispatch) => async (data, id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.put("/apppointments/" + id, data);
+    const res = await officeNavApi.put("/appointments/" + id, data);
 
     dispatch({ type: "UPDATE_APPOINTMENT", payload: res.data });
 
@@ -47,7 +47,7 @@ const actions = {
   respondToAppointment: (dispatch) => async (data, id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.put("/apppointments/" + id, data);
+    const res = await officeNavApi.put("/appointments/" + id, data);
 
     dispatch({
       type: "RESPOND_TO_APPOINTMENT_REQUEST",
@@ -60,7 +60,7 @@ const actions = {
   deleteAppointment: (dispatch) => async (id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.delete("/apppointments/" + id);
+    const res = await officeNavApi.delete("/appointments/" + id);
 
     dispatch({ type: "DELETE_APPOINTMENT", payload: res.data });
 

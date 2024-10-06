@@ -9,6 +9,7 @@ import { Provider as NoticeProvider } from "./src/context/notices/noticeContext"
 import { Provider as UsersProvider } from "./src/context/users/userContext";
 import { Provider as DirectionsProvider } from "./src/context/directions/directionContext";
 import { Provider as FeedbackProvider } from "./src/context/feedback/feedbackContext";
+import { Provider as AppointmentProvider } from "./src/context/appointments/appointmentContext";
 import { setNavigation } from "./src/utils/navigationRef";
 import SplashScreen from "./src/screens/SplashScreen";
 import EmployeeScreen from "./src/screens/EmployeeScreen";
@@ -27,6 +28,7 @@ import EditRouteScreen from "./src/screens/EditRouteScreen";
 import EditNoticeScreen from "./src/screens/EditNoticeScreen";
 import { TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import AppoinmentDetailScreen from "./src/screens/AppoinmentDetailScreen";
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -161,6 +163,14 @@ function App() {
             headerShown: true,
           }}
         />
+        <Stack.Screen
+          name="AppointmentDetail"
+          component={AppoinmentDetailScreen}
+          options={{
+            title: "Update Notice",
+            headerShown: true,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -184,13 +194,15 @@ export default function () {
           <DirectionsProvider>
             <FeedbackProvider>
               <NoticeProvider>
-                <TrackProvider>
-                  <LocationProvider>
-                    <PaperProvider>
-                      <App />
-                    </PaperProvider>
-                  </LocationProvider>
-                </TrackProvider>
+                <AppointmentProvider>
+                  <TrackProvider>
+                    <LocationProvider>
+                      <PaperProvider>
+                        <App />
+                      </PaperProvider>
+                    </LocationProvider>
+                  </TrackProvider>
+                </AppointmentProvider>
               </NoticeProvider>
             </FeedbackProvider>
           </DirectionsProvider>
