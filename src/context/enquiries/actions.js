@@ -14,7 +14,7 @@ const actions = {
     try {
       dispatch({ type: "SET_LOADING", payload: true });
 
-      const messages = await AsyncStorage.getItem("enquiryMsgs");
+      const messages = (await AsyncStorage.getItem("enquiryMsgs")) || [];
 
       dispatch({ type: "GET_ENQUIRY_MESSAGES", payload: JSON.parse(messages) });
     } catch (error) {

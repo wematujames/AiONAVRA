@@ -86,15 +86,15 @@ const actions = {
       typeOfUser = userType;
     }
 
-    if (!typeOfUser) return navigate("SelectUserType");
-
-    dispatch({ type: "SET_USER_TYPE", payload: typeOfUser });
-
     await new Promise((res) => {
       setTimeout(() => {
         res();
-      });
+      }, 3000);
     });
+
+    if (!typeOfUser) return navigate("SelectUserType");
+
+    dispatch({ type: "SET_USER_TYPE", payload: typeOfUser });
 
     switch (typeOfUser) {
       case "Admin":

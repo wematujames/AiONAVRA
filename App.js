@@ -12,11 +12,12 @@ import { Provider as FeedbackProvider } from "./src/context/feedback/feedbackCon
 import { Provider as AppointmentProvider } from "./src/context/appointments/appointmentContext";
 import { Provider as EnquiriesProvider } from "./src/context/enquiries/enquiriesContext";
 import { setNavigation } from "./src/utils/navigationRef";
-import SplashScreen from "./src/screens/SplashScreen";
+import * as SplashScreen from "expo-splash-screen";
+import CustomSplashScreen from "./src/screens/SplashScreen";
 import EmployeeScreen from "./src/screens/EmployeeScreen";
 import VisitorScreen from "./src/screens/VisitorScreen";
 import SelectUserTypeScreen from "./src/screens/SelectUserTypeScreen";
-import { PaperProvider, ThemeProvider } from "react-native-paper";
+import { PaperProvider } from "react-native-paper";
 import NotificationsScreen from "./src/screens/NotificationsScreen";
 import NoticeDetailScreen from "./src/screens/NoticeDetailScreen";
 import { MD3LightTheme as DefaultTheme } from "react-native-paper";
@@ -29,11 +30,35 @@ import EditRouteScreen from "./src/screens/EditRouteScreen";
 import EditNoticeScreen from "./src/screens/EditNoticeScreen";
 import AppoinmentDetailScreen from "./src/screens/AppoinmentDetailScreen";
 import NoficationsIcon from "./src/components/NoficationsIcon";
+import { useCallback } from "react";
+import { useFonts } from "expo-font";
+import { ActivityIndicator } from "react-native";
+
+SplashScreen.preventAutoHideAsync();
+
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [fontsLoaded] = useFonts({
+    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+    "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
+    "Montserrat-Light": require("./assets/fonts/Montserrat-Light.ttf"),
+    "Montserrat-Thin": require("./assets/fonts/Montserrat-Thin.ttf"),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return <ActivityIndicator size="large" />;
+  }
+
   return (
     <NavigationContainer
+      onReady={onLayoutRootView}
       ref={(navigator) => {
         setNavigation(navigator);
       }}
@@ -43,14 +68,14 @@ function App() {
         <Stack.Screen
           name="SplashScreen"
           options={{ headerShown: false }}
-          component={SplashScreen}
+          component={CustomSplashScreen}
         />
 
         {/* Auth */}
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen
           name="SelectUserType"
-          options={{ headerBackVisible: false }}
+          options={{ headerBackVisible: false, headerShown: false }}
           component={SelectUserTypeScreen}
         />
 
@@ -169,37 +194,75 @@ function App() {
 export default function () {
   const theme = {
     ...DefaultTheme,
-
     colors: {
       ...DefaultTheme.colors,
-      primary: "tomato",
-      secondary: "yellow",
+    },
+    fonts: {
+      ...DefaultTheme.fonts,
+      bold: {
+        fontFamily: "Montserrat-Bold",
+        fontWeight: "bold",
+      },
+      medium: {
+        fontFamily: "Montserrat-Regular", // Adjust to your font's medium variant if available
+        fontWeight: "500",
+      },
+      regular: {
+        fontFamily: "Montserrat-Regular",
+        fontWeight: "normal",
+      },
+      light: {
+        fontFamily: "Montserrat-Light",
+        fontWeight: "300",
+      },
+      thin: {
+        fontFamily: "Montserrat-Thin",
+        fontWeight: "100",
+      },
+    },
+    typescale: {
+      displayLarge: {
+        fontFamily: "Montserrat-Bold",
+        fontSize: 57,
+        fontWeight: "bold",
+        lineHeight: 64,
+      },
+      headlineLarge: {
+        fontFamily: "Montserrat-Regular",
+        fontSize: 32,
+        fontWeight: "normal",
+        lineHeight: 40,
+      },
+      bodyLarge: {
+        fontFamily: "Montserrat-Regular",
+        fontSize: 16,
+        fontWeight: "normal",
+        lineHeight: 24,
+      },
     },
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <UsersProvider>
-          <DirectionsProvider>
-            <FeedbackProvider>
-              <NoticeProvider>
-                <EnquiriesProvider>
-                  <AppointmentProvider>
-                    <TrackProvider>
-                      <LocationProvider>
-                        <PaperProvider>
-                          <App />
-                        </PaperProvider>
-                      </LocationProvider>
-                    </TrackProvider>
-                  </AppointmentProvider>
-                </EnquiriesProvider>
-              </NoticeProvider>
-            </FeedbackProvider>
-          </DirectionsProvider>
-        </UsersProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <AuthProvider>
+      <UsersProvider>
+        <DirectionsProvider>
+          <FeedbackProvider>
+            <NoticeProvider>
+              <EnquiriesProvider>
+                <AppointmentProvider>
+                  <TrackProvider>
+                    <LocationProvider>
+                      <PaperProvider theme={theme}>
+                        <App />
+                      </PaperProvider>
+                    </LocationProvider>
+                  </TrackProvider>
+                </AppointmentProvider>
+              </EnquiriesProvider>
+            </NoticeProvider>
+          </FeedbackProvider>
+        </DirectionsProvider>
+      </UsersProvider>
+    </AuthProvider>
   );
 }

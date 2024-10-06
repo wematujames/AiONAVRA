@@ -21,9 +21,6 @@ const AdminScreen = ({}) => {
         drawerType: "front",
         headerTintColor: "black",
         headerRight: () => <NotificationsIcon />,
-        // drawerStyle: {
-        //   height: "90%", // Adjust this to limit the drawer height
-        // },
       }}
     >
       <Drawer.Screen

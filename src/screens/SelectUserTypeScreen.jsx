@@ -1,58 +1,120 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, ImageBackground, Image } from "react-native";
 import { useContext } from "react";
 import { Context as AuthContext } from "../context/auth/authContext";
-import { Button, Text } from "react-native-paper";
+import { Button, Icon, Text } from "react-native-paper";
 import Spacer from "../components/Spacer";
 import Center from "../components/Center";
+import { BlurView } from "expo-blur";
 
 const SelectUserTypeScreen = () => {
   const authContext = useContext(AuthContext);
-
-  const { state, setUserType } = authContext;
+  const { setUserType } = authContext;
 
   return (
-    <Center>
-      <Text style={styles.heading} variant="headlineMedium">
-        Select Type Of User
-      </Text>
-      <Spacer>
-        <Button
-          mode="contained"
-          onPress={() => {
-            setUserType("Visitor");
-          }}
-        >
-          Visitor
-        </Button>
-      </Spacer>
-      <Spacer>
-        <Button
-          mode="contained"
-          onPress={() => {
-            setUserType("Employee");
-          }}
-        >
-          Employee
-        </Button>
-      </Spacer>
-      <Spacer>
-        <Button
-          mode="contained"
-          onPress={() => {
-            setUserType("Admin");
-          }}
-        >
-          Administrator
-        </Button>
-      </Spacer>
-    </Center>
+    <ImageBackground
+      source={require("../../assets/3.jpg")}
+      style={styles.background}
+    >
+      <BlurView intensity={5} style={styles.blurContainer}>
+        <Center style={styles.container}>
+          <View style={[styles.logoContainer, { alignSelf: "center" }]}>
+            <Image
+              source={require("../../assets/1.jpg")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+
+          <Text style={styles.heading} variant="headlineLarge">
+            WHO ARE YOU?
+          </Text>
+
+          <Spacer>
+            <Button
+              mode="contained"
+              onPress={() => setUserType("Visitor")}
+              style={styles.button}
+              labelStyle={[styles.buttonLabel, { color: "blue" }]}
+              icon={() => <Icon source="account" size={30} color="blue" />}
+            >
+              A Visitor
+            </Button>
+          </Spacer>
+          <Spacer>
+            <Button
+              mode="contained"
+              onPress={() => setUserType("Employee")}
+              style={[styles.button]}
+              labelStyle={[styles.buttonLabel, { color: "green" }]}
+              icon={() => <Icon source="account-tie" size={30} color="green" />}
+            >
+              An Employee
+            </Button>
+          </Spacer>
+          <Spacer>
+            <Button
+              mode="contained"
+              onPress={() => setUserType("Admin")}
+              style={styles.button}
+              labelStyle={[styles.buttonLabel, { color: "purple" }]}
+              icon={() => (
+                <Icon source="shield-account" size={30} color="purple" />
+              )}
+            >
+              An Administrator
+            </Button>
+          </Spacer>
+        </Center>
+      </BlurView>
+    </ImageBackground>
   );
 };
 
 export default SelectUserTypeScreen;
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  blurContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    padding: 20,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
   heading: {
-    alignSelf: "center",
+    color: "#ffffff",
+    fontWeight: "bold",
+    fontSize: 30,
+    letterSpacing: 1.5,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  logoContainer: {
+    marginBottom: 20,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+  },
+  button: {
+    borderRadius: 5,
+    paddingVertical: 5,
+    backgroundColor: "#fefefe",
+  },
+  buttonLabel: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#000",
   },
 });
