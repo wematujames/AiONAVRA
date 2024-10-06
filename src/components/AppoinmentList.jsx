@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: "#663399",
-    fontWeight: "bold", // Optional: Make text bold
+    fontWeight: "bold",
   },
   fab: {
     position: "absolute",

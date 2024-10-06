@@ -38,21 +38,23 @@ const RouteItem = ({ routeItem }) => {
           </View>
         </View>
 
-        {/* <Card.Content>
+        <Card.Content>
           <Text variant="bodyMedium" style={styles.description}>
             {routeItem.description.length > 50
               ? `${routeItem.description.substring(0, 50)}...`
               : routeItem.description}
           </Text>
-        </Card.Content> */}
+        </Card.Content>
 
         <View style={styles.infoContainer}>
           <Button icon="account" mode="text" style={styles.infoText}>
             {getOccupantName()}
           </Button>
-          <Button mode="text" style={styles.infoText}>
-            {routeItem.occupant?.fName && "Out of office"}
-          </Button>
+          {routeItem.occupant?.fName && (
+            <Button mode="text">
+              {routeItem.occupant?.fName && "Out of office"}
+            </Button>
+          )}
         </View>
       </Card>
     </TouchableOpacity>
@@ -77,13 +79,15 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   container: {
-    marginVertical: 5,
+    marginVertical: 3,
   },
   card: {
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
-    backgroundColor: "#faf9f6",
+    backgroundColor: "#fff",
+    borderBottomWidth: 0.2,
+    borderBottomColor: "#888",
   },
   headerContainer: {
     flexDirection: "row",
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   avatar: {
     marginRight: 10,

@@ -54,13 +54,7 @@ const styles = StyleSheet.create({
   conatainer: {
     flex: 1,
   },
-  fab: {
-    position: "absolute",
-    margin: 16,
-    right: 0,
-    bottom: 35,
-  },
   searchBar: {
-    borderRadius: 10,
+    borderRadius: 5,
   },
 });

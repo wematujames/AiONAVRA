@@ -34,15 +34,13 @@ const RouteDetail = ({ navigation, route }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Card mode="contained" style={styles.card}>
             <Card.Title
-              title={name}
+              title={
+                <View style={{ alignItems: "center" }}>
+                  <Avatar.Icon size={100} icon="map-marker" />
+                  <Text style={styles.title}>{name}</Text>
+                </View>
+              }
               titleStyle={styles.title}
-              left={() => (
-                <Avatar.Icon
-                  size={50}
-                  icon="map-marker"
-                  style={styles.avatar}
-                />
-              )}
             />
             <Card.Content>
               <Text style={styles.label}>Description</Text>
@@ -113,22 +111,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#faf9f6",
   },
   card: {
-    paddingTop: "40%",
+    paddingTop: "10%",
     backgroundColor: "#faf9f6",
     marginBottom: 20,
     padding: 10,
   },
   title: {
-    fontSize: 22,
+    fontSize: 25,
     fontWeight: "bold",
     color: "#333",
+    alignSelf: "center",
+    marginVertical: 20,
   },
   label: {
     fontSize: 16,
     fontWeight: "600",
     marginTop: 10,
     marginBottom: 5,
-    color: "#6200ea",
   },
   text: {
     fontSize: 14,
