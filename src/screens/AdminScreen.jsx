@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import FeedbackListScreen from "./FeedbackListScreen";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -7,6 +7,7 @@ import UsersListScreen from "./UsersListScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import RouteListScreen from "./RouteListScreen";
+import NotificationsIcon from "../components/NoficationsIcon";
 
 const Drawer = createDrawerNavigator();
 
@@ -20,14 +21,7 @@ const AdminScreen = ({}) => {
         headerShown: true,
         drawerType: "front",
         headerTintColor: "black",
-        headerRight: () => (
-          <TouchableOpacity
-            style={{ marginRight: 15 }}
-            onPress={() => navigation.navigate("Notifications")}
-          >
-            <MaterialIcons size={20} name="notifications" />
-          </TouchableOpacity>
-        ),
+        headerRight: () => <NotificationsIcon />,
       }}
     >
       <Drawer.Screen

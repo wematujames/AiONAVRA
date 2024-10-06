@@ -27,9 +27,8 @@ import RouteDetailScreen from "./src/screens/RouteDetailScreen";
 import CreateNoticeScreen from "./src/screens/CreateNoticeScreen";
 import EditRouteScreen from "./src/screens/EditRouteScreen";
 import EditNoticeScreen from "./src/screens/EditNoticeScreen";
-import { TouchableOpacity } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 import AppoinmentDetailScreen from "./src/screens/AppoinmentDetailScreen";
+import NoficationsIcon from "./src/components/NoficationsIcon";
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -57,41 +56,31 @@ function App() {
 
         <Stack.Screen
           name="Admin"
-          options={{ headerShown: false, headerBackVisible: false }}
+          options={{
+            headerShown: false,
+            headerBackVisible: false,
+          }}
           component={AdminScreen}
         />
         <Stack.Screen
           name="Employee"
-          options={({ navigation }) => ({
+          options={{
             title: "Home",
             headerShown: true,
             headerBackVisible: false,
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notifications")}
-              >
-                <MaterialIcons size={20} name="notifications" />
-              </TouchableOpacity>
-            ),
-          })}
+            headerRight: () => <NoficationsIcon />,
+          }}
           component={EmployeeScreen}
         />
         <Stack.Screen
           name="Visitor"
-          options={({ navigation }) => ({
+          options={{
             title: "Home",
             headerShown: true,
             headerBackVisible: false,
             headerShown: true,
-            headerRight: () => (
-              <TouchableOpacity
-                style={{ marginRight: 15 }}
-                onPress={() => navigation.navigate("Notifications")}
-              >
-                <MaterialIcons size={20} name="notifications" />
-              </TouchableOpacity>
-            ),
-          })}
+            headerRight: () => <NoficationsIcon />,
+          }}
           component={VisitorScreen}
         />
 

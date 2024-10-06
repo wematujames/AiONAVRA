@@ -65,7 +65,7 @@ const AppointmentList = ({ enableAdd, navigation }) => {
   const [routes] = React.useState([
     { key: "confirmed", title: "CONFIRMED" },
     { key: "pending", title: "PENDING" },
-    { key: "cancelled", title: "CANCELLED" },
+    { key: "cancelled", title: "CANCELED" },
   ]);
 
   useEffect(() => {
@@ -77,7 +77,6 @@ const AppointmentList = ({ enableAdd, navigation }) => {
       <TabView
         onIndexChange={setIndex}
         navigationState={{ index, routes }}
-        // navigationState={{ index, routes: [{ key: "" }] }}
         initialLayout={{ width: Dimensions.get("window").width }}
         renderScene={SceneMap({
           pending: PendingRoute,
