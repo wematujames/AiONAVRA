@@ -10,6 +10,7 @@ import { Provider as UsersProvider } from "./src/context/users/userContext";
 import { Provider as DirectionsProvider } from "./src/context/directions/directionContext";
 import { Provider as FeedbackProvider } from "./src/context/feedback/feedbackContext";
 import { Provider as AppointmentProvider } from "./src/context/appointments/appointmentContext";
+import { Provider as EnquiriesProvider } from "./src/context/enquiries/enquiriesContext";
 import { setNavigation } from "./src/utils/navigationRef";
 import SplashScreen from "./src/screens/SplashScreen";
 import EmployeeScreen from "./src/screens/EmployeeScreen";
@@ -194,15 +195,17 @@ export default function () {
           <DirectionsProvider>
             <FeedbackProvider>
               <NoticeProvider>
-                <AppointmentProvider>
-                  <TrackProvider>
-                    <LocationProvider>
-                      <PaperProvider>
-                        <App />
-                      </PaperProvider>
-                    </LocationProvider>
-                  </TrackProvider>
-                </AppointmentProvider>
+                <EnquiriesProvider>
+                  <AppointmentProvider>
+                    <TrackProvider>
+                      <LocationProvider>
+                        <PaperProvider>
+                          <App />
+                        </PaperProvider>
+                      </LocationProvider>
+                    </TrackProvider>
+                  </AppointmentProvider>
+                </EnquiriesProvider>
               </NoticeProvider>
             </FeedbackProvider>
           </DirectionsProvider>

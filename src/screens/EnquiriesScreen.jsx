@@ -1,44 +1,37 @@
 import { StyleSheet, View, FlatList, ActivityIndicator } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Text, TextInput, Button, Card } from "react-native-paper";
 import { useTheme } from "react-native-paper";
+import { Context as EnquiriesContext } from "../context/enquiries/enquiriesContext";
 
 const EnquiriesScreen = () => {
   const theme = useTheme();
   const [query, setQuery] = useState("");
-  const [messages, setMessages] = useState([
-    { text: "Hello! How can I help you today?", sender: "bot" },
-    { text: "I have a question about your services.", sender: "user" },
-    { text: "What services do you offer?", sender: "bot" },
-    { text: "Can you tell me about the opening hours?", sender: "user" },
-    {
-      text: "Our opening hours are from 9 AM to 5 PM, Monday to Friday.",
-      sender: "bot",
-    },
-  ]);
 
-  const [isTyping, setIsTyping] = useState(false);
+  const enquiriesContext = useContext(EnquiriesContext);
+
+  const { state, getEnquiryMessages, makeEnquiry } = enquiriesContext;
+
   const handleSend = () => {
     if (query.trim()) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: query, sender: "user" },
-      ]);
-
+      makeEnquiry(query, state.messages);
       setQuery("");
-      setIsTyping(true);
-
-      setTimeout(() => {
-        const botResponse = "Thank you for your query!";
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: botResponse, sender: "bot" },
-        ]);
-
-        setIsTyping(false);
-      }, 1500);
     }
   };
+
+  const flatListRef = useRef(null);
+  useEffect(() => {
+    if (flatListRef.current && state.messages.length > 0) {
+      flatListRef.current.scrollToIndex({
+        index: state.messages.length - 1,
+        animated: true,
+      });
+    }
+  }, [state.messages, state.loading]);
+
+  useEffect(() => {
+    getEnquiryMessages();
+  }, []);
 
   const renderMessage = ({ item }) => (
     <Card
@@ -54,21 +47,10 @@ const EnquiriesScreen = () => {
     </Card>
   );
 
-  const flatListRef = useRef(null);
-
-  useEffect(() => {
-    if (flatListRef.current && messages.length > 0) {
-      flatListRef.current.scrollToIndex({
-        index: messages.length - 1,
-        animated: true,
-      });
-    }
-  }, [messages, isTyping]);
-
   return (
     <View style={styles.container}>
       <FlatList
-        data={messages}
+        data={state.messages}
         renderItem={renderMessage}
         keyExtractor={(item, index) => index.toString()}
         style={styles.messageList}
@@ -80,9 +62,17 @@ const EnquiriesScreen = () => {
           offset: 60 * index,
           index,
         })}
+        onLayout={() => {
+          if (flatListRef.current && state.messages.length > 0) {
+            flatListRef.current.scrollToIndex({
+              index: state.messages.length - 1,
+              animated: true,
+            });
+          }
+        }}
       />
 
-      {isTyping && (
+      {state.loading && (
         <View style={styles.typingIndicatorContainer}>
           <ActivityIndicator size="small" color="#007AFF" />
           <Text style={styles.typingText}>Bot is typing...</Text>

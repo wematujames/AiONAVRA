@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import officeNavApi from "../api/trackApi";
 
 const setErrorMsg = (dispatch, err) => {
@@ -9,26 +10,48 @@ const setErrorMsg = (dispatch, err) => {
 };
 
 const actions = {
-  makeEnquiry: (dispatch) => async (data) => {
-    dispatch({ type: "SET_LOADING", payload: true });
-
-    await officeNavApi.post("/feeedbacks", data);
-
-    dispatch({ type: "CREATE_FEEDBACK" });
-
-    navigate("FeedbackList");
-  },
-
-  getFeedbacks: (dispatch) => async () => {
+  getEnquiryMessages: (dispatch) => async () => {
     try {
       dispatch({ type: "SET_LOADING", payload: true });
 
-      const res = await officeNavApi.get("/feedbacks");
-      console.log("feedbacks", res.data);
-      dispatch({ type: "GET_FEEDBACKS", payload: res.data });
+      const messages = await AsyncStorage.getItem("enquiryMsgs");
+
+      dispatch({ type: "GET_ENQUIRY_MESSAGES", payload: JSON.parse(messages) });
     } catch (error) {
       // console.log(error.response.data);
     }
+  },
+
+  makeEnquiry: (dispatch) => async (message, messages) => {
+    dispatch({
+      type: "NEW_ENQUIRY",
+      payload: { text: message, sender: "user" },
+    });
+
+    dispatch({ type: "SET_LOADING", payload: true });
+
+    const res = null; //await officeNavApi.post("/feeedbacks", { message, messages });
+    await new Promise((res) => {
+      setTimeout(() => {
+        res();
+      }, 1500);
+    });
+
+    const response = "Thank you for your query!" || res.data;
+
+    dispatch({
+      type: "NEW_ENQUIRY_RESPONSE",
+      payload: { text: response, sender: "bot" },
+    });
+
+    await AsyncStorage.setItem(
+      "enquiryMsgs",
+      JSON.stringify([
+        ...messages,
+        { text: message, sender: "user" },
+        { text: message, response, sender: "bot" },
+      ]),
+    );
   },
 
   getFeedback: (dispatch) => async (id) => {

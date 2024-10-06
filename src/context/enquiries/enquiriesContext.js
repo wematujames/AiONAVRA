@@ -4,8 +4,7 @@ import actions from "./actions";
 
 const state = {
   loading: true,
-  feedbacks: [],
-  feedback: {},
+  messages: [],
 };
 
 const { Provider, Context } = createDataContext(reducer, actions, state);

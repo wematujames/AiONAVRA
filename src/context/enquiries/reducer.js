@@ -1,36 +1,28 @@
 export default (state, action) => {
   switch (action.type) {
-    case "GET_FEEDBACKS":
+    case "GET_ENQUIRY_MESSAGES":
       return {
         ...state,
-        feedbacks: action.payload,
+        messages: action.payload,
         loading: false,
       };
 
-    case "GET_FEEDBACK":
+    case "NEW_ENQUIRY":
       return {
         ...state,
-        feedback: action.payload,
+        messages: [...state.messages, action.payload],
         loading: false,
       };
 
-    case "UPDATE_FEEDBACK":
+    case "NEW_ENQUIRY_RESPONSE":
       return {
         ...state,
-        loading: false,
-      };
-
-    case "DELETE_FEEDBACK":
-      return {
-        ...state,
+        messages: [...state.messages, action.payload],
         loading: false,
       };
 
     case "SET_LOADING":
       return { ...state, loading: action.payload };
-
-    case "CLEAR_AUTH_ERROR":
-      return { ...state, errMsg: "" };
 
     default:
       return state;
