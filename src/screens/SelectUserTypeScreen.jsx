@@ -12,21 +12,20 @@ const SelectUserTypeScreen = () => {
 
   return (
     <ImageBackground
-      source={require("../../assets/3.jpg")}
+      source={require("../../assets/login_1.jpg")}
       style={styles.background}
     >
-      <BlurView intensity={5} style={styles.blurContainer}>
+      <BlurView intensity={15} style={styles.blurContainer}>
         <Center style={styles.container}>
           <View style={[styles.logoContainer, { alignSelf: "center" }]}>
             <Image
-              source={require("../../assets/1.jpg")}
+              source={require("../../assets/logo.png")}
               style={styles.logo}
-              resizeMode="contain"
             />
           </View>
 
           <Text style={styles.heading} variant="headlineLarge">
-            WHO ARE YOU?
+            Who are you ?
           </Text>
 
           <Spacer>
@@ -104,8 +103,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 300,
+    height: 200,
   },
   button: {
     borderRadius: 5,

@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { Image, ImageBackground, StyleSheet, View } from "react-native";
 import React, { useContext, useState } from "react";
 import { Context as AuthContext } from "../context/auth/authContext";
 import { BlurView } from "expo-blur";
@@ -24,15 +24,19 @@ const SignInScreen = ({ navigation }) => {
       style={styles.background}
     >
       <BlurView intensity={10} style={styles.container}>
-        {/* <View style={styles.transparentOverlay}> */}
         <View style={styles.formContainer}>
+          <Image
+            source={require("../../assets/logo.png")}
+            style={{ width: 300, height: 200, alignSelf: "center" }}
+          />
+
           <Text style={styles.heading}>Sign In</Text>
 
           {state.errMsg ? (
             <Text style={styles.errMsg}>
               <Icon source="information" color="red" size={20} />
               <Text style={{ color: "red", marginRight: 30 }}>
-                {"" + state.errMsg}
+                {" " + state.errMsg}
               </Text>
             </Text>
           ) : null}
@@ -67,7 +71,6 @@ const SignInScreen = ({ navigation }) => {
             Sign In
           </Button>
         </View>
-        {/* </View> */}
       </BlurView>
     </ImageBackground>
   );
@@ -91,13 +94,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   formContainer: {
+    paddingTop: -50,
     borderRadius: 10,
     padding: 20,
     marginHorizontal: 20,
     shadowColor: "#000",
+    marginBottom: 150,
   },
   heading: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,

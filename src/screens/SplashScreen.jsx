@@ -20,17 +20,15 @@ const SplashScreen = () => {
 
   return (
     <ImageBackground
-      source={require("../../assets/3.jpg")}
+      source={require("../../assets/login_1.jpg")}
       style={styles.background}
     >
       <BlurView intensity={5} style={styles.blurContainer}>
         <View style={styles.content}>
           <Image
-            source={require("../../assets/2.jpg")}
+            source={require("../../assets/logo.png")}
             style={styles.logo}
-            resizeMode="contain"
           />
-          <Text style={styles.title}>AiONAVRA</Text>
         </View>
 
         <View style={styles.loadingContainer}>
@@ -54,15 +52,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   content: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    flex: 1,
     padding: 20,
   },
   logo: {
-    width: 150,
-    height: 150,
-    marginBottom: 20,
+    width: 300,
+    height: 300,
+    marginTop: 100,
   },
   title: {
     color: "#fff",
