@@ -67,7 +67,7 @@ const CreateNoticeForm = ({
       <Spacer />
       <TouchableOpacity onPress={() => onSubmit(notice, notice.id)}>
         <Button style={styles.submitButton} mode="contained">
-          Save Notice
+          Save
         </Button>
       </TouchableOpacity>
       <Spacer />
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-
     alignSelf: "center",
   },
   headerText: {

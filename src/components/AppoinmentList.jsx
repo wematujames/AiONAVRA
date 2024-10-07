@@ -12,6 +12,7 @@ import Spinner from "./Spinner";
 import AddContentFAB from "./AddContentFAB";
 import AppointmentItem from "./AppointmentItem";
 import { IconButton, Text } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 const PendingRoute = () => {
   const appointmentContext = useContext(AppointmentContext);
@@ -45,6 +46,7 @@ const ConfirmedRoute = () => {
 
 const CancelledRoute = () => {
   const appointmentContext = useContext(AppointmentContext);
+
   const { state } = appointmentContext;
 
   return (
@@ -58,7 +60,8 @@ const CancelledRoute = () => {
   );
 };
 
-const AppointmentList = ({ enableAdd, navigation }) => {
+const AppointmentList = ({ enableAdd }) => {
+  const navigation = useNavigation();
   const appointmentContext = useContext(AppointmentContext);
   const { getAppointments } = appointmentContext;
   const [index, setIndex] = React.useState(0);

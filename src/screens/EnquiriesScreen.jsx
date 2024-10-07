@@ -14,7 +14,7 @@ const EnquiriesScreen = () => {
 
   const handleSend = () => {
     if (query.trim()) {
-      makeEnquiry(query, state.messages);
+      makeEnquiry(query.trim(), state.messages);
       setQuery("");
     }
   };
@@ -87,7 +87,6 @@ const EnquiriesScreen = () => {
           style={styles.input}
           mode="outlined"
           theme={theme}
-          onEndEditing={handleSend}
           multiline
         />
         <Button mode="contained" onPress={handleSend} style={styles.sendButton}>

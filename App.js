@@ -29,6 +29,7 @@ import CreateNoticeScreen from "./src/screens/CreateNoticeScreen";
 import EditRouteScreen from "./src/screens/EditRouteScreen";
 import EditNoticeScreen from "./src/screens/EditNoticeScreen";
 import AppoinmentDetailScreen from "./src/screens/AppoinmentDetailScreen";
+import CreateAppointmentScreen from "./src/screens/CreateAppointmentScreen";
 import NoficationsIcon from "./src/components/NoficationsIcon";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
@@ -181,6 +182,14 @@ function App() {
         <Stack.Screen
           name="AppointmentDetail"
           component={AppoinmentDetailScreen}
+          options={{
+            title: "Update Notice",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="CreateAppointment"
+          component={CreateAppointmentScreen}
           options={{
             title: "Update Notice",
             headerShown: true,

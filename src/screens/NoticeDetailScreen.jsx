@@ -6,7 +6,14 @@ import {
   View,
 } from "react-native";
 import React, { useContext, useEffect } from "react";
-import { Card, Divider, Text, Title, Subheading } from "react-native-paper";
+import {
+  Card,
+  Divider,
+  Text,
+  Title,
+  Subheading,
+  Icon,
+} from "react-native-paper";
 import ContentAction from "../components/ContentAction";
 import { Context as AuthContext } from "../context/auth/authContext";
 import { Context as NoticeContext } from "../context/notices/noticeContext";
@@ -38,9 +45,12 @@ const NoticeDetail = ({ navigation, route }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <Card mode="contained" style={styles.card}>
-          <Card.Title
-            title={<Title style={styles.title}>{notice.title}</Title>}
-          />
+          <Card.Title />
+
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <Icon size={35} source="book" />
+            <Title style={styles.title}>{notice.title}</Title>
+          </View>
 
           <Divider style={{ marginBottom: 10 }} />
 
@@ -130,6 +140,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   title: {
+    fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
   },

@@ -1,14 +1,15 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import UserForm from "../components/UserForm";
-const CreateUserScreen = () => {
+
+const EditUserScreen = () => {
   return (
     <View>
-      <UserForm title="Enter User Details" onSubmit={() => {}} />
+      <UserForm />
     </View>
   );
 };
 
-export default CreateUserScreen;
+export default EditUserScreen;
 
 const styles = StyleSheet.create({});

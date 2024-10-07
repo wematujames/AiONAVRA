@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
-import { Button, Card, Divider, Text } from "react-native-paper";
+import { Button, Card, Divider, Icon, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 const NoticeCard = ({ notice }) => {
@@ -16,7 +16,11 @@ const NoticeCard = ({ notice }) => {
       <Card mode="contained" style={styles.cardStyle}>
         <Card.Title
           title={
-            <Text variant="titleLarge" style={styles.title}>
+            <Text
+              variant="titleLarge"
+              style={[styles.title, { alignSelf: "center" }]}
+            >
+              <Icon source="book" size={20} color="purple" />
               {notice.title}
             </Text>
           }

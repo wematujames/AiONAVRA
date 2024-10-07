@@ -79,7 +79,7 @@ const actions = {
   },
 
   authenticate: (dispatch) => async (userType) => {
-    let typeOfUser = await AsyncStorage.removeItem("userType");
+    let typeOfUser = await AsyncStorage.getItem("userType");
 
     if (userType) {
       await AsyncStorage.setItem("userType", userType);
