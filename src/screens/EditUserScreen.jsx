@@ -5,7 +5,7 @@ import UserForm from "../components/UserForm";
 const EditUserScreen = () => {
   return (
     <View>
-      <UserForm />
+      <UserForm title="Update User" />
     </View>
   );
 };

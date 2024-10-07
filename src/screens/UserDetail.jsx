@@ -2,15 +2,16 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import React, { useContext, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { Context as UserContext } from "../context/users/userContext";
+import { Context as AuthContext } from "../context/auth/authContext";
 import { Text, Card, Avatar, IconButton, Button } from "react-native-paper";
 import Spinner from "../components/Spinner";
-
+import ContentAction from "../components/ContentAction";
 const UserDetail = ({ route, navigation }) => {
   const { id: userId } = route.params;
-
+  const authContext = useContext(AuthContext);
   const isFocused = useIsFocused();
   const userContext = useContext(UserContext);
-
+  const { state: authState } = authContext;
   const { state, getUser } = userContext;
 
   useEffect(() => {
@@ -97,6 +98,13 @@ const UserDetail = ({ route, navigation }) => {
           </Button>
         </Card.Actions>
       </Card>
+      <ContentAction
+        showFAB={authState.userType === "Admin"}
+        onEdit={() =>
+          navigation.navigate("EditUser", { userDetail: state.user })
+        }
+        onDelete={() => deleteRoute(auth.user.id)}
+      />
     </ScrollView>
   );
 };

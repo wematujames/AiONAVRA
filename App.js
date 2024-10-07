@@ -34,6 +34,7 @@ import NoficationsIcon from "./src/components/NoficationsIcon";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native";
+import EditUserScreen from "./src/screens/EditUserScreen";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -190,6 +191,14 @@ function App() {
         <Stack.Screen
           name="CreateAppointment"
           component={CreateAppointmentScreen}
+          options={{
+            title: "Update Notice",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="EditUser"
+          component={EditUserScreen}
           options={{
             title: "Update Notice",
             headerShown: true,

@@ -11,12 +11,10 @@ import NotificationsIcon from "../components/NoficationsIcon";
 const Drawer = createDrawerNavigator();
 
 const AdminScreen = ({}) => {
-  // <SafeAreaView style={{ flex: 1 }}>
   return (
     <Drawer.Navigator
       initialRouteName="UsersListScreen"
       screenOptions={{
-        drawerLabel: "Home",
         headerShown: true,
         drawerType: "front",
         headerTintColor: "black",
@@ -64,9 +62,6 @@ const AdminScreen = ({}) => {
       />
     </Drawer.Navigator>
   );
-  {
-    /* </SafeAreaView> */
-  }
 };
 
 export default AdminScreen;

@@ -33,7 +33,6 @@ const UserForm = ({
   onSubmit,
   title,
   routeDetail = { ...routeDetailDefault },
-  mode,
 }) => {
   const theme = useTheme();
   const [selectedLanguage, setSelectedLanguage] = useState();
@@ -136,12 +135,10 @@ const UserForm = ({
           <Picker.Item label="JavaScript" value="js" />
         </PickerIOS>
         <Spacer />
-        <Button style={{ borderRadius: 10 }} mode="contained" onPress={close}>
-          open/close
-        </Button>
+
         <TouchableOpacity onPress={() => onSubmit(route, route.id)}>
           <Button style={{ borderRadius: 10 }} mode="contained">
-            Save Route
+            Save
           </Button>
         </TouchableOpacity>
       </ScrollView>
