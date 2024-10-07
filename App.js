@@ -35,6 +35,7 @@ import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native";
 import EditUserScreen from "./src/screens/EditUserScreen";
+import EditAppointmentScreen from "./src/screens/EditAppointmentScreen";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -191,6 +192,14 @@ function App() {
         <Stack.Screen
           name="CreateAppointment"
           component={CreateAppointmentScreen}
+          options={{
+            title: "Update Notice",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="EditAppointment"
+          component={EditAppointmentScreen}
           options={{
             title: "Update Notice",
             headerShown: true,

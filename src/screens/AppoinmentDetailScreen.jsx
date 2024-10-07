@@ -23,7 +23,11 @@ const AppointmentDetailScreen = ({ route }) => {
   const appointmentContext = useContext(AppointmentContext);
 
   const { state: authState } = authContext;
-  const { getAppointment, state: appointmentState } = appointmentContext;
+  const {
+    getAppointment,
+    state: appointmentState,
+    editAppointment,
+  } = appointmentContext;
 
   useEffect(() => {
     getAppointment(appointmentId);
@@ -90,7 +94,8 @@ const AppointmentDetailScreen = ({ route }) => {
             <Card.Actions style={styles.actionsContainer}>
               <ContentAction
                 showFAB={authState.userType === "Visitor"}
-                onDelete={() => deleteNotice(appointment.id)} // Adjust to your delete function
+                onEdit={() => navigation.navigate("EditAppointment")}
+                onDelete={() => deleteNotice(appointment.id)}
               />
             </Card.Actions>
           </Card>

@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 import React from "react";
 import AppointmentForm from "../components/AppoinmentForm";
 
-const CreateAppointmentScreen = () => {
+const EditAppointmentScreen = () => {
   return <AppointmentForm />;
 };
 
-export default CreateAppointmentScreen;
+export default EditAppointmentScreen;
 
 const styles = StyleSheet.create({});
