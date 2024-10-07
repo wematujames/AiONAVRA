@@ -1,63 +1,60 @@
-import { StyleSheet, View } from 'react-native';
-import React, { useState } from 'react';
-import Spacer from './Spacer';
-import { Button, Input, Text, } from 'react-native-paper';
+import { StyleSheet } from "react-native";
+import { useState } from "react";
 
-const AuthForm = ({errMsg, submitAction, link, formTitle}) => {
-    const [signUp, setSignUp] = useState({
-        email: '', password: ''
-    });
+const AuthForm = ({ errMsg, submitAction, link, formTitle }) => {
+  const [signUp, setSignUp] = useState({ email: "", password: "" });
 
-    const onSumbit = async () => {
-        await submitAction(
-            signUp.email, 
-            signUp.password, 
-        )
-    }
-  return (
-       <View style={styles.formContainer}>
-        <Spacer>
-            <Text h3>{formTitle}</Text>
-        </Spacer>
-        <Spacer>
-        {errMsg && <Text style={styles.errMsg}>{errMsg}</Text>}
-        </Spacer>
-        <Input
-            label="Email" 
-            value={signUp.email} 
-            onChangeText={(val) => setSignUp(prev => ({...prev, email: val}))} 
-            autoCapitalize='none'
-            autoCorrect={false}
-        />
-       <Spacer/>
-        <Input
-            label="Pasword" 
-            value={signUp.password} 
-            onChangeText={(val) => setSignUp(prev => ({...prev, password: val}))}
-            autoCapitalize='none'
-            autoCorrect={false} 
-            secureTextEntry
-        />
-        <Spacer>  
-            <Button buttonStyle={{width: "100%"}} title='Sign Up' onPress={onSumbit} />
-        </Spacer>
+  const onSubmit = async () => {
+    await submitAction(signUp.email, signUp.password);
+  };
 
-        {link}
-    </View> 
-  )
-}
+  const onInputChange = (key, val) => {
+    setSignUp((prev) => ({ ...prev, [key]: val }));
+  };
 
-export default AuthForm
+  return null;
+};
+
+export default AuthForm;
 
 const styles = StyleSheet.create({
-    formContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginBottom: 200
-    },
-    errMsg: {
-        color: "red"
-    },
-
-})
+  formContainer: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  transparentOverlay: {
+    height: 300,
+    borderRadius: 10,
+    padding: 20,
+    marginHorizontal: 20,
+    shadowColor: "#000",
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#fff",
+  },
+  errMsg: {
+    color: "red",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  input: {
+    color: "#fff",
+    marginBottom: 10,
+  },
+  button: {
+    marginTop: 5,
+    borderRadius: 5,
+  },
+  buttonContent: {
+    paddingVertical: 5,
+  },
+  linkContainer: {
+    marginTop: 15,
+    alignItems: "center",
+  },
+});

@@ -66,7 +66,7 @@ function App() {
         setNavigation(navigator);
       }}
     >
-      <Stack.Navigator initialRouteName="SplashScreen">
+      <Stack.Navigator initialRouteName="SignIn">
         {/* Splashscreen or initial screen */}
         <Stack.Screen
           name="SplashScreen"
@@ -75,7 +75,11 @@ function App() {
         />
 
         {/* Auth */}
-        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen
+          name="SignIn"
+          component={SignInScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="SelectUserType"
           options={{ headerBackVisible: false, headerShown: false }}
