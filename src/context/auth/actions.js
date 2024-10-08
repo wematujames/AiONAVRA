@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { navigate } from "../../utils/navigationRef";
+import aionavraApi from "../api/aionavraApi";
 const setErrorMsg = (dispatch, err) => {
   dispatch({ type: "AUTH_ERROR", payload: err });
 
@@ -78,8 +79,8 @@ const actions = {
     navigate("SignIn");
   },
 
-  authenticate: (dispatch) => async (userType) => {
-    let typeOfUser = await AsyncStorage.removeItem("userType");
+  authenticate: (dispatch) => async (userType, data) => {
+    let typeOfUser = await AsyncStorage.getItem("userType");
 
     if (userType) {
       await AsyncStorage.setItem("userType", userType);
@@ -101,7 +102,23 @@ const actions = {
         return navigate(typeOfUser);
 
       case "Visitor":
-        return navigate(typeOfUser);
+        const token = await AsyncStorage.getItem("VisitorAuthToken");
+
+        if (!token) return navigate("VisitorSignIn");
+
+        let user;
+
+        try {
+          user = await aionavraApi.get("/visitorAuth/profile");
+        } catch (err) {
+          console.log(res.response.data);
+          dispatch({
+            type: "AUTH_ERROR",
+            payload: err.response?.data?.message,
+          });
+        }
+
+        return navigate("Visitor");
 
       case "Employee":
         return navigate(typeOfUser);
@@ -115,6 +132,35 @@ const actions = {
     dispatch({ type: "SET_USER_TYPE", payload: userType });
 
     navigate("SplashScreen");
+  },
+
+  visitorSignIn: (dispatch) => async (phone) => {
+    dispatch({ type: "SET_LOADING", payload: true });
+
+    const res = await aionavraApi.post("/visitorAuth/login", { phone });
+
+    await AsyncStorage.setItem("VisitorAuthPhone", phone);
+
+    dispatch({ type: "SET_LOADING", payload: false });
+
+    return navigate("VisitorSignInOTP");
+  },
+
+  visitorSignIn2Fa: (dispatch) => async (otpCode) => {
+    dispatch({ type: "SET_LOADING", payload: true });
+
+    const phone = await AsyncStorage.getItem("VisitorAuthPhone");
+
+    if (!phone) return navigate("VisitorSignIn");
+
+    const res = await aionavraApi.post("/visitorAuth/login2fa", {
+      phone,
+      otpCode,
+    });
+
+    await AsyncStorage.setItem("VisitorAuthToken", res.data.data.token);
+
+    return navigate("SplashScreen");
   },
 };
 

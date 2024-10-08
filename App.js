@@ -30,12 +30,14 @@ import EditRouteScreen from "./src/screens/EditRouteScreen";
 import EditNoticeScreen from "./src/screens/EditNoticeScreen";
 import AppoinmentDetailScreen from "./src/screens/AppoinmentDetailScreen";
 import CreateAppointmentScreen from "./src/screens/CreateAppointmentScreen";
+import VisitorSignInScreen from "./src/screens/VisitorSignInScreen";
 import NoficationsIcon from "./src/components/NoficationsIcon";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native";
 import EditUserScreen from "./src/screens/EditUserScreen";
 import EditAppointmentScreen from "./src/screens/EditAppointmentScreen";
+import VisitorOTPScreen from "./src/screens/VisitorOTPScreen";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -66,7 +68,7 @@ function App() {
         setNavigation(navigator);
       }}
     >
-      <Stack.Navigator initialRouteName="SignIn">
+      <Stack.Navigator initialRouteName="SplashScreen">
         {/* Splashscreen or initial screen */}
         <Stack.Screen
           name="SplashScreen"
@@ -78,6 +80,16 @@ function App() {
         <Stack.Screen
           name="SignIn"
           component={SignInScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="VisitorSignIn"
+          component={VisitorSignInScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="VisitorSignInOTP"
+          component={VisitorOTPScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

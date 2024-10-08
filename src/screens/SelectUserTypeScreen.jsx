@@ -8,6 +8,7 @@ import { BlurView } from "expo-blur";
 
 const SelectUserTypeScreen = () => {
   const authContext = useContext(AuthContext);
+
   const { setUserType } = authContext;
 
   return (
@@ -31,7 +32,7 @@ const SelectUserTypeScreen = () => {
           <Spacer>
             <Button
               mode="contained"
-              onPress={() => setUserType("Visitor")}
+              onPress={async () => setUserType("Visitor")}
               style={styles.button}
               labelStyle={[styles.buttonLabel, { color: "blue" }]}
               icon={() => <Icon source="account" size={30} color="blue" />}
