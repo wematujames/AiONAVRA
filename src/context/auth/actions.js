@@ -72,16 +72,16 @@ const actions = {
   },
 
   logout: (dispatch) => async () => {
-    await AsyncStorage.removeItem("token");
+    await AsyncStorage.clear();
 
     dispatch({ type: "SIGN_OUT" });
 
-    navigate("SignIn");
+    navigate("SplashScreen");
   },
 
   authenticate: (dispatch) => async (userType, data) => {
     let typeOfUser = await AsyncStorage.getItem("userType");
-
+    console.log(userType);
     if (userType) {
       await AsyncStorage.setItem("userType", userType);
       typeOfUser = userType;

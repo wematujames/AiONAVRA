@@ -38,6 +38,7 @@ import { ActivityIndicator } from "react-native";
 import EditUserScreen from "./src/screens/EditUserScreen";
 import EditAppointmentScreen from "./src/screens/EditAppointmentScreen";
 import VisitorOTPScreen from "./src/screens/VisitorOTPScreen";
+import UserAccountScreen from "./src/screens/AccountScreen";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -92,6 +93,7 @@ function App() {
           component={VisitorOTPScreen}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
           name="SelectUserType"
           options={{ headerBackVisible: false, headerShown: false }}
@@ -132,6 +134,11 @@ function App() {
           name="Notifications"
           options={{ headerShown: true }}
           component={NotificationsScreen}
+        />
+        <Stack.Screen
+          name="UserAccount"
+          options={{ headerShown: true }}
+          component={UserAccountScreen}
         />
         <Stack.Screen
           name="NoticeDetail"
