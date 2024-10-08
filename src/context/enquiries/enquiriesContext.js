@@ -3,7 +3,7 @@ import reducer from "./reducer";
 import actions from "./actions";
 
 const state = {
-  loading: true,
+  loading: false,
   messages: [],
 };
 

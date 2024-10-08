@@ -1,3 +1,4 @@
+import aionavraApi from "../api/aionavraApi";
 import officeNavApi from "../api/trackApi";
 
 const setErrorMsg = (dispatch, err) => {
@@ -23,9 +24,9 @@ const actions = {
     try {
       dispatch({ type: "SET_LOADING", payload: true });
 
-      const res = await officeNavApi.get("/users");
+      const res = await aionavraApi.get("/users");
 
-      dispatch({ type: "GET_USERS", payload: res.data });
+      dispatch({ type: "GET_USERS", payload: res.data.data });
     } catch (error) {
       // console.log(error.response.data);
     }
@@ -35,9 +36,9 @@ const actions = {
     try {
       dispatch({ type: "SET_LOADING", payload: true });
 
-      const res = await officeNavApi.get("/users/" + id);
+      const res = await aionavraApi.get("/users/" + id);
 
-      dispatch({ type: "GET_USER", payload: res.data });
+      dispatch({ type: "GET_USER", payload: res.data.data });
     } catch (error) {
       // console.log(error.response.data);
     }
@@ -45,6 +46,8 @@ const actions = {
 
   updateUser: (dispatch) => async (update, id) => {
     dispatch({ type: "SET_LOADING", payload: true });
+
+    const res = await aionavraApi.get("/users/" + id, update);
 
     dispatch({ type: "UPDATE_USER" });
 

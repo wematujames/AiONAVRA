@@ -19,7 +19,7 @@ const UserDetail = ({ route, navigation }) => {
   }, [isFocused, userId]);
 
   const user = state.user;
-
+  console.log("user details", state.user);
   if (state.loading || !state.user) return <Spinner loading={true} />;
 
   return (
@@ -70,7 +70,7 @@ const UserDetail = ({ route, navigation }) => {
 
           <View style={styles.row}>
             <IconButton icon="domain" size={20} iconColor="#663399" />
-            <Text style={styles.value}>{user.organization.name}</Text>
+            <Text style={styles.value}>{user.organization?.name}</Text>
           </View>
 
           {user.office ? (

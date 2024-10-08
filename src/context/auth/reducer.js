@@ -25,6 +25,7 @@ export default (state, action) => {
       };
 
     case "AUTH_ERROR":
+      console.log(action.payload);
       return {
         ...state,
         token: null,

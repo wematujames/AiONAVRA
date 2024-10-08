@@ -7,7 +7,7 @@ const aionavraApi = axios.create({
 
 aionavraApi.interceptors.request.use(
   async (req) => {
-    const token = await AsyncStorage.getItem("VisitorAuthToken");
+    const token = await AsyncStorage.getItem("token");
 
     if (token) {
       req.headers.Authorization = `Bearer ${token}`;

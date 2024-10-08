@@ -9,79 +9,27 @@ const setErrorMsg = (dispatch, err) => {
   }, 3000);
 };
 
-const setLoading = (dispatch) => async (isLoading) => {
-  dispatch({ type: "SET_LOADING", payload: isLoading });
-};
-
 const actions = {
-  signUp(dispatch) {
-    return async (email, password, cb) => {
-      try {
-        const res = await trackApi.post("/signup", {
-          email,
-          password,
-        });
-
-        await AsyncStorage.setItem("token", res.data.token);
-
-        dispatch({
-          type: "SIGN_UP",
-          payload: res.data,
-        });
-
-        navigate("Home");
-      } catch (err) {
-        setErrorMsg(dispatch, { msg: "Something went wrong" });
-      }
-    };
-  },
-
   signIn(dispatch) {
     return async (email, password, cb) => {
       try {
-        const res = await trackApi.post("/signin", {
-          email,
-          password,
-        });
+        const res = await aionavraApi.post("/auth/login", { email, password });
 
-        await AsyncStorage.setItem("token", res.data.token);
+        await AsyncStorage.setItem("token", res.data.data.token);
 
-        dispatch({
-          type: "SIGN_IN",
-          payload: res.data,
-        });
-
-        navigate("Home");
+        navigate("SplashScreen");
       } catch (err) {
-        setErrorMsg(dispatch, { msg: "Something went wrong" });
+        dispatch({
+          type: "AUTH_ERROR",
+          payload: { msg: "Something went wrong" },
+        });
       }
     };
-  },
-
-  tryLogin: (dispatch) => async () => {
-    const token = await AsyncStorage.getItem("token");
-
-    if (!token) return navigate("SignUp");
-
-    dispatch({
-      type: "SIGN_IN",
-      payload: { token },
-    });
-
-    navigate("SelectUserType");
-  },
-
-  logout: (dispatch) => async () => {
-    await AsyncStorage.clear();
-
-    dispatch({ type: "SIGN_OUT" });
-
-    navigate("SplashScreen");
   },
 
   authenticate: (dispatch) => async (userType, data) => {
     let typeOfUser = await AsyncStorage.getItem("userType");
-    console.log(userType);
+
     if (userType) {
       await AsyncStorage.setItem("userType", userType);
       typeOfUser = userType;
@@ -99,10 +47,27 @@ const actions = {
 
     switch (typeOfUser) {
       case "Admin":
+      case "Employee":
+        const compUserToken = await AsyncStorage.getItem("token");
+
+        if (!compUserToken) return navigate("SignIn");
+
+        let compUser;
+
+        try {
+          compUser = await aionavraApi.get("/auth/user");
+        } catch (err) {
+          // dispatch({
+          //   type: "AUTH_ERROR",
+          //   payload: err.response?.data?.message,
+          // });
+          return navigate("SignIn");
+        }
+
         return navigate(typeOfUser);
 
       case "Visitor":
-        const token = await AsyncStorage.getItem("VisitorAuthToken");
+        const token = await AsyncStorage.getItem("token");
 
         if (!token) return navigate("VisitorSignIn");
 
@@ -111,7 +76,6 @@ const actions = {
         try {
           user = await aionavraApi.get("/visitorAuth/profile");
         } catch (err) {
-          console.log(res.response.data);
           dispatch({
             type: "AUTH_ERROR",
             payload: err.response?.data?.message,
@@ -119,9 +83,6 @@ const actions = {
         }
 
         return navigate("Visitor");
-
-      case "Employee":
-        return navigate(typeOfUser);
 
       default:
         navigate("SelectUserType");
@@ -158,9 +119,17 @@ const actions = {
       otpCode,
     });
 
-    await AsyncStorage.setItem("VisitorAuthToken", res.data.data.token);
+    await AsyncStorage.setItem("token", res.data.data.token);
 
     return navigate("SplashScreen");
+  },
+
+  logout: (dispatch) => async () => {
+    await AsyncStorage.multiRemove(["token", "userType", "VisitorAuthPhone"]);
+
+    dispatch({ type: "SIGN_OUT" });
+
+    navigate("SplashScreen");
   },
 };
 

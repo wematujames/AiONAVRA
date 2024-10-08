@@ -35,7 +35,7 @@ const UserItem = ({ user }) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate("UserDetail", { id: user.id })}
+      onPress={() => navigation.navigate("UserDetail", { id: user._id })}
     >
       <View style={styles.userInfo}>
         <View style={styles.leftSection}>
