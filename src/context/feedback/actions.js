@@ -1,4 +1,4 @@
-import officeNavApi from "../api/trackApi";
+import aionavraApi from "../api/aionavraApi";
 
 const setErrorMsg = (dispatch, err) => {
   dispatch({ type: "AUTH_ERROR", payload: err });
@@ -12,7 +12,7 @@ const actions = {
   createFeedback: (dispatch) => async (data) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    await officeNavApi.post("/feeedbacks", data);
+    await aionavraApi.post("/feeedbacks", data);
 
     dispatch({ type: "CREATE_FEEDBACK" });
 
@@ -23,21 +23,9 @@ const actions = {
     try {
       dispatch({ type: "SET_LOADING", payload: true });
 
-      const res = await officeNavApi.get("/feedbacks");
-      console.log("feedbacks", res.data);
-      dispatch({ type: "GET_FEEDBACKS", payload: res.data });
-    } catch (error) {
-      // console.log(error.response.data);
-    }
-  },
+      const res = await aionavraApi.get("/feedbacks");
 
-  getFeedback: (dispatch) => async (id) => {
-    try {
-      dispatch({ type: "SET_LOADING", payload: true });
-
-      const res = await officeNavApi.get("/feedbacks/" + id);
-
-      dispatch({ type: "GET_FEEDBACK", payload: res.data });
+      dispatch({ type: "GET_FEEDBACKS", payload: res.data.data });
     } catch (error) {
       // console.log(error.response.data);
     }
@@ -46,7 +34,7 @@ const actions = {
   updateFeedback: (dispatch) => async (update, id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    await officeNavApi.put("/feedbacks/" + id);
+    await aionavraApi.put("/feedbacks/" + id, update);
 
     dispatch({ type: "UPDATE_FEEDBACK" });
 
@@ -56,7 +44,7 @@ const actions = {
   deleteFeedback: (dispatch) => async (id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    await officeNavApi.delete("/feedbacks/" + id);
+    await aionavraApi.delete("/feedbacks/" + id);
 
     dispatch({ type: "DELETE_FEEDBACK" });
 
