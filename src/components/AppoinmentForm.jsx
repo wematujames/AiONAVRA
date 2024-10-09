@@ -5,18 +5,19 @@ import DateTimePicker, {
   DateTimePickerAndroid,
 } from "@react-native-community/datetimepicker";
 import { Context as AuthContext } from "../context/auth/authContext";
+import { PaperSelect } from "react-native-paper-select";
 
 const AppointmentForm = () => {
   const authContext = useContext(AuthContext);
   const { state } = authContext;
-  console.log(state.user);
+
   const [appointment, setAppointment] = useState({
     title: "",
     description: "",
     date: new Date(),
     status: "pending",
     visitor: state.user?._id,
-    employee: "",
+    employee: "Wematu",
     duration: "",
   });
 
@@ -51,7 +52,6 @@ const AppointmentForm = () => {
         mode="outlined"
         style={styles.input}
       />
-
       <TextInput
         label="Description"
         value={appointment.description}
@@ -60,13 +60,25 @@ const AppointmentForm = () => {
         multiline
         style={styles.input}
       />
-
       <TextInput
         label="Employee"
         value={appointment.employee}
-        onChangeText={(val) => onChange("employee", val)}
+        onChangeText={(val) => onChange("employee", val[0]?.value)}
         mode="outlined"
         style={styles.input}
+      />
+      <PaperSelect
+        label="Employee"
+        value={appointment.employee}
+        textInputMode="outlined"
+        onSelection={(val) => console.log(val)}
+        arrayList={[
+          { value: "Wematu", _id: "324234234" },
+          { value: "Ayoo", _id: "sdfsdfdfsdf" },
+          { value: "Nakysiah", _id: "sdfsdf3sdf" },
+        ]}
+        selectAllEnable={false}
+        selectedArrayList={[]}
       />
 
       <View
@@ -103,6 +115,7 @@ const AppointmentForm = () => {
             </Button>
           )}
         </View>
+
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={{ fontSize: 18 }}>Time: </Text>
           {Platform.OS === "ios" && (
@@ -131,7 +144,6 @@ const AppointmentForm = () => {
           )}
         </View>
       </View>
-
       <TextInput
         label="Duration (minutes)"
         value={appointment.duration}
@@ -141,7 +153,6 @@ const AppointmentForm = () => {
         inputMode="numeric"
         style={styles.input}
       />
-
       <Button mode="contained" onPress={handleSubmit} style={styles.button}>
         Save Appointment
       </Button>
