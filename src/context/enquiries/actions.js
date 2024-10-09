@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import officeNavApi from "../api/trackApi";
+import officeNavApi from "../api/aionavraApi";
 
 const setErrorMsg = (dispatch, err) => {
   dispatch({ type: "AUTH_ERROR", payload: err });
@@ -22,61 +22,44 @@ const actions = {
     }
   },
 
-  makeEnquiry: (dispatch) => async (message, messages) => {
+  makeEnquiry: (dispatch) => async (message) => {
+    console.log("enquiry", message);
+
     dispatch({
       type: "NEW_ENQUIRY",
-      payload: { text: message, sender: "user" },
+      payload: { content: message, role: "user" },
     });
 
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = null; //await officeNavApi.post("/feeedbacks", { message, messages });
-    await new Promise((res) => {
-      setTimeout(() => {
-        res();
-      }, 1500);
+    let prevMsgs = JSON.parse(await AsyncStorage.getItem("enquiryMsgs"));
+
+    if (!prevMsgs) prevMsgs = [];
+
+    const res = await officeNavApi.post("/enquiries", {
+      messages: [...prevMsgs, { role: "user", content: message }],
     });
 
-    const response = "Thank you for your query!" || res.data;
+    console.log("response", res.data);
+
+    const response = res.data.data.response;
 
     dispatch({
       type: "NEW_ENQUIRY_RESPONSE",
-      payload: { text: response, sender: "bot" },
+      payload: { content: response, role: "assistant" },
     });
 
     await AsyncStorage.setItem(
       "enquiryMsgs",
       JSON.stringify([
-        ...messages,
-        { text: message, sender: "user" },
-        { text: message, response, sender: "bot" },
+        ...prevMsgs,
+        { content: message, role: "user" },
+        { content: response, role: "assistant" },
       ]),
     );
   },
 
-  getFeedback: (dispatch) => async (id) => {
-    try {
-      dispatch({ type: "SET_LOADING", payload: true });
-
-      const res = await officeNavApi.get("/feedbacks/" + id);
-
-      dispatch({ type: "GET_FEEDBACK", payload: res.data });
-    } catch (error) {
-      // console.log(error.response.data);
-    }
-  },
-
-  updateFeedback: (dispatch) => async (update, id) => {
-    dispatch({ type: "SET_LOADING", payload: true });
-
-    await officeNavApi.put("/feedbacks/" + id);
-
-    dispatch({ type: "UPDATE_FEEDBACK" });
-
-    navigate("FeedbackList");
-  },
-
-  deleteFeedback: (dispatch) => async (id) => {
+  deleteEnquiries: (dispatch) => async (id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
     await officeNavApi.delete("/feedbacks/" + id);

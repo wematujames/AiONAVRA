@@ -14,7 +14,7 @@ const EnquiriesScreen = () => {
 
   const handleSend = () => {
     if (query.trim()) {
-      makeEnquiry(query.trim(), state.messages);
+      makeEnquiry(query.trim());
       setQuery("");
     }
   };
@@ -38,11 +38,11 @@ const EnquiriesScreen = () => {
       mode="contained"
       style={[
         styles.messageCard,
-        item.sender === "user" ? styles.userMessage : styles.botMessage,
+        item.role === "user" ? styles.userMessage : styles.botMessage,
       ]}
     >
-      <Text style={item.sender === "user" ? styles.userText : styles.botText}>
-        {item.text}
+      <Text style={item.role === "user" ? styles.userText : styles.botText}>
+        {item.content}
       </Text>
     </Card>
   );

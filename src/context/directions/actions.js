@@ -1,5 +1,5 @@
 import { navigate } from "../../utils/navigationRef";
-import officeNavApi from "../api/trackApi";
+import officeNavApi from "../api/aionavraApi";
 
 const setErrorMsg = (dispatch, err) => {
   dispatch({ type: "AUTH_ERROR", payload: err });
@@ -15,7 +15,7 @@ const actions = {
   },
 
   createRoute: (dispatch) => async (routeDetails) => {
-    const res = await officeNavApi.post("routes", routeDetails);
+    const res = await officeNavApi.post("/routes", routeDetails);
 
     dispatch({ type: "CREATE_ROUTE", payload: res.data });
 
@@ -25,23 +25,23 @@ const actions = {
   getRoutes: (dispatch) => async () => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.get("routes");
+    const res = await officeNavApi.get("/routes");
 
-    dispatch({ type: "GET_ROUTES", payload: res.data });
+    dispatch({ type: "GET_ROUTES", payload: res.data.data });
   },
 
   getRoute: (dispatch) => async (id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.get("routes/" + id);
+    const res = await officeNavApi.get("/routes/" + id);
 
-    dispatch({ type: "GET_ROUTE", payload: res.data });
+    dispatch({ type: "GET_ROUTE", payload: res.data.data });
   },
 
   updateRoute: (dispatch) => async (data, id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.put("routes/" + id, data);
+    const res = await officeNavApi.put("/routes/" + id, data);
 
     dispatch({ type: "UPDATE_ROUTE", payload: res.data });
 
@@ -51,7 +51,7 @@ const actions = {
   deleteRoute: (dispatch) => async (id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.delete("routes/" + id);
+    const res = await officeNavApi.delete("/routes/" + id);
 
     dispatch({ type: "DELETE_ROUTE", payload: res.data });
 

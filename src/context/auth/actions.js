@@ -28,6 +28,8 @@ const actions = {
   },
 
   authenticate: (dispatch) => async (userType, data) => {
+    // await AsyncStorage.multiRemove(["token", "userType", "VisitorAuthPhone"]);
+
     let typeOfUser = await AsyncStorage.getItem("userType");
 
     if (userType) {
@@ -78,7 +80,7 @@ const actions = {
         } catch (err) {
           dispatch({
             type: "AUTH_ERROR",
-            payload: err.response?.data?.message,
+            payload: { msg: err.response?.data?.message },
           });
         }
 
@@ -97,9 +99,9 @@ const actions = {
 
   visitorSignIn: (dispatch) => async (phone) => {
     dispatch({ type: "SET_LOADING", payload: true });
-
+    console.log(phone);
     const res = await aionavraApi.post("/visitorAuth/login", { phone });
-
+    console.log(res.data);
     await AsyncStorage.setItem("VisitorAuthPhone", phone);
 
     dispatch({ type: "SET_LOADING", payload: false });

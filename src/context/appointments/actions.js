@@ -1,5 +1,5 @@
 import { navigate } from "../../utils/navigationRef";
-import officeNavApi from "../api/trackApi";
+import officeNavApi from "../api/aionavraApi";
 
 const setErrorMsg = (dispatch, err) => {
   dispatch({ type: "AUTH_ERROR", payload: err });
@@ -23,7 +23,7 @@ const actions = {
 
     const res = await officeNavApi.get("/appointments");
 
-    dispatch({ type: "GET_APPOINTMENTS", payload: res.data });
+    dispatch({ type: "GET_APPOINTMENTS", payload: res.data.data });
   },
 
   getAppointment: (dispatch) => async (id) => {
@@ -31,7 +31,7 @@ const actions = {
 
     const res = await officeNavApi.get("/appointments/" + id);
 
-    dispatch({ type: "GET_APPOINTMENT", payload: res.data });
+    dispatch({ type: "GET_APPOINTMENT", payload: res.data.data });
   },
 
   updateAppointment: (dispatch) => async (data, id) => {

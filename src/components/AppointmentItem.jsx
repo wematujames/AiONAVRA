@@ -56,7 +56,7 @@ const AppointmentItem = ({ appointment }) => {
                 color={theme.colors.primary}
               />
               <Text style={styles.description}>
-                {appointment.date} • {appointment.duration}
+                {appointment.date.split("GMT")[0]} • {appointment.duration}
               </Text>
             </View>
 
