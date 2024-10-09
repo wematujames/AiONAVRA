@@ -16,6 +16,15 @@ export default (state, action) => {
         loading: false,
       };
 
+    case "LOAD_USER":
+      return {
+        ...state,
+        token: action.payload.token,
+        user: action.payload.user,
+        loading: false,
+        isAuthenticated: true,
+      };
+
     case "SIGN_OUT":
       return {
         ...state,
@@ -25,7 +34,6 @@ export default (state, action) => {
       };
 
     case "AUTH_ERROR":
-      console.log(action.payload);
       return {
         ...state,
         token: null,

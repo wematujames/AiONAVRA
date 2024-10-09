@@ -1,35 +1,41 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import React, { useContext, useState } from "react";
+import { StyleSheet, View, Alert, Platform } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
+import DateTimePicker, {
+  DateTimePickerAndroid,
+} from "@react-native-community/datetimepicker";
+import { Context as AuthContext } from "../context/auth/authContext";
 
 const AppointmentForm = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [employee, setEmployee] = useState("");
-  const [visitor, setVisitor] = useState("");
-  const [date, setDate] = useState("");
-  const [duration, setDuration] = useState("");
-  const [status, setStatus] = useState("Scheduled");
-  const [visible, setVisible] = useState(false);
+  const authContext = useContext(AuthContext);
+  const { state } = authContext;
+
+  const [appointment, setAppointment] = useState({
+    title: "",
+    description: "",
+    date: new Date(),
+    status: "pending",
+    visitor: state.user._id,
+    employee: "",
+    duration: "",
+  });
+
+  const onChange = (key, val) =>
+    setAppointment((prev) => ({ ...prev, [key]: val }));
 
   const handleSubmit = () => {
     // Example validation
-    if (!title || !description || !employee || !visitor || !date || !duration) {
+    if (
+      !appointment.title ||
+      !appointment.description ||
+      !appointment.employee ||
+      !appointment.visitor ||
+      !appointment.date ||
+      !appointment.duration
+    ) {
       Alert.alert("Error", "Please fill out all fields.");
       return;
     }
-
-    // Logic to save the appointment can be implemented here
-    const appointmentData = {
-      title,
-      description,
-      employee,
-      visitor,
-      date,
-      duration,
-      status,
-      createdAt: new Date().toISOString(),
-    };
 
     // For now, just log the appointment data
     console.log("Appointment Created:", appointmentData);
@@ -39,58 +45,105 @@ const AppointmentForm = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Create Appointment</Text>
-
       <TextInput
         label="Title"
-        value={title}
-        onChangeText={setTitle}
+        value={appointment.title}
+        onChangeText={(val) => onChange("title", val)}
         mode="outlined"
         style={styles.input}
       />
 
       <TextInput
         label="Description"
-        value={description}
-        onChangeText={setDescription}
+        value={appointment.description}
+        onChangeText={(val) => onChange("content", val)}
         mode="outlined"
         style={styles.input}
       />
 
       <TextInput
         label="Employee"
-        value={employee}
-        onChangeText={setEmployee}
+        value={appointment.employee}
+        onChangeText={(val) => onChange("employee", val)}
         mode="outlined"
         style={styles.input}
       />
 
-      <TextInput
-        label="Visitor"
-        value={visitor}
-        onChangeText={setVisitor}
-        mode="outlined"
-        style={styles.input}
-      />
-
-      <TextInput
-        label="Date (YYYY-MM-DD)"
-        value={date}
-        onChangeText={setDate}
-        mode="outlined"
-        style={styles.input}
-      />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{ fontSize: 18 }}>Date: </Text>
+          {Platform.OS === "ios" && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={appointment.date}
+              mode="date"
+              is24Hour
+              onChange={(e, val) => console.log(val)}
+            />
+          )}
+          {Platform.OS === "android" && (
+            <Button
+              mode="text"
+              onPress={() =>
+                DateTimePickerAndroid.open({
+                  value: appointment.date,
+                  onChange: (e, val) => onChange("date", val),
+                  mode: "date",
+                  is24Hour: true,
+                })
+              }
+            >
+              {appointment.date.toDateString()}
+            </Button>
+          )}
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{ fontSize: 18 }}>Time: </Text>
+          {Platform.OS === "ios" && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={appointment.date}
+              mode="time"
+              is24Hour
+              onChange={(e, val) => console.log(val)}
+            />
+          )}
+          {Platform.OS === "android" && (
+            <Button
+              mode="text"
+              onPress={() =>
+                DateTimePickerAndroid.open({
+                  value: appointment.date,
+                  onChange: (e, val) => onChange("date", val),
+                  mode: "time",
+                  is24Hour: true,
+                })
+              }
+            >
+              {appointment.date.toTimeString()}
+            </Button>
+          )}
+        </View>
+      </View>
 
       <TextInput
         label="Duration (minutes)"
-        value={duration}
-        onChangeText={setDuration}
+        value={appointment.duration}
+        onChangeText={(val) => onChange("duration", val)}
         keyboardType="numeric"
         mode="outlined"
+        inputMode="numeric"
         style={styles.input}
       />
 
       <Button mode="contained" onPress={handleSubmit} style={styles.button}>
-        Create Appointment
+        Save Appointment
       </Button>
     </View>
   );

@@ -23,8 +23,6 @@ const actions = {
   },
 
   makeEnquiry: (dispatch) => async (message) => {
-    console.log("enquiry", message);
-
     dispatch({
       type: "NEW_ENQUIRY",
       payload: { content: message, role: "user" },
@@ -39,8 +37,6 @@ const actions = {
     const res = await officeNavApi.post("/enquiries", {
       messages: [...prevMsgs, { role: "user", content: message }],
     });
-
-    console.log("response", res.data);
 
     const response = res.data.data.response;
 

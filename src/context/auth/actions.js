@@ -40,7 +40,7 @@ const actions = {
     await new Promise((res) => {
       setTimeout(() => {
         res();
-      }, 3000);
+      });
     });
 
     if (!typeOfUser) return navigate("SelectUserType");
@@ -54,15 +54,18 @@ const actions = {
 
         if (!compUserToken) return navigate("SignIn");
 
-        let compUser;
-
         try {
-          compUser = await aionavraApi.get("/auth/user");
+          const res = await aionavraApi.get("/auth/user");
+
+          dispatch({
+            type: "LOAD_USER",
+            payload: { user: res.data.data, token },
+          });
         } catch (err) {
-          // dispatch({
-          //   type: "AUTH_ERROR",
-          //   payload: err.response?.data?.message,
-          // });
+          dispatch({
+            type: "AUTH_ERROR",
+            payload: { msg: err.response?.data?.message },
+          });
           return navigate("SignIn");
         }
 
@@ -73,10 +76,13 @@ const actions = {
 
         if (!token) return navigate("VisitorSignIn");
 
-        let user;
-
         try {
-          user = await aionavraApi.get("/visitorAuth/profile");
+          const res = await aionavraApi.get("/visitorAuth/profile");
+
+          dispatch({
+            type: "LOAD_USER",
+            payload: { user: res.data.data, token },
+          });
         } catch (err) {
           dispatch({
             type: "AUTH_ERROR",
@@ -99,9 +105,9 @@ const actions = {
 
   visitorSignIn: (dispatch) => async (phone) => {
     dispatch({ type: "SET_LOADING", payload: true });
-    console.log(phone);
+
     const res = await aionavraApi.post("/visitorAuth/login", { phone });
-    console.log(res.data);
+
     await AsyncStorage.setItem("VisitorAuthPhone", phone);
 
     dispatch({ type: "SET_LOADING", payload: false });
