@@ -9,14 +9,16 @@ import { useContext, useEffect } from "react";
 import { Context as AuthContext } from "../context/auth/authContext";
 import { Text } from "react-native-paper";
 import { BlurView } from "expo-blur";
+import { useIsFocused } from "@react-navigation/native";
 
 const SplashScreen = () => {
   const authContext = useContext(AuthContext);
   const { state, authenticate } = authContext;
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     authenticate(state.userType);
-  }, [state.userType]);
+  }, [state.userType, isFocused]);
 
   return (
     <ImageBackground

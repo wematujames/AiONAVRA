@@ -31,8 +31,9 @@ const actions = {
     // await AsyncStorage.multiRemove(["token", "userType", "VisitorAuthPhone"]);
 
     let typeOfUser = await AsyncStorage.getItem("userType");
-
+    console.log("from async storage", typeOfUser);
     if (userType) {
+      console.log("from params", userType);
       await AsyncStorage.setItem("userType", userType);
       typeOfUser = userType;
     }
@@ -47,15 +48,17 @@ const actions = {
 
     dispatch({ type: "SET_USER_TYPE", payload: typeOfUser });
 
+    const token = await AsyncStorage.getItem("token");
+
     switch (typeOfUser) {
       case "Admin":
       case "Employee":
-        const compUserToken = await AsyncStorage.getItem("token");
-
-        if (!compUserToken) return navigate("SignIn");
+        if (!token) return navigate("SignIn");
 
         try {
-          const res = await aionavraApi.get("/auth/user");
+          const res = await aionavraApi.get("/auth/user", {
+            headers: { Authorization: "Bearer " + token },
+          });
 
           dispatch({
             type: "LOAD_USER",
@@ -72,12 +75,12 @@ const actions = {
         return navigate(typeOfUser);
 
       case "Visitor":
-        const token = await AsyncStorage.getItem("token");
-
         if (!token) return navigate("VisitorSignIn");
 
         try {
-          const res = await aionavraApi.get("/visitorAuth/profile");
+          const res = await aionavraApi.get("/visitorAuth/profile", {
+            headers: { Authorization: "Bearer " + token },
+          });
 
           dispatch({
             type: "LOAD_USER",
@@ -133,7 +136,9 @@ const actions = {
   },
 
   logout: (dispatch) => async () => {
-    await AsyncStorage.multiRemove(["token", "userType", "VisitorAuthPhone"]);
+    await AsyncStorage.clear();
+    // await AsyncStorage.multiRemove(
+    //["token", "userType", "VisitorAuthPhone"]);
 
     dispatch({ type: "SIGN_OUT" });
 

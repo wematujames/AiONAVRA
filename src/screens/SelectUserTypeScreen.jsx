@@ -11,6 +11,10 @@ const SelectUserTypeScreen = () => {
 
   const { setUserType } = authContext;
 
+  // useEffect(() => {
+  //   setUserType();
+  // }, []);
+
   return (
     <ImageBackground
       source={require("../../assets/login_1.jpg")}

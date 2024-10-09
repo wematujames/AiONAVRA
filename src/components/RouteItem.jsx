@@ -27,7 +27,7 @@ const RouteItem = ({ routeItem }) => {
             <View style={styles.userInfo}>
               <Text style={styles.userName}>{routeItem.name}</Text>
               <Text style={styles.routeMeta}>
-                Floor {routeItem.floor} • ETA {routeItem.eta}
+                Floor {routeItem.floor} • {routeItem.eta}
               </Text>
             </View>
           </View>

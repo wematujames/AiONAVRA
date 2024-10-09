@@ -15,8 +15,18 @@ aionavraApi.interceptors.request.use(
 
     return req;
   },
-
   (err) => Promise.reject(err),
 );
+
+export function setTokenHeader(token) {
+  aionavraApi.interceptors.request.use(
+    async (req) => {
+      req.headers.Authorization = `Bearer ${token}`;
+
+      return req;
+    },
+    (err) => Promise.reject(err),
+  );
+}
 
 export default aionavraApi;

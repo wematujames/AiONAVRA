@@ -31,6 +31,7 @@ export default (state, action) => {
         token: null,
         isAuthenticated: false,
         loading: false,
+        userType: null,
       };
 
     case "AUTH_ERROR":
