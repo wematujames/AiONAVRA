@@ -35,7 +35,7 @@ const VisitorScreen = () => {
       />
 
       <Tab.Screen
-        name="Tracks"
+        name="Appointments"
         component={AppointmentsScreen}
         options={{
           title: "Appointments",

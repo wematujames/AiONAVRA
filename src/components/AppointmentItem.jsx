@@ -35,31 +35,19 @@ const AppointmentItem = ({ appointment }) => {
         />
 
         <Card.Content>
-          <View style={styles.row}>
-            <MaterialCommunityIcons
-              name="account-outline"
-              size={22}
-              color={theme.colors.primary}
-            />
-            <Text style={styles.boldText}>
-              Visitor: {appointment.visitor.fName} {appointment.visitor.lName}
-            </Text>
-          </View>
-
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <View style={styles.row}>
               <MaterialCommunityIcons
-                name="clock-outline"
+                name="account-outline"
                 size={22}
                 color={theme.colors.primary}
               />
-              <Text style={styles.description}>
-                {appointment.date.split("GMT")[0]} • {appointment.duration}
+              <Text style={styles.boldText}>
+                Visitor: {appointment.visitor.fName} {appointment.visitor.lName}
               </Text>
             </View>
-
             <View style={styles.row}>
               <MaterialCommunityIcons
                 name="check-circle-outline"
@@ -77,6 +65,22 @@ const AppointmentItem = ({ appointment }) => {
                     appointment.status.slice(1)}
                 </Text>
               </View>
+            </View>
+          </View>
+
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View style={styles.row}>
+              <MaterialCommunityIcons
+                name="clock-outline"
+                size={22}
+                color={theme.colors.primary}
+              />
+              <Text style={styles.description}>
+                {appointment.date.split("GMT")[0]} • {appointment.duration}{" "}
+                min(s)
+              </Text>
             </View>
           </View>
         </Card.Content>

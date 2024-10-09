@@ -71,7 +71,9 @@ const AppointmentDetailScreen = ({ route }) => {
               </View>
               <View style={styles.detailsContainer}>
                 <Text style={styles.detailsLabel}>Duration:</Text>
-                <Text style={styles.detailsText}>{appointment.duration}</Text>
+                <Text style={styles.detailsText}>
+                  {appointment.duration} mins
+                </Text>
                 <IconButton icon="clock-outline" size={20} onPress={() => {}} />
               </View>
               <View style={styles.detailsContainer}>

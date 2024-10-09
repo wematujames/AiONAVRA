@@ -52,6 +52,29 @@ function App() {
     "Montserrat-Thin": require("./assets/fonts/Montserrat-Thin.ttf"),
   });
 
+  // const fadeAnim = new Animated.Value(3000);
+
+  // useEffect(() => {
+  //   async function prepare() {
+  //     try {
+  //       await SplashScreen.preventAutoHideAsync();
+  //       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a delay
+
+  //       Animated.timing(fadeAnim, {
+  //         toValue: 1,
+  //         duration: 3000,
+  //         useNativeDriver: true,
+  //       }).start();
+  //     } catch (e) {
+  //       console.warn(e);
+  //     } finally {
+  //       await SplashScreen.hideAsync();
+  //     }
+  //   }
+
+  //   prepare();
+  // }, [fadeAnim]);
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();

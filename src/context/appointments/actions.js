@@ -11,11 +11,15 @@ const setErrorMsg = (dispatch, err) => {
 
 const actions = {
   createAppointment: (dispatch) => async (routeDetails) => {
-    const res = await officeNavApi.post("/apppointments", routeDetails);
+    try {
+      const res = await officeNavApi.post("/appointments", routeDetails);
 
-    dispatch({ type: "CREATE_APPOINTMENT", payload: res.data });
+      dispatch({ type: "CREATE_APPOINTMENT", payload: res.data });
 
-    navigate("AppointmentList");
+      navigate("Appointments");
+    } catch (err) {
+      console.log(err.response.data);
+    }
   },
 
   getAppointments: (dispatch) => async () => {

@@ -1,23 +1,29 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Alert, Platform } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import DateTimePicker, {
   DateTimePickerAndroid,
 } from "@react-native-community/datetimepicker";
 import { Context as AuthContext } from "../context/auth/authContext";
-import { PaperSelect } from "react-native-paper-select";
+import { Context as UsersContext } from "../context/users/userContext";
+import { Context as AppointmentContext } from "../context/appointments/appointmentContext";
+import { Dropdown } from "react-native-paper-dropdown";
 
 const AppointmentForm = () => {
   const authContext = useContext(AuthContext);
-  const { state } = authContext;
+  const usersContext = useContext(UsersContext);
+  const appointmentContext = useContext(AppointmentContext);
+  const { state: usersState, getUsers } = usersContext;
+  const { state: authState } = authContext;
+  const { createAppointment } = appointmentContext;
 
   const [appointment, setAppointment] = useState({
     title: "",
     description: "",
     date: new Date(),
     status: "pending",
-    visitor: state.user?._id,
-    employee: "Wematu",
+    visitor: authState.user?._id,
+    employee: usersState.users[0]?._id,
     duration: "",
   });
 
@@ -39,8 +45,13 @@ const AppointmentForm = () => {
     }
 
     console.log("Appointment Created:", appointment);
+    createAppointment(appointment);
     Alert.alert("Success", "Appointment created successfully!");
   };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -60,25 +71,24 @@ const AppointmentForm = () => {
         multiline
         style={styles.input}
       />
-      <TextInput
+      {/* <TextInput
         label="Employee"
         value={appointment.employee}
         onChangeText={(val) => onChange("employee", val[0]?.value)}
         mode="outlined"
         style={styles.input}
-      />
-      <PaperSelect
+      /> */}
+
+      <Dropdown
         label="Employee"
+        mode="outlined"
+        placeholder="Select Gender"
+        options={usersState.users.map((u) => ({
+          label: u.fName + " " + u.lName,
+          value: u._id,
+        }))}
         value={appointment.employee}
-        textInputMode="outlined"
-        onSelection={(val) => console.log(val)}
-        arrayList={[
-          { value: "Wematu", _id: "324234234" },
-          { value: "Ayoo", _id: "sdfsdfdfsdf" },
-          { value: "Nakysiah", _id: "sdfsdf3sdf" },
-        ]}
-        selectAllEnable={false}
-        selectedArrayList={[]}
+        onSelect={(val) => onChange("employee", val)}
       />
 
       <View
@@ -86,6 +96,7 @@ const AppointmentForm = () => {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
+          marginVertical: 10,
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
