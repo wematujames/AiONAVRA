@@ -39,13 +39,18 @@ const actions = {
   },
 
   updateAppointment: (dispatch) => async (data, id) => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    console.log("appointment update", data);
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.put("/appointments/" + id, data);
+      const res = await officeNavApi.put("/appointments/" + id, data);
 
-    dispatch({ type: "UPDATE_APPOINTMENT", payload: res.data });
+      dispatch({ type: "UPDATE_APPOINTMENT", payload: res.data.data });
 
-    navigate("AppointmentList");
+      navigate("Appointments");
+    } catch (err) {
+      console.log(err.response.data);
+    }
   },
 
   respondToAppointment: (dispatch) => async (data, id) => {

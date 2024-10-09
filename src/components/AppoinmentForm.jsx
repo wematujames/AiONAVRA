@@ -6,32 +6,38 @@ import DateTimePicker, {
 } from "@react-native-community/datetimepicker";
 import { Context as AuthContext } from "../context/auth/authContext";
 import { Context as UsersContext } from "../context/users/userContext";
-import { Context as AppointmentContext } from "../context/appointments/appointmentContext";
 import { Dropdown } from "react-native-paper-dropdown";
 
-const AppointmentForm = () => {
+const apmntDefProp = {
+  title: "",
+  description: "",
+  date: new Date(),
+  status: "pending",
+  duration: "",
+};
+
+const AppointmentForm = ({ title, onSubmit, _appointment = apmntDefProp }) => {
   const authContext = useContext(AuthContext);
   const usersContext = useContext(UsersContext);
-  const appointmentContext = useContext(AppointmentContext);
+
   const { state: usersState, getUsers } = usersContext;
   const { state: authState } = authContext;
-  const { createAppointment } = appointmentContext;
 
   const [appointment, setAppointment] = useState({
-    title: "",
-    description: "",
-    date: new Date(),
-    status: "pending",
-    visitor: authState.user?._id,
-    employee: usersState.users[0]?._id,
-    duration: "",
+    title: _appointment.title || "",
+    description: _appointment.description || "",
+    date: _appointment.date ? new Date(_appointment.date) : new Date(),
+    employee: _appointment?.employee?._id || usersState.users[0]?._id,
+    visitor: _appointment?.visitor?._id || authState.user?._id,
+    duration: _appointment?.duration + "" || "0",
   });
+
+  console.log(appointment);
 
   const onChange = (key, val) =>
     setAppointment((prev) => ({ ...prev, [key]: val }));
 
   const handleSubmit = () => {
-    // Example validation
     if (
       !appointment.title ||
       !appointment.description ||
@@ -44,9 +50,8 @@ const AppointmentForm = () => {
       return;
     }
 
-    console.log("Appointment Created:", appointment);
-    createAppointment(appointment);
-    Alert.alert("Success", "Appointment created successfully!");
+    onSubmit(appointment, _appointment?._id);
+    Alert.alert("Success", "Appointment saved!");
   };
 
   useEffect(() => {
@@ -55,7 +60,7 @@ const AppointmentForm = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Create Appointment</Text>
+      <Text style={styles.header}>{title}</Text>
       <TextInput
         label="Title"
         value={appointment.title}
@@ -71,13 +76,6 @@ const AppointmentForm = () => {
         multiline
         style={styles.input}
       />
-      {/* <TextInput
-        label="Employee"
-        value={appointment.employee}
-        onChangeText={(val) => onChange("employee", val[0]?.value)}
-        mode="outlined"
-        style={styles.input}
-      /> */}
 
       <Dropdown
         label="Employee"
@@ -155,6 +153,7 @@ const AppointmentForm = () => {
           )}
         </View>
       </View>
+
       <TextInput
         label="Duration (minutes)"
         value={appointment.duration}

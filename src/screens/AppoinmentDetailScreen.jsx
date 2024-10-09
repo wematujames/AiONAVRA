@@ -96,7 +96,9 @@ const AppointmentDetailScreen = ({ route }) => {
             <Card.Actions style={styles.actionsContainer}>
               <ContentAction
                 showFAB={authState.userType === "Visitor"}
-                onEdit={() => navigation.navigate("EditAppointment")}
+                onEdit={() =>
+                  navigation.navigate("EditAppointment", { appointment })
+                }
                 onDelete={() => deleteNotice(appointment.id)}
               />
             </Card.Actions>

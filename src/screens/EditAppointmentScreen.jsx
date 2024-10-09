@@ -1,9 +1,20 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import AppointmentForm from "../components/AppoinmentForm";
+import { Context as AppointmentContext } from "../context/appointments/appointmentContext";
+const EditAppointmentScreen = ({ route }) => {
+  const { appointment } = route.params;
 
-const EditAppointmentScreen = () => {
-  return <AppointmentForm />;
+  const appointmentContext = useContext(AppointmentContext);
+  const { updateAppointment } = appointmentContext;
+
+  return (
+    <AppointmentForm
+      _appointment={appointment}
+      title="Update Appointment"
+      onSubmit={updateAppointment}
+    />
+  );
 };
 
 export default EditAppointmentScreen;

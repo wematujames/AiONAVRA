@@ -12,7 +12,7 @@ import Spinner from "./Spinner";
 import AddContentFAB from "./AddContentFAB";
 import AppointmentItem from "./AppointmentItem";
 import { IconButton, Text } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 const PendingRoute = () => {
   const appointmentContext = useContext(AppointmentContext);
@@ -64,6 +64,7 @@ const AppointmentList = ({ enableAdd }) => {
   const navigation = useNavigation();
   const appointmentContext = useContext(AppointmentContext);
   const { getAppointments } = appointmentContext;
+  const isFocused = useIsFocused();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "confirmed", title: "CONFIRMED" },
@@ -73,7 +74,7 @@ const AppointmentList = ({ enableAdd }) => {
 
   useEffect(() => {
     getAppointments();
-  }, []);
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={styles.container}>

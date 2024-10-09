@@ -27,6 +27,7 @@ export default (state, action) => {
       return {
         ...state,
         loading: false,
+        appointment: action.payload,
       };
 
     case "DELETE_APPOINTMENT":
