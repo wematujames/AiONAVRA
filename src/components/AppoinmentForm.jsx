@@ -9,13 +9,13 @@ import { Context as AuthContext } from "../context/auth/authContext";
 const AppointmentForm = () => {
   const authContext = useContext(AuthContext);
   const { state } = authContext;
-
+  console.log(state.user);
   const [appointment, setAppointment] = useState({
     title: "",
     description: "",
     date: new Date(),
     status: "pending",
-    visitor: state.user._id,
+    visitor: state.user?._id,
     employee: "",
     duration: "",
   });
@@ -37,8 +37,7 @@ const AppointmentForm = () => {
       return;
     }
 
-    // For now, just log the appointment data
-    console.log("Appointment Created:", appointmentData);
+    console.log("Appointment Created:", appointment);
     Alert.alert("Success", "Appointment created successfully!");
   };
 
@@ -56,8 +55,9 @@ const AppointmentForm = () => {
       <TextInput
         label="Description"
         value={appointment.description}
-        onChangeText={(val) => onChange("content", val)}
+        onChangeText={(val) => onChange("description", val)}
         mode="outlined"
+        multiline
         style={styles.input}
       />
 
@@ -84,7 +84,7 @@ const AppointmentForm = () => {
               value={appointment.date}
               mode="date"
               is24Hour
-              onChange={(e, val) => console.log(val)}
+              onChange={(e, val) => onChange("date", val)}
             />
           )}
           {Platform.OS === "android" && (
@@ -111,7 +111,7 @@ const AppointmentForm = () => {
               value={appointment.date}
               mode="time"
               is24Hour
-              onChange={(e, val) => console.log(val)}
+              onChange={(e, val) => onChange("date", val)}
             />
           )}
           {Platform.OS === "android" && (
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     padding: 16,
     justifyContent: "center",
     backgroundColor: "#f5f5f5",
+    marginBottom: 150,
   },
   header: {
     fontSize: 28,
