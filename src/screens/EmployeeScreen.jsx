@@ -9,6 +9,7 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 import RouteListScreen from "./RouteListScreen";
 import AppointmentsScreen from "./AppointmentsScreen";
 import HomeScreen from "./HomeScreen";
+import UserListScreen from "./UsersListScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -38,6 +39,25 @@ const EmployeeScreen = () => {
         component={HomeScreen}
       />
       <Tab.Screen
+        name="Employees"
+        options={{
+          title: "Employees",
+          tabBarIcon: () => (
+            <MaterialCommunityIcons size={20} name="account-tie" />
+          ),
+        }}
+        component={UserListScreen}
+      />
+      <Tab.Screen
+        name="Appointments"
+        component={AppointmentsScreen}
+        options={{
+          title: "Appointments",
+          tabBarIcon: () => <MaterialIcons size={20} name="event" />,
+        }}
+      />
+
+      <Tab.Screen
         name="Directions"
         options={{
           title: "Directions",
@@ -46,15 +66,6 @@ const EmployeeScreen = () => {
           ),
         }}
         component={RouteListScreen}
-      />
-
-      <Tab.Screen
-        name="Appointments"
-        component={AppointmentsScreen}
-        options={{
-          title: "Appointments",
-          tabBarIcon: () => <MaterialIcons size={20} name="event" />,
-        }}
       />
     </Tab.Navigator>
   );
