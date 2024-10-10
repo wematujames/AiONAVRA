@@ -13,7 +13,13 @@ const EditNoticeScreen = ({ route }) => {
   return (
     <ScrollView style={styles.container}>
       <NoticeForm
-        noticeDetail={noticeDetails}
+        noticeDetail={{
+          title: noticeDetails.title,
+          content: noticeDetails.content,
+          priority: noticeDetails.priority,
+          attachments: noticeDetails.attachments,
+        }}
+        noticeId={noticeDetails._id}
         onSubmit={updateNotice}
         title="Update Notice"
       />

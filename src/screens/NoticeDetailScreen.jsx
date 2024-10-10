@@ -115,7 +115,7 @@ const NoticeDetail = ({ navigation, route }) => {
               noticeDetails: notice,
             })
           }
-          onDelete={() => deleteNotice(notice.id)}
+          onDelete={() => deleteNotice(notice._id)}
         />
       </ScrollView>
     </SafeAreaView>

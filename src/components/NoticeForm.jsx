@@ -14,12 +14,14 @@ const notice = {
   title: "",
   content: "",
   priority: "",
+  attachments: [],
 };
 
 const CreateNoticeForm = ({
   title,
   onSubmit,
   noticeDetail = { ...notice },
+  noticeId,
 }) => {
   const theme = useTheme();
   const [notice, setNotice] = useState(noticeDetail);
@@ -65,7 +67,7 @@ const CreateNoticeForm = ({
         theme={{ colors: { primary: theme.colors.primary } }}
       />
       <Spacer />
-      <TouchableOpacity onPress={() => onSubmit(notice, notice.id)}>
+      <TouchableOpacity onPress={() => onSubmit(notice, noticeId)}>
         <Button style={styles.submitButton} mode="contained">
           Save
         </Button>

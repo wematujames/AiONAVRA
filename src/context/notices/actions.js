@@ -11,13 +11,17 @@ const setErrorMsg = (dispatch, err) => {
 
 const actions = {
   createNotice: (dispatch) => async (data) => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    await aionavraApi.post("/notices", data);
+      await aionavraApi.post("/notices", data);
 
-    dispatch({ type: "CREATE_NOTICE" });
+      dispatch({ type: "CREATE_NOTICE" });
 
-    navigate("Home");
+      navigate("Home");
+    } catch (err) {
+      console.log(err.response.data);
+    }
   },
 
   getNotices: (dispatch) => async () => {
@@ -27,8 +31,8 @@ const actions = {
       const res = await aionavraApi.get("/notices");
 
       dispatch({ type: "GET_NOTICES", payload: res.data.data });
-    } catch (error) {
-      // console.log(error.response.data);
+    } catch (err) {
+      console.log(err.response.data);
     }
   },
 
@@ -39,27 +43,37 @@ const actions = {
       const res = await aionavraApi.get("/notices/" + id);
 
       dispatch({ type: "GET_NOTICE", payload: res.data.data });
-    } catch (error) {
-      // console.log(error.response.data);
+    } catch (err) {
+      console.log(err.response.data);
     }
   },
 
   updateNotice: (dispatch) => async (update, id) => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    dispatch({ type: "UPDATE_NOTICE" });
+      const res = await aionavraApi.put("/notices/" + id, update);
 
-    navigate("Home");
+      dispatch({ type: "UPDATE_NOTICE", payload: res.data.data });
+
+      navigate("Home");
+    } catch (err) {
+      console.log(err.response.data);
+    }
   },
 
   deleteNotice: (dispatch) => async (id) => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    await aionavraApi.delete("/notices/" + id);
+      await aionavraApi.delete("/notices/" + id);
 
-    dispatch({ type: "DELETE_NOTICE" });
+      dispatch({ type: "DELETE_NOTICE" });
 
-    navigate("Home");
+      navigate("Home");
+    } catch (err) {
+      console.log(err.response.data);
+    }
   },
 };
 
