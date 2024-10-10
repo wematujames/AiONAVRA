@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   Divider,
@@ -16,26 +16,41 @@ import {
   useTheme,
 } from "react-native-paper";
 import Spacer from "./Spacer";
-
+import { Context as AuthContext } from "../context/auth/authContext";
+import { Context as UsersContext } from "../context/users/userContext";
+import { Dropdown } from "react-native-paper-dropdown";
 const routeDetailDefault = {
   name: "",
   description: "",
   occupant: "",
   floor: "",
-  elevation: "",
+  elevation: "None",
   eta: "",
   directions: "",
-  createdAt: new Date().toISOString(),
 };
 
 const RouteForm = ({
   onSubmit,
   title,
   routeDetail = { ...routeDetailDefault },
+  routeId,
 }) => {
   const theme = useTheme();
+  const authContext = useContext(AuthContext);
+  const usersContext = useContext(UsersContext);
 
-  const [route, setRoute] = useState(routeDetail);
+  const { state: authState } = authContext;
+  const { state: usersState, getUsers } = usersContext;
+
+  const [route, setRoute] = useState({
+    ...routeDetail,
+    occupant: routeDetail.occupant?._id || usersState.users[0]?._id,
+    createdBy: routeDetail.createdBy || authState.user?._id,
+  });
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -86,14 +101,17 @@ const RouteForm = ({
           placeholder="floor number"
           mode="outlined"
         />
-        <TextInput
-          value={route.elevation}
-          onChangeText={(val) => setRoute((p) => ({ ...p, elevation: val }))}
-          style={styles.textInput}
-          clearButtonMode="always"
-          placeholder="Stairs, Elevator, None"
+        <Dropdown
           label="Elevation"
           mode="outlined"
+          placeholder="Stairs, Elevator, None"
+          options={[
+            { label: "None", value: "None" },
+            { label: "Stairs", value: "Stairs" },
+            { label: "Elevator", value: "Elevator" },
+          ]}
+          value={route.elevation}
+          onSelect={(val) => setRoute((p) => ({ ...p, elevation: val }))}
         />
         <TextInput
           value={route.eta}
@@ -104,14 +122,16 @@ const RouteForm = ({
           placeholder="Estimated arrival time"
           mode="outlined"
         />
-        <TextInput
-          value={route.occupant}
-          onChangeText={(val) => setRoute((p) => ({ ...p, occupant: val }))}
-          style={styles.textInput}
-          clearButtonMode="always"
+        <Dropdown
           label="Occupant"
-          placeholder="Employee occupant"
           mode="outlined"
+          placeholder="Select Occupant"
+          options={usersState.users.map((u) => ({
+            label: u.fName + " " + u.lName,
+            value: u._id,
+          }))}
+          value={route.occupant}
+          onSelect={(val) => setRoute((p) => ({ ...p, occupant: val }))}
         />
         <TextInput
           value={route.directions}
@@ -124,7 +144,7 @@ const RouteForm = ({
           mode="outlined"
         />
         <Spacer />
-        <TouchableOpacity onPress={() => onSubmit(route, route.id)}>
+        <TouchableOpacity onPress={() => onSubmit(route, routeId)}>
           <Button style={{ borderRadius: 10 }} mode="contained">
             Save Route
           </Button>

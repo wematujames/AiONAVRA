@@ -13,7 +13,17 @@ const EditRouteScreen = ({ route }) => {
   return (
     <SafeAreaView>
       <RouteForm
-        routeDetail={routeDetail}
+        routeDetail={{
+          name: routeDetail.name,
+          description: routeDetail.description,
+          floor: routeDetail.floor,
+          elevation: routeDetail.elevation,
+          eta: routeDetail.eta,
+          occupant: routeDetail.occupant,
+          createdBy: routeDetail.createdBy,
+          directions: routeDetail.directions,
+        }}
+        routeId={routeDetail.id}
         onSubmit={updateRoute}
         title="Update Route"
       />

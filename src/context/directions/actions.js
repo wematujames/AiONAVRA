@@ -15,11 +15,15 @@ const actions = {
   },
 
   createRoute: (dispatch) => async (routeDetails) => {
-    const res = await officeNavApi.post("/routes", routeDetails);
+    try {
+      const res = await officeNavApi.post("/routes", routeDetails);
 
-    dispatch({ type: "CREATE_ROUTE", payload: res.data });
+      dispatch({ type: "CREATE_ROUTE", payload: res.data });
 
-    navigate("RouteList");
+      navigate("RouteList");
+    } catch (err) {
+      console.log(err.response.data);
+    }
   },
 
   getRoutes: (dispatch) => async () => {

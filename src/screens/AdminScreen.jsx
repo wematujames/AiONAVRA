@@ -13,7 +13,7 @@ const Drawer = createDrawerNavigator();
 const AdminScreen = ({}) => {
   return (
     <Drawer.Navigator
-      initialRouteName="UsersListScreen"
+      initialRouteName="RouteList"
       screenOptions={{
         headerShown: true,
         drawerType: "front",
