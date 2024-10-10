@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { Context as AppointmentContext } from "../context/appointments/appointmentContext";
+import { Context as AuthContext } from "../context/auth/authContext";
 import Spinner from "./Spinner";
 import AddContentFAB from "./AddContentFAB";
 import AppointmentItem from "./AppointmentItem";
@@ -53,7 +54,7 @@ const CancelledRoute = () => {
     <Spinner loading={state.loading}>
       <FlatList
         keyExtractor={(item) => item.id}
-        data={state.appointments.filter((a) => a.status === "cancelled")}
+        data={state.appointments.filter((a) => a.status === "canceled")}
         renderItem={({ item }) => <AppointmentItem appointment={item} />}
       />
     </Spinner>
@@ -61,6 +62,8 @@ const CancelledRoute = () => {
 };
 
 const AppointmentList = ({ enableAdd }) => {
+  const authContext = useContext(AuthContext);
+  const { state: authState } = authContext;
   const navigation = useNavigation();
   const appointmentContext = useContext(AppointmentContext);
   const { getAppointments } = appointmentContext;
@@ -73,7 +76,11 @@ const AppointmentList = ({ enableAdd }) => {
   ]);
 
   useEffect(() => {
-    getAppointments();
+    if (authState.user?.userType === "Visitor") {
+      getAppointments({ visitor: authState.user?._id });
+    } else {
+      getAppointments({ employee: authState.user?._id });
+    }
   }, [isFocused]);
 
   return (
@@ -121,7 +128,7 @@ const AppointmentList = ({ enableAdd }) => {
         )}
       />
       <AddContentFAB
-        showFAB={enableAdd}
+        showFAB={authState.user?.userType === "Visitor"}
         onAdd={() => navigation.navigate("CreateAppointment")}
       />
     </SafeAreaView>

@@ -22,10 +22,10 @@ const actions = {
     }
   },
 
-  getAppointments: (dispatch) => async () => {
+  getAppointments: (dispatch) => async (filter) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.get("/appointments");
+    const res = await officeNavApi.get("/appointments", { params: filter });
 
     dispatch({ type: "GET_APPOINTMENTS", payload: res.data.data });
   },

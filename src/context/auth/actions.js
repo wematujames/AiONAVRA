@@ -80,7 +80,7 @@ const actions = {
           const res = await aionavraApi.get("/visitorAuth/profile", {
             headers: { Authorization: "Bearer " + token },
           });
-
+          console.log(token);
           dispatch({
             type: "LOAD_USER",
             payload: { user: res.data.data, token },

@@ -13,7 +13,7 @@ import {
 } from "react-native-paper";
 import Spinner from "../components/Spinner";
 import ContentAction from "../components/ContentAction";
-
+import AppoinmentStatusAction from "../components/AppointmentStatusAction";
 const AppointmentDetailScreen = ({ route }) => {
   const navigation = useNavigation();
   const { id: appointmentId } = route.params;
@@ -26,7 +26,7 @@ const AppointmentDetailScreen = ({ route }) => {
   const {
     getAppointment,
     state: appointmentState,
-    editAppointment,
+    updateAppointment,
   } = appointmentContext;
 
   useEffect(() => {
@@ -92,10 +92,25 @@ const AppointmentDetailScreen = ({ route }) => {
                   onPress={() => {}}
                 />
               </View>
+
+              {["Admin", "Employee"].includes(authState.user?.userType) && (
+                <AppoinmentStatusAction
+                  onCancel={() =>
+                    updateAppointment({ status: "canceled" }, appointmentId)
+                  }
+                  onConfirm={() =>
+                    updateAppointment({ status: "confirmed" }, appointmentId)
+                  }
+                  onReject={() =>
+                    updateAppointment({ status: "rejected" }, appointmentId)
+                  }
+                  status={appointment.status}
+                />
+              )}
             </Card.Content>
             <Card.Actions style={styles.actionsContainer}>
               <ContentAction
-                showFAB={authState.userType === "Visitor"}
+                showFAB
                 onEdit={() =>
                   navigation.navigate("EditAppointment", { appointment })
                 }

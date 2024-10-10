@@ -11,7 +11,7 @@ const AppointmentItem = ({ appointment }) => {
   const statusColor = {
     pending: theme.colors.secondary,
     confirmed: theme.colors.primary,
-    cancelled: theme.colors.error,
+    canceled: theme.colors.error,
   };
 
   return (

@@ -49,7 +49,7 @@ const EmployeeScreen = () => {
       />
 
       <Tab.Screen
-        name="EAppointments"
+        name="Appointments"
         component={AppointmentsScreen}
         options={{
           title: "Appointments",
