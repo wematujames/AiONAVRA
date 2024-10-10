@@ -39,7 +39,6 @@ const actions = {
   },
 
   updateAppointment: (dispatch) => async (data, id) => {
-    console.log("appointment update", data);
     try {
       dispatch({ type: "SET_LOADING", payload: true });
 

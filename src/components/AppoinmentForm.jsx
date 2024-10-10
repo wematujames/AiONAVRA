@@ -32,8 +32,6 @@ const AppointmentForm = ({ title, onSubmit, _appointment = apmntDefProp }) => {
     duration: _appointment?.duration + "" || "0",
   });
 
-  console.log(appointment);
-
   const onChange = (key, val) =>
     setAppointment((prev) => ({ ...prev, [key]: val }));
 

@@ -31,9 +31,8 @@ const actions = {
     // await AsyncStorage.multiRemove(["token", "userType", "VisitorAuthPhone"]);
 
     let typeOfUser = await AsyncStorage.getItem("userType");
-    console.log("from async storage", typeOfUser);
+
     if (userType) {
-      console.log("from params", userType);
       await AsyncStorage.setItem("userType", userType);
       typeOfUser = userType;
     }

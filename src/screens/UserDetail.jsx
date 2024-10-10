@@ -19,7 +19,7 @@ const UserDetail = ({ route, navigation }) => {
   }, [isFocused, userId]);
 
   const user = state.user;
-  console.log("user details", state.user);
+
   if (state.loading || !state.user) return <Spinner loading={true} />;
 
   return (

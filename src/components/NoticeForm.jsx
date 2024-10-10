@@ -27,8 +27,6 @@ const CreateNoticeForm = ({
   const authContext = useContext(AuthContext);
   const { state } = authContext;
 
-  console.log(state.user);
-
   const theme = useTheme();
   const [notice, setNotice] = useState({
     ...noticeDetail,
