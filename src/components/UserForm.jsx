@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Divider,
@@ -16,36 +16,35 @@ import {
   useTheme,
 } from "react-native-paper";
 import Spacer from "./Spacer";
-import { Picker, PickerIOS } from "@react-native-picker/picker";
+import { Dropdown } from "react-native-paper-dropdown";
+import { Context as AuthContext } from "../context/auth/authContext";
 
-const routeDetailDefault = {
-  name: "",
-  description: "",
-  occupant: "",
-  floor: "",
-  elevation: "",
-  eta: "",
-  directions: "",
-  createdAt: new Date().toISOString(),
+const userDefault = {
+  fName: "",
+  lName: "",
+  email: "",
+  phone: "",
+  employeeId: "",
+  userType: "",
+  active: "true",
 };
 
 const UserForm = ({
   onSubmit,
   title,
-  routeDetail = { ...routeDetailDefault },
+  userDetail = { ...userDefault },
+  userId,
 }) => {
   const theme = useTheme();
-  const [selectedLanguage, setSelectedLanguage] = useState();
-  const [route, setRoute] = useState(routeDetail);
-  const pickerRef = useRef();
 
-  function open() {
-    pickerRef.current.focus();
-  }
+  const authContext = useContext(AuthContext);
+  const { state } = authContext;
 
-  function close() {
-    pickerRef.current.blur();
-  }
+  const [user, setUser] = useState({
+    ...userDetail,
+    createdBy: userDetail.createdBy || state.user?._id,
+  });
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -68,8 +67,8 @@ const UserForm = ({
         </View>
         <Divider bold horizontalInset />
         <TextInput
-          value={route.name}
-          onChangeText={(val) => setRoute((p) => ({ ...p, name: val }))}
+          value={user.fName}
+          onChangeText={(val) => setUser((p) => ({ ...p, fName: val }))}
           style={styles.textInput}
           clearButtonMode="always"
           label="First Name"
@@ -77,66 +76,69 @@ const UserForm = ({
           mode="outlined"
         />
         <TextInput
-          value={route.description}
-          onChangeText={(val) => setRoute((p) => ({ ...p, description: val }))}
+          value={user.lName}
+          onChangeText={(val) => setUser((p) => ({ ...p, lName: val }))}
           style={styles.textInput}
           clearButtonMode="always"
           label="Last Name"
           placeholder="Doe"
           mode="outlined"
-          multiline
         />
         <TextInput
-          value={route.floor}
-          onChangeText={(val) => setRoute((p) => ({ ...p, floor: val }))}
+          value={user.email}
+          onChangeText={(val) => setUser((p) => ({ ...p, email: val }))}
           style={styles.textInput}
           clearButtonMode="always"
           label="Email"
+          autoCapitalize="none"
+          autoCorrect={false}
+          inputMode="email"
           placeholder="johndoe@company.com"
           mode="outlined"
         />
         <TextInput
-          value={route.elevation}
-          onChangeText={(val) => setRoute((p) => ({ ...p, elevation: val }))}
+          value={user.phone}
+          onChangeText={(val) => setUser((p) => ({ ...p, phone: val }))}
           style={styles.textInput}
           clearButtonMode="always"
-          placeholder="0245214521"
+          placeholder="233245214521"
           label="Phone"
+          inputMode="tel"
           mode="outlined"
         />
         <TextInput
-          value={route.eta}
-          onChangeText={(val) => setRoute((p) => ({ ...p, eta: val }))}
+          value={user.employeeId}
+          onChangeText={(val) => setUser((p) => ({ ...p, employeeId: val }))}
           style={styles.textInput}
           clearButtonMode="always"
           label="EmployeeId"
           placeholder="CMP19999"
           mode="outlined"
         />
-        <TextInput
-          value={route.occupant}
-          onChangeText={(val) => setRoute((p) => ({ ...p, occupant: val }))}
-          style={styles.textInput}
-          clearButtonMode="always"
-          label="UserType"
-          placeholder="Employee occupant"
+        <Dropdown
+          label="User Type"
           mode="outlined"
+          placeholder="Admin, Employee"
+          options={[
+            { label: "Admin", value: "Admin" },
+            { label: "Employee", value: "Employee" },
+          ]}
+          value={user.userType}
+          onSelect={(val) => setUser((p) => ({ ...p, userType: val }))}
         />
-        <PickerIOS
-          enabled={true}
-          mode="dropdown"
-          ref={pickerRef}
-          selectedValue={selectedLanguage}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedLanguage(itemValue)
-          }
-        >
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
-        </PickerIOS>
+        <Dropdown
+          label="Status"
+          mode="outlined"
+          placeholder="Active, Inactive"
+          options={[
+            { label: "Active", value: "true" },
+            { label: "Inactive", value: "false" },
+          ]}
+          value={user.active}
+          onSelect={(val) => setUser((p) => ({ ...p, active: val }))}
+        />
         <Spacer />
-
-        <TouchableOpacity onPress={() => onSubmit(route, route.id)}>
+        <TouchableOpacity onPress={() => onSubmit(user, userId)}>
           <Button style={{ borderRadius: 10 }} mode="contained">
             Save
           </Button>

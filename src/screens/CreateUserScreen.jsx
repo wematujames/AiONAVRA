@@ -1,10 +1,14 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import UserForm from "../components/UserForm";
+import { Context as UsersContext } from "../context/users/userContext";
 const CreateUserScreen = () => {
+  const usersContext = useContext(UsersContext);
+  const { state, creatUser } = usersContext;
+
   return (
     <View>
-      <UserForm title="Enter User Details" onSubmit={() => {}} />
+      <UserForm title="Enter User Details" onSubmit={creatUser} />
     </View>
   );
 };

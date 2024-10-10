@@ -63,6 +63,8 @@ const actions = {
             type: "LOAD_USER",
             payload: { user: res.data.data, token },
           });
+
+          return navigate(res.data.data.userType || typeOfUser);
         } catch (err) {
           dispatch({
             type: "AUTH_ERROR",
@@ -70,8 +72,6 @@ const actions = {
           });
           return navigate("SignIn");
         }
-
-        return navigate(typeOfUser);
 
       case "Visitor":
         if (!token) return navigate("VisitorSignIn");

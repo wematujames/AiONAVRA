@@ -1,5 +1,5 @@
+import { navigate } from "../../utils/navigationRef";
 import aionavraApi from "../api/aionavraApi";
-import officeNavApi from "../api/trackApi";
 
 const setErrorMsg = (dispatch, err) => {
   dispatch({ type: "AUTH_ERROR", payload: err });
@@ -11,13 +11,20 @@ const setErrorMsg = (dispatch, err) => {
 
 const actions = {
   creatUser: (dispatch) => async (data) => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    console.log("create User", data);
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    await officeNavApi.post("/users", data);
+      await aionavraApi.post("/users", data);
 
-    dispatch({ type: "CREATE_USER" });
+      dispatch({ type: "CREATE_USER" });
 
-    navigate("Home");
+      navigate("UsersListScreen");
+    } catch (err) {
+      console.log(err);
+      console.log(err.response);
+      console.log(err.response.data);
+    }
   },
 
   getUsers: (dispatch) => async () => {
@@ -57,7 +64,7 @@ const actions = {
   deleteUser: (dispatch) => async (id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
-    await officeNavApi.delete("/users/" + id);
+    await aionavraApi.delete("/users/" + id);
 
     dispatch({ type: "DELETE_USER" });
 
