@@ -7,6 +7,7 @@ import UsersListScreen from "./UsersListScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import RouteListScreen from "./RouteListScreen";
 import NotificationsIcon from "../components/NoficationsIcon";
+import AppointmentsScreen from "./AppointmentsScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -26,6 +27,14 @@ const AdminScreen = ({}) => {
         component={HomeScreen}
         options={{
           title: "Home",
+          drawerIcon: () => <MaterialIcons size={20} name="home" />,
+        }}
+      />
+      <Drawer.Screen
+        name="Appointments"
+        component={AppointmentsScreen}
+        options={{
+          title: "Appointments",
           drawerIcon: () => <MaterialIcons size={20} name="home" />,
         }}
       />
