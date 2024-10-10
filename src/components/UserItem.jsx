@@ -44,29 +44,36 @@ const UserItem = ({ user }) => {
             <Text style={styles.name}>
               {user.fName} {user.lName}
             </Text>
+            <Text style={styles.email}>{user.email}</Text>
             <View style={{ flexDirection: "row" }}>
-              <View
-                style={[styles.badge, { backgroundColor: getBadgeColor() }]}
-              >
-                <Text style={styles.badgeText}>{user.userType}</Text>
-              </View>
-              {user.inOffice !== null && (
-                <View style={[styles.badge, { backgroundColor: "#663399" }]}>
-                  <Text style={styles.badgeText}>
-                    {user.inOffice ? "In Office" : "Out Of Office"}
-                  </Text>
-                </View>
+              <Text style={styles.phone}>{user.phone}</Text>
+              {user.employeeId && (
+                <Text style={styles.employeeId}>{user.employeeId}</Text>
               )}
             </View>
           </View>
         </View>
-
         <View style={styles.rightSection}>
-          <Text style={styles.email}>{user.email}</Text>
-          <Text style={styles.phone}>{user.phone}</Text>
-          {user.employeeId && (
-            <Text style={styles.employeeId}>{user.employeeId}</Text>
-          )}
+          <View style={{}}>
+            <Text style={[styles.badge]}>
+              {user.employeeId && (
+                <Text style={styles.employeeId}>{user.employeeId}</Text>
+              )}
+            </Text>
+            <View style={styles.badge}>
+              <Text style={[styles.badgeText, { color: getBadgeColor() }]}>
+                {user.userType}
+              </Text>
+            </View>
+
+            {user.inOffice !== null && (
+              <View style={[styles.badge]}>
+                <Text style={[styles.badgeText, { fontWeight: "bold" }]}>
+                  {user.inOffice ? "In Office" : "Out Of Office"}
+                </Text>
+              </View>
+            )}
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -86,6 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    paddingRight: 10,
   },
   leftSection: {
     flexDirection: "row",
@@ -99,18 +107,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: "#333",
+    marginBottom: 5,
   },
   badge: {
-    paddingHorizontal: 8,
-    paddingVertical: 5,
+    paddingHorizontal: 3,
+    // paddingVertical: 3,
     borderRadius: 5,
     marginTop: 5,
     marginRight: 5,
-    alignSelf: "flex-start",
+    alignSelf: "flex-end",
   },
   badgeText: {
     fontSize: 14,
-    color: "#fff",
+    color: "#663399",
     fontWeight: "500",
   },
   rightSection: {

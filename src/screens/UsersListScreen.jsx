@@ -4,14 +4,16 @@ import { FAB, Searchbar } from "react-native-paper";
 import UserItem from "../components/UserItem";
 import { Context as UsersContext } from "../context/users/userContext";
 import Spinner from "../components/Spinner";
+import { useIsFocused } from "@react-navigation/native";
 
 const UsersListScreen = ({ navigation }) => {
   const usersContext = useContext(UsersContext);
+  const isFocused = useIsFocused();
   const { state, getUsers } = usersContext;
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={styles.conatainer}>

@@ -6,6 +6,7 @@ import { Context as AuthContext } from "../context/auth/authContext";
 import { Text, Card, Avatar, IconButton, Button } from "react-native-paper";
 import Spinner from "../components/Spinner";
 import ContentAction from "../components/ContentAction";
+
 const UserDetail = ({ route, navigation }) => {
   const { id: userId } = route.params;
   const authContext = useContext(AuthContext);
@@ -99,11 +100,12 @@ const UserDetail = ({ route, navigation }) => {
         </Card.Actions>
       </Card>
       <ContentAction
+        // showDel
         showFAB={authState.userType === "Admin"}
         onEdit={() =>
           navigation.navigate("EditUser", { userDetail: state.user })
         }
-        onDelete={() => deleteRoute(auth.user.id)}
+        onDelete={() => deleteRoute(id)}
       />
     </ScrollView>
   );

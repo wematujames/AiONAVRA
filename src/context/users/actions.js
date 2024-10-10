@@ -52,13 +52,19 @@ const actions = {
   },
 
   updateUser: (dispatch) => async (update, id) => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    try {
+      console.log("user", update, id);
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await aionavraApi.get("/users/" + id, update);
+      const res = await aionavraApi.put("/users/" + id, update);
 
-    dispatch({ type: "UPDATE_USER" });
+      dispatch({ type: "UPDATE_USER" });
 
-    navigate("Home");
+      navigate("UsersListScreen");
+    } catch (err) {
+      console.log(err.response);
+      console.log(err.response.data);
+    }
   },
 
   deleteUser: (dispatch) => async (id) => {
@@ -68,7 +74,7 @@ const actions = {
 
     dispatch({ type: "DELETE_USER" });
 
-    navigate("Home");
+    navigate("UsersListScreen");
   },
 };
 
