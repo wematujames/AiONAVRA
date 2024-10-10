@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { navigate } from "../../utils/navigationRef";
 import aionavraApi from "../api/aionavraApi";
+import { registerForPushNotificationsAsync } from "../../notifications/push";
 const setErrorMsg = (dispatch, err) => {
   dispatch({ type: "AUTH_ERROR", payload: err });
 
@@ -64,12 +65,21 @@ const actions = {
             payload: { user: res.data.data, token },
           });
 
-          return navigate(res.data.data.userType || typeOfUser);
+          navigate(res.data.data.userType || typeOfUser);
+
+          const pushToken = await registerForPushNotificationsAsync();
+
+          if (!pushToken) return;
+
+          return await aionavraApi.post("/auth/notifications/savepushtoken", {
+            token: pushToken,
+          });
         } catch (err) {
           dispatch({
             type: "AUTH_ERROR",
             payload: { msg: err.response?.data?.message },
           });
+
           return navigate("SignIn");
         }
 
@@ -77,22 +87,34 @@ const actions = {
         if (!token) return navigate("VisitorSignIn");
 
         try {
-          const res = await aionavraApi.get("/visitorAuth/profile", {
+          const res = await aionavraApi.get("/visitorauth/profile", {
             headers: { Authorization: "Bearer " + token },
           });
-          console.log(token);
+
           dispatch({
             type: "LOAD_USER",
             payload: { user: res.data.data, token },
           });
+
+          navigate("Visitor");
+
+          // store push notification token
+          const pushToken = await registerForPushNotificationsAsync();
+
+          if (!pushToken) return;
+
+          return await aionavraApi.post(
+            "/visitorauth/notifications/savepushtoken",
+            { token: pushToken },
+          );
         } catch (err) {
           dispatch({
             type: "AUTH_ERROR",
             payload: { msg: err.response?.data?.message },
           });
-        }
 
-        return navigate("Visitor");
+          return navigate("Visitor");
+        }
 
       default:
         navigate("SelectUserType");

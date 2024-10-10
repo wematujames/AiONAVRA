@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "tracks",
-    "slug": "tracks",
+    "slug": "aionavra",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,11 +21,18 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.wematu.aionavra"
+      "package": "com.wematu.aionavra",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-font"]
+    "plugins": ["expo-font"],
+    "extra": {
+      "eas": {
+        "projectId": "25c438a4-b9d6-4473-887c-f82b25e79232"
+      }
+    },
+    "owner": "wematu"
   }
 }
