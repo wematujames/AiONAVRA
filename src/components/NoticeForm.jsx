@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Divider,
@@ -9,6 +9,7 @@ import {
   useTheme,
 } from "react-native-paper";
 import Spacer from "./Spacer";
+import { Context as AuthContext } from "../context/auth/authContext";
 
 const notice = {
   title: "",
@@ -23,8 +24,16 @@ const CreateNoticeForm = ({
   noticeDetail = { ...notice },
   noticeId,
 }) => {
+  const authContext = useContext(AuthContext);
+  const { state } = authContext;
+
+  console.log(state.user);
+
   const theme = useTheme();
-  const [notice, setNotice] = useState(noticeDetail);
+  const [notice, setNotice] = useState({
+    ...noticeDetail,
+    createdBy: noticeDetail.createdBy || state.user?._id,
+  });
 
   return (
     <View style={styles.formContainer}>
