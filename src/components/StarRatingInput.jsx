@@ -7,7 +7,7 @@ const StarRatingInput = ({ maxRating = 5, onRatingSelected }) => {
 
   const handleRating = (rate) => {
     setRating(rate);
-    if (onRatingSelected) onRatingSelected(rate); // Pass the selected rating back if needed
+    if (onRatingSelected) onRatingSelected(rate);
   };
 
   return (
