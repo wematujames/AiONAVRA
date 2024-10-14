@@ -20,6 +20,7 @@ const EnquiriesScreen = () => {
   };
 
   const flatListRef = useRef(null);
+
   useEffect(() => {
     if (flatListRef.current && state.messages.length > 0) {
       flatListRef.current.scrollToIndex({

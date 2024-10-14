@@ -12,7 +12,7 @@ const setErrorMsg = (dispatch, err) => {
 const actions = {
   getEnquiryMessages: (dispatch) => async () => {
     try {
-      dispatch({ type: "SET_LOADING", payload: true });
+      // dispatch({ type: "SET_LOADING", payload: true });
 
       const messages = (await AsyncStorage.getItem("enquiryMsgs")) || [];
 

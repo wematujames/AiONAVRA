@@ -60,7 +60,7 @@ const EmployeeScreen = () => {
       <Tab.Screen
         name="Directions"
         options={{
-          title: "Directions",
+          title: "Routes",
           tabBarIcon: () => (
             <MaterialCommunityIcons size={20} name="go-kart-track" />
           ),

@@ -43,23 +43,33 @@ const actions = {
   },
 
   updateRoute: (dispatch) => async (data, id) => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.put("/routes/" + id, data);
+      const res = await officeNavApi.put("/routes/" + id, data);
 
-    dispatch({ type: "UPDATE_ROUTE", payload: res.data });
+      dispatch({ type: "UPDATE_ROUTE", payload: res.data });
 
-    navigate("RouteList");
+      navigate("RouteList");
+    } catch (err) {
+      console.log(err);
+      console.log(err.response);
+      console.log(err.response.message);
+    }
   },
 
   deleteRoute: (dispatch) => async (id) => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    const res = await officeNavApi.delete("/routes/" + id);
+      const res = await officeNavApi.delete("/routes/" + id);
 
-    dispatch({ type: "DELETE_ROUTE", payload: res.data });
+      dispatch({ type: "DELETE_ROUTE", payload: res.data });
 
-    navigate("RouteList");
+      navigate("RouteList");
+    } catch (err) {
+      console.log(err);
+    }
   },
 };
 

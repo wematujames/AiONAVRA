@@ -14,7 +14,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 const VisitorScreen = () => {
   return (
-    <Tab.Navigator initialRouteName="Appointments">
+    <Tab.Navigator initialRouteName="Enquiries">
       <Tab.Screen
         options={{
           tabBarIcon: () => <AntDesign size={20} name="questioncircleo" />,

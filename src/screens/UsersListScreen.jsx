@@ -39,6 +39,10 @@ const UsersListScreen = ({ navigation }) => {
     getUsers();
   }, [isFocused]);
 
+  useEffect(() => {
+    setFilteredUsers(state.users);
+  }, [state.users]);
+
   return (
     <SafeAreaView style={styles.conatainer}>
       <Spinner loading={state.loading}>
