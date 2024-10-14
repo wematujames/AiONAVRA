@@ -1,6 +1,4 @@
 export function handleSearch(term, setTerm, data, setData, filterKeys) {
-  console.log(term);
-
   setSearchTerm(term);
 
   if (!term) return setFilteredRoutes(state.routes);

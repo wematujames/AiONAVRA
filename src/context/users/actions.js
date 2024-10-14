@@ -11,7 +11,6 @@ const setErrorMsg = (dispatch, err) => {
 
 const actions = {
   creatUser: (dispatch) => async (data) => {
-    console.log("create User", data);
     try {
       dispatch({ type: "SET_LOADING", payload: true });
 
@@ -22,8 +21,6 @@ const actions = {
       navigate("UsersListScreen");
     } catch (err) {
       console.log(err);
-      console.log(err.response);
-      console.log(err.response.data);
     }
   },
 
@@ -53,7 +50,6 @@ const actions = {
 
   updateUser: (dispatch) => async (update, id) => {
     try {
-      console.log("user", update, id);
       dispatch({ type: "SET_LOADING", payload: true });
 
       const res = await aionavraApi.put("/users/" + id, update);

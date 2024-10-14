@@ -22,8 +22,6 @@ const RouteListScreen = ({ navigation }) => {
   const [filteredRoutes, setFilteredRoutes] = useState(state.routes);
 
   const handleSearch = (term) => {
-    console.log(term);
-
     setSearchTerm(term);
 
     if (!term) return setFilteredRoutes(state.routes);
