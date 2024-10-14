@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "tracks",
+    "name": "AiONAVRA",
     "slug": "aionavra",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#663399"
     },
     "platforms": ["ios", "android"],
     "ios": {
@@ -19,7 +19,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#663399"
       },
       "package": "com.wematu.aionavra",
       "googleServicesFile": "./google-services.json"

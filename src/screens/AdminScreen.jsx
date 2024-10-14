@@ -54,7 +54,7 @@ const AdminScreen = ({}) => {
         name="UsersListScreen"
         component={UsersListScreen}
         options={{
-          title: "Users",
+          title: "Employees",
           drawerIcon: () => (
             <MaterialIcons size={20} name="supervised-user-circle" />
           ),

@@ -18,10 +18,11 @@ const EditUserScreen = ({ route }) => {
           employeeId: userDetail.employeeId,
           userType: userDetail.userType,
           active: userDetail.active + "",
+          jobTitle: userDetail.jobTitle,
           createdBy: userDetail.createdBy,
         }}
         userId={userDetail._id}
-        title="Update User"
+        title="Update Employee"
         onSubmit={updateUser}
       />
     </View>

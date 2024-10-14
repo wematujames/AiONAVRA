@@ -27,6 +27,7 @@ const userDefault = {
   employeeId: "",
   userType: "",
   active: "true",
+  jobTitle: "",
 };
 
 const UserForm = ({
@@ -57,7 +58,7 @@ const UserForm = ({
         }}
       >
         <View style={styles.title}>
-          <Icon source="details" color={theme.colors.primary} size={25} />
+          <Icon source="account-tie" color={theme.colors.primary} size={25} />
           <Text
             style={{ marginLeft: 10, color: theme.colors.primary }}
             variant="headlineMedium"
@@ -115,6 +116,16 @@ const UserForm = ({
           placeholder="CMP19999"
           mode="outlined"
         />
+        <TextInput
+          value={user.jobTitle}
+          onChangeText={(val) => setUser((p) => ({ ...p, jobTitle: val }))}
+          style={styles.textInput}
+          clearButtonMode="always"
+          label="Job Title"
+          placeholder="Dentist"
+          mode="outlined"
+        />
+        <View style={{ marginBottom: 10 }} />
         <Dropdown
           label="User Type"
           mode="outlined"
@@ -126,6 +137,7 @@ const UserForm = ({
           value={user.userType}
           onSelect={(val) => setUser((p) => ({ ...p, userType: val }))}
         />
+        <View style={{ marginBottom: 10 }} />
         <Dropdown
           label="Status"
           mode="outlined"

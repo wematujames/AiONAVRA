@@ -1,5 +1,5 @@
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FAB, Searchbar } from "react-native-paper";
 import UserItem from "../components/UserItem";
 import { Context as UsersContext } from "../context/users/userContext";
@@ -15,6 +15,26 @@ const UsersListScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
   const { state, getUsers } = usersContext;
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState(state.users);
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+
+    if (!term) return setFilteredUsers(state.users);
+
+    const filtered = state.users.filter(
+      (user) =>
+        `${user.fName} ${user.lName}`
+          .toLowerCase()
+          .includes(term.toLowerCase()) ||
+        user.jobTitle?.toLowerCase().includes(term.toLowerCase()) ||
+        user.email.toLowerCase().includes(term.toLowerCase()),
+    );
+
+    setFilteredUsers(filtered);
+  };
+
   useEffect(() => {
     getUsers();
   }, [isFocused]);
@@ -23,6 +43,9 @@ const UsersListScreen = ({ navigation }) => {
     <SafeAreaView style={styles.conatainer}>
       <Spinner loading={state.loading}>
         <Searchbar
+          placeholder="Search users..."
+          value={searchTerm}
+          onChangeText={handleSearch}
           autoCapitalize="none"
           autoCorrect={false}
           mode="bar"
@@ -31,7 +54,7 @@ const UsersListScreen = ({ navigation }) => {
         />
 
         <FlatList
-          data={state.users}
+          data={filteredUsers}
           keyExtractor={(i) => i.id}
           renderItem={({ item }) => <UserItem user={item} />}
         />

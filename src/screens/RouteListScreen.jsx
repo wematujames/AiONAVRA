@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, View } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Searchbar } from "react-native-paper";
 import RouteItem from "../components/RouteItem";
 import { Context as RouteContext } from "../context/directions/directionContext";
@@ -18,14 +18,40 @@ const RouteListScreen = ({ navigation }) => {
     state: { userType },
   } = authContext;
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredRoutes, setFilteredRoutes] = useState(state.routes);
+
+  const handleSearch = (term) => {
+    console.log(term);
+
+    setSearchTerm(term);
+
+    if (!term) return setFilteredRoutes(state.routes);
+
+    const filtered = state.routes.filter(
+      (route) =>
+        route.name.toLowerCase().includes(term.toLowerCase()) ||
+        route.description.toLowerCase().includes(term.toLowerCase()),
+    );
+
+    setFilteredRoutes(filtered);
+  };
+
   useEffect(() => {
     getRoutes();
   }, [isFocused]);
 
+  useEffect(() => {
+    setFilteredRoutes(state.routes);
+  }, [state.routes]);
+
   return (
     <Spinner loading={state.loading}>
-      <View style={styles.conatainer}>
+      <View style={styles.container}>
         <Searchbar
+          placeholder="Search routes..."
+          value={searchTerm}
+          onChangeText={handleSearch}
           autoCapitalize="none"
           autoCorrect={false}
           mode="bar"
@@ -34,7 +60,7 @@ const RouteListScreen = ({ navigation }) => {
         />
 
         <FlatList
-          data={state.routes}
+          data={filteredRoutes}
           keyExtractor={(i) => i.id}
           renderItem={({ item }) => <RouteItem routeItem={item} />}
         />
@@ -51,7 +77,7 @@ const RouteListScreen = ({ navigation }) => {
 export default RouteListScreen;
 
 const styles = StyleSheet.create({
-  conatainer: {
+  container: {
     flex: 1,
   },
   searchBar: {

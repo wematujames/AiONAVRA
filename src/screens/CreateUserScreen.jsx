@@ -8,7 +8,7 @@ const CreateUserScreen = () => {
 
   return (
     <View>
-      <UserForm title="Enter User Details" onSubmit={creatUser} />
+      <UserForm title="Employee Details" onSubmit={creatUser} />
     </View>
   );
 };

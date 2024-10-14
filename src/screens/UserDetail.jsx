@@ -70,8 +70,8 @@ const UserDetail = ({ route, navigation }) => {
           </View>
 
           <View style={styles.row}>
-            <IconButton icon="domain" size={20} iconColor="#663399" />
-            <Text style={styles.value}>{user.organization?.name}</Text>
+            <IconButton icon="play-network" size={20} iconColor="#663399" />
+            <Text style={styles.value}>{user.jobTitle}</Text>
           </View>
 
           {user.office ? (
