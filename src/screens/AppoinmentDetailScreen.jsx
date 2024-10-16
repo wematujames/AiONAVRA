@@ -26,7 +26,7 @@ const AppointmentDetailScreen = ({ route }) => {
   const {
     getAppointment,
     state: appointmentState,
-    updateAppointment,
+    employeeApproval,
   } = appointmentContext;
 
   useEffect(() => {
@@ -96,13 +96,13 @@ const AppointmentDetailScreen = ({ route }) => {
               {["Admin", "Employee"].includes(authState.user?.userType) && (
                 <AppoinmentStatusAction
                   onCancel={() =>
-                    updateAppointment({ status: "canceled" }, appointmentId)
+                    employeeApproval({ status: "canceled" }, appointmentId)
                   }
                   onConfirm={() =>
-                    updateAppointment({ status: "confirmed" }, appointmentId)
+                    employeeApproval({ status: "confirmed" }, appointmentId)
                   }
                   onReject={() =>
-                    updateAppointment({ status: "rejected" }, appointmentId)
+                    employeeApproval({ status: "rejected" }, appointmentId)
                   }
                   status={appointment.status}
                 />
@@ -110,7 +110,7 @@ const AppointmentDetailScreen = ({ route }) => {
             </Card.Content>
             <Card.Actions style={styles.actionsContainer}>
               <ContentAction
-                showFAB
+                showFAB={appointment.status === "pending"}
                 onEdit={() =>
                   navigation.navigate("EditAppointment", { appointment })
                 }

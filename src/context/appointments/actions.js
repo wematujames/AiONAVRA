@@ -52,6 +52,23 @@ const actions = {
     }
   },
 
+  employeeApproval: (dispatch) => async (data, id) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
+
+      const res = await officeNavApi.put(
+        "/appointments/employee/approval/" + id,
+        data,
+      );
+
+      dispatch({ type: "UPDATE_APPOINTMENT", payload: res.data.data });
+
+      navigate("Appointments");
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  },
+
   respondToAppointment: (dispatch) => async (data, id) => {
     dispatch({ type: "SET_LOADING", payload: true });
 
