@@ -80,6 +80,8 @@ export async function registerForPushNotificationsAsync() {
       { projectId },
     );
 
+    console.log(pushTokenString);
+
     return pushTokenString;
   } catch (e) {
     handleRegistrationError(`${e}`);

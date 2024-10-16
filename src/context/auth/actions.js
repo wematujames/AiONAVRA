@@ -68,7 +68,7 @@ const actions = {
           navigate(res.data.data.userType || typeOfUser);
 
           const pushToken = await registerForPushNotificationsAsync();
-
+          console.log(pushToken);
           if (!pushToken) return;
 
           return await aionavraApi.post("/auth/notifications/savepushtoken", {

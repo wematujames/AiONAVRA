@@ -11,7 +11,7 @@ import { Provider as DirectionsProvider } from "./src/context/directions/directi
 import { Provider as FeedbackProvider } from "./src/context/feedback/feedbackContext";
 import { Provider as AppointmentProvider } from "./src/context/appointments/appointmentContext";
 import { Provider as EnquiriesProvider } from "./src/context/enquiries/enquiriesContext";
-import { setNavigation } from "./src/utils/navigationRef";
+import { navigationRef } from "./src/utils/navigationRef";
 import * as SplashScreen from "expo-splash-screen";
 import CustomSplashScreen from "./src/screens/SplashScreen";
 import EmployeeScreen from "./src/screens/EmployeeScreen";
@@ -32,13 +32,16 @@ import AppoinmentDetailScreen from "./src/screens/AppoinmentDetailScreen";
 import CreateAppointmentScreen from "./src/screens/CreateAppointmentScreen";
 import VisitorSignInScreen from "./src/screens/VisitorSignInScreen";
 import NoficationsIcon from "./src/components/NoficationsIcon";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native";
 import EditUserScreen from "./src/screens/EditUserScreen";
 import EditAppointmentScreen from "./src/screens/EditAppointmentScreen";
 import VisitorOTPScreen from "./src/screens/VisitorOTPScreen";
 import UserAccountScreen from "./src/screens/AccountScreen";
+import * as Notifications from "expo-notifications";
+import { handlePush, storePushMessage } from "./src/notifications/handlePush";
+import { navigateNew } from "./src/utils/navigationRef";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -51,6 +54,28 @@ function App() {
     "Montserrat-Light": require("./assets/fonts/Montserrat-Light.ttf"),
     "Montserrat-Thin": require("./assets/fonts/Montserrat-Thin.ttf"),
   });
+
+  // console.log("notification", notification);
+  // console.log("notification data", notificationData);
+  useEffect(() => {
+    // Listener for notifications while app is in the foreground
+    const notificationListener = Notifications.addNotificationReceivedListener(
+      async ({ title, body, data }) => {
+        storePushMessage({ title, body, data });
+      },
+    );
+
+    // Listener for response to notifications (e.g., when the user taps a notification)
+    const responseListener =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        handlePush(response.notification.request.content, navigateNew);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -65,9 +90,10 @@ function App() {
   return (
     <NavigationContainer
       onReady={onLayoutRootView}
-      ref={(navigator) => {
-        setNavigation(navigator);
-      }}
+      // ref={(navigator) => {
+      //   setNavigation(navigator);
+      // }}
+      ref={navigationRef}
     >
       <Stack.Navigator initialRouteName="SplashScreen">
         {/* Splashscreen or initial screen */}
@@ -208,7 +234,7 @@ function App() {
           name="AppointmentDetail"
           component={AppoinmentDetailScreen}
           options={{
-            title: "Update Notice",
+            title: "Appointment Details",
             headerShown: true,
           }}
         />
@@ -216,7 +242,7 @@ function App() {
           name="CreateAppointment"
           component={CreateAppointmentScreen}
           options={{
-            title: "Update Notice",
+            title: "Create Appointment",
             headerShown: true,
           }}
         />
@@ -224,7 +250,7 @@ function App() {
           name="EditAppointment"
           component={EditAppointmentScreen}
           options={{
-            title: "Update Notice",
+            title: "Update Appointment",
             headerShown: true,
           }}
         />
@@ -232,7 +258,7 @@ function App() {
           name="EditUser"
           component={EditUserScreen}
           options={{
-            title: "Update Notice",
+            title: "Edit User",
             headerShown: true,
           }}
         />
