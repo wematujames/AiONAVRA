@@ -47,9 +47,6 @@ const UserItem = ({ user }) => {
             <Text style={styles.email}>{user.email}</Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.phone}>{user.phone}</Text>
-              {user.employeeId && (
-                <Text style={styles.employeeId}>{user.employeeId}</Text>
-              )}
             </View>
           </View>
         </View>
