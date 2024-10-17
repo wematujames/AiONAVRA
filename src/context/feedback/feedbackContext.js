@@ -5,7 +5,7 @@ import actions from "./actions";
 const state = {
   loading: true,
   feedbacks: [],
-  feedback: {},
+  feedback: null,
 };
 
 const { Provider, Context } = createDataContext(reducer, actions, state);

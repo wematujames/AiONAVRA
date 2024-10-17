@@ -12,7 +12,7 @@ const NoficationIcon = ({ onAcc, onNot }) => {
     <View style={styles.container}>
       <TouchableOpacity>
         <MaterialIcons
-          style={{ marginRight: 20 }}
+          style={{ marginRight: 15 }}
           onPress={() => navigation.navigate("UserAccount")}
           size={20}
           name="account-circle"
@@ -25,6 +25,14 @@ const NoficationIcon = ({ onAcc, onNot }) => {
           size={20}
           color="#663399"
           name="notifications"
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={{ marginLeft: 15 }}>
+        <MaterialIcons
+          onPress={() => navigation.navigate("FeedbackList")}
+          size={20}
+          color="#663399"
+          name="feedback"
         />
       </TouchableOpacity>
     </View>

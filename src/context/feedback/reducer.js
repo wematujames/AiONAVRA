@@ -7,7 +7,7 @@ export default (state, action) => {
         loading: false,
       };
 
-    case "GET_FEEDBACK":
+    case "GET_USER_FEEDBACK":
       return {
         ...state,
         feedback: action.payload,

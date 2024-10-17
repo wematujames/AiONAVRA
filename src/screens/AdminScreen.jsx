@@ -61,14 +61,14 @@ const AdminScreen = ({}) => {
         }}
       />
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="FeedbackList"
         component={FeedbackListScreen}
         options={{
           title: "Feedback",
           drawerIcon: () => <MaterialIcons size={20} name="feedback" />,
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };

@@ -1,3 +1,4 @@
+import { navigate } from "../../utils/navigationRef";
 import aionavraApi from "../api/aionavraApi";
 
 const setErrorMsg = (dispatch, err) => {
@@ -10,13 +11,17 @@ const setErrorMsg = (dispatch, err) => {
 
 const actions = {
   createFeedback: (dispatch) => async (data) => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    await aionavraApi.post("/feeedbacks", data);
+      await aionavraApi.post("/feedbacks", data);
 
-    dispatch({ type: "CREATE_FEEDBACK" });
+      dispatch({ type: "CREATE_FEEDBACK" });
 
-    navigate("FeedbackList");
+      navigate("FeedbackList");
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   getFeedbacks: (dispatch) => async () => {
@@ -26,6 +31,18 @@ const actions = {
       const res = await aionavraApi.get("/feedbacks");
 
       dispatch({ type: "GET_FEEDBACKS", payload: res.data.data });
+    } catch (error) {
+      // console.log(error.response.data);
+    }
+  },
+
+  getUserFeeback: (dispatch) => async (userId) => {
+    try {
+      dispatch({ type: "SET_LOADING", payload: true });
+
+      const res = await aionavraApi.get("/feedback/user/" + userId);
+
+      dispatch({ type: "GET_USER_FEEDBACK", payload: res.data.data });
     } catch (error) {
       // console.log(error.response.data);
     }

@@ -43,6 +43,8 @@ import UserAccountScreen from "./src/screens/AccountScreen";
 import * as Notifications from "expo-notifications";
 import { handlePush, storePushMessage } from "./src/notifications/handlePush";
 import { navigateNew } from "./src/utils/navigationRef";
+import FeedbackListScreen from "./src/screens/FeedbackListScreen";
+import CreateFeedbackScreen from "./src/screens/CreateFeedbackScreen";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -88,13 +90,7 @@ function App() {
   }
 
   return (
-    <NavigationContainer
-      onReady={onLayoutRootView}
-      // ref={(navigator) => {
-      //   setNavigation(navigator);
-      // }}
-      ref={navigationRef}
-    >
+    <NavigationContainer onReady={onLayoutRootView} ref={navigationRef}>
       <Stack.Navigator initialRouteName="SplashScreen">
         {/* Splashscreen or initial screen */}
         <Stack.Screen
@@ -261,6 +257,16 @@ function App() {
             title: "Edit User",
             headerShown: true,
           }}
+        />
+        <Stack.Screen
+          name="FeedbackList"
+          component={FeedbackListScreen}
+          options={{ title: "Feedback" }}
+        />
+        <Stack.Screen
+          name="CreateFeedback"
+          component={CreateFeedbackScreen}
+          options={{ title: "Feedback" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -4,8 +4,9 @@ import { Context as FeedbackContext } from "../context/feedback/feedbackContext"
 import FeedbackItem from "../components/FeedbackItem";
 import { useIsFocused } from "@react-navigation/native";
 import Spinner from "../components/Spinner";
+import AddContentFAB from "../components/AddContentFAB";
 
-const FeedbackListScreen = () => {
+const FeedbackListScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
   const feedbackContext = useContext(FeedbackContext);
   const { state, getFeedbacks } = feedbackContext;
@@ -15,16 +16,20 @@ const FeedbackListScreen = () => {
   }, [isFocused]);
 
   return (
-    <Spinner loading={state.loading}>
-      <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Spinner loading={state.loading}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={state.feedbacks}
           keyExtractor={(i) => i.id}
           renderItem={({ item }) => <FeedbackItem feedback={item} />}
         />
-      </SafeAreaView>
-    </Spinner>
+      </Spinner>
+      <AddContentFAB
+        showFAB
+        onAdd={() => navigation.navigate("CreateFeedback")}
+      />
+    </SafeAreaView>
   );
 };
 
