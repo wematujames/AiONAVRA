@@ -18,10 +18,7 @@ export default (state, action) => {
       };
 
     case "UPDATE_USER":
-      return {
-        ...state,
-        loading: false,
-      };
+      return { ...state, loading: false };
 
     case "DELETE_USER":
       return {

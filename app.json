@@ -14,7 +14,12 @@
     "platforms": ["ios", "android"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.wematu.aionavra"
+      "bundleIdentifier": "com.wematu.aionavra",
+      "infoPlist": {
+        "NSLocationAlwaysUsageDescription": "This app needs access to your location in the background.",
+        "NSLocationWhenInUseUsageDescription": "This app needs access to your location while you are using the app.",
+        "UIBackgroundModes": ["location"]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -22,12 +27,25 @@
         "backgroundColor": "#663399"
       },
       "package": "com.wematu.aionavra",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-font"],
+    "plugins": [
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "isIosBackgroundLocationEnabled": true
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "25c438a4-b9d6-4473-887c-f82b25e79232"

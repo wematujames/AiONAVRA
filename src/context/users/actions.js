@@ -1,5 +1,12 @@
 import { navigate } from "../../utils/navigationRef";
 import aionavraApi from "../api/aionavraApi";
+import { calculateDistance } from "../../utils/common";
+
+const THRESHOLD_DISTANCE = 3000;
+const OFFICE_LOCATION = {
+  latitude: 37.68035365,
+  longitude: -122.47161149,
+};
 
 const setErrorMsg = (dispatch, err) => {
   dispatch({ type: "AUTH_ERROR", payload: err });
@@ -58,6 +65,29 @@ const actions = {
 
       navigate("UsersListScreen");
     } catch (err) {
+      console.log(err.response);
+      console.log(err.response.data);
+    }
+  },
+
+  updateUserOfficeStatus: (dispatch) => async (location, userId) => {
+    try {
+      const distanceFromOffice = calculateDistance(
+        OFFICE_LOCATION.latitude,
+        OFFICE_LOCATION.longitude,
+        location[0].coords.latitude,
+        location[0].coords.longitude,
+      );
+
+      const res = await aionavraApi.put("/users/" + userId, {
+        inOffice: THRESHOLD_DISTANCE > distanceFromOffice,
+      });
+
+      dispatch({ type: "UPDATE_USER" });
+
+      // navigate("UsersListScreen");
+    } catch (err) {
+      console.log(err);
       console.log(err.response);
       console.log(err.response.data);
     }

@@ -5,20 +5,35 @@ import {
   ActivityIndicator,
   View,
 } from "react-native";
-import { useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { Context as AuthContext } from "../context/auth/authContext";
+import { Context as UserContext } from "../context/users/userContext";
 import { Text } from "react-native-paper";
 import { BlurView } from "expo-blur";
 import { useIsFocused } from "@react-navigation/native";
+import useLocation from "../hooks/useLocation";
 
 const SplashScreen = () => {
-  const authContext = useContext(AuthContext);
-  const { state, authenticate } = authContext;
   const isFocused = useIsFocused();
+  const authContext = useContext(AuthContext);
+  const userContext = useContext(UserContext);
+
+  const { updateUserOfficeStatus } = userContext;
+  const { state: authState, authenticate } = authContext;
+
+  const callback = useCallback((loc) => {
+    // console.log(loc);
+    authState.user?._id && updateUserOfficeStatus(loc, authState.user?._id);
+  });
+
+  const [err] = useLocation(
+    authState.user?._id && ["Admin", "Employee"].includes(authState.userType),
+    callback,
+  );
 
   useEffect(() => {
-    authenticate(state.userType);
-  }, [state.userType, isFocused]);
+    authenticate(authState.userType);
+  }, [authState.userType, isFocused]);
 
   return (
     <ImageBackground
