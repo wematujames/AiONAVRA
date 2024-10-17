@@ -1,12 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { navigate } from "../utils/navigationRef";
 
-export async function storePushMessage({ title, body, data }) {
+export async function storePushMessage(notification) {
   const notifications = JSON.parse(
     (await AsyncStorage.getItem("notifications")) || "[]",
   );
 
-  notifications.push({ title, body, data });
+  notifications.push(notification);
 
   await AsyncStorage.setItem("notifications", JSON.stringify(notifications));
 }

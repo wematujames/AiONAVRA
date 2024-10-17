@@ -11,6 +11,7 @@ import { Provider as DirectionsProvider } from "./src/context/directions/directi
 import { Provider as FeedbackProvider } from "./src/context/feedback/feedbackContext";
 import { Provider as AppointmentProvider } from "./src/context/appointments/appointmentContext";
 import { Provider as EnquiriesProvider } from "./src/context/enquiries/enquiriesContext";
+import { Provider as NotificationsProvider } from "./src/context/notifications/notificationContext";
 import { navigationRef } from "./src/utils/navigationRef";
 import * as SplashScreen from "expo-splash-screen";
 import CustomSplashScreen from "./src/screens/SplashScreen";
@@ -55,13 +56,12 @@ function App() {
     "Montserrat-Thin": require("./assets/fonts/Montserrat-Thin.ttf"),
   });
 
-  // console.log("notification", notification);
-  // console.log("notification data", notificationData);
   useEffect(() => {
     // Listener for notifications while app is in the foreground
     const notificationListener = Notifications.addNotificationReceivedListener(
-      async ({ title, body, data }) => {
-        storePushMessage({ title, body, data });
+      async (notification) => {
+        console.log(notification);
+        storePushMessage(notification);
       },
     );
 
@@ -327,11 +327,13 @@ export default function () {
               <EnquiriesProvider>
                 <AppointmentProvider>
                   <TrackProvider>
-                    <LocationProvider>
-                      <PaperProvider theme={theme}>
-                        <App />
-                      </PaperProvider>
-                    </LocationProvider>
+                    <NotificationsProvider>
+                      <LocationProvider>
+                        <PaperProvider theme={theme}>
+                          <App />
+                        </PaperProvider>
+                      </LocationProvider>
+                    </NotificationsProvider>
                   </TrackProvider>
                 </AppointmentProvider>
               </EnquiriesProvider>

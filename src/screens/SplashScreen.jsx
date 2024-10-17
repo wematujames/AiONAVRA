@@ -11,7 +11,6 @@ import { Context as UserContext } from "../context/users/userContext";
 import { Text } from "react-native-paper";
 import { BlurView } from "expo-blur";
 import { useIsFocused } from "@react-navigation/native";
-import useLocation from "../hooks/useLocation";
 
 const SplashScreen = () => {
   const isFocused = useIsFocused();
@@ -26,10 +25,10 @@ const SplashScreen = () => {
     authState.user?._id && updateUserOfficeStatus(loc, authState.user?._id);
   });
 
-  const [err] = useLocation(
-    authState.user?._id && ["Admin", "Employee"].includes(authState.userType),
-    callback,
-  );
+  // const [err] = useLocation(
+  //   authState.user?._id && ["Admin", "Employee"].includes(authState.userType),
+  //   callback,
+  // );
 
   useEffect(() => {
     authenticate(authState.userType);
