@@ -15,7 +15,7 @@ const actions = {
         JSON.stringify(notifications),
       );
 
-      dispatch({ type: "SAVE_NOTIFICATION", payload: notifications });
+      dispatch({ type: "SAVE_NOTIFICATION", payload: notifications.reverse() });
     } catch (err) {
       console.log(err.response.data);
     }
@@ -28,7 +28,7 @@ const actions = {
       (await AsyncStorage.getItem("notifications")) || "[]",
     );
 
-    dispatch({ type: "GET_NOTIFICATIONS", payload: notifications });
+    dispatch({ type: "GET_NOTIFICATIONS", payload: notifications.reverse() });
   },
 
   getNotificaation: (dispatch) => async (id) => {
