@@ -6,7 +6,7 @@ import { FontAwesome } from "@expo/vector-icons";
 
 const FeedbackItem = ({ feedback }) => {
   const [expand, setExpand] = useState(false);
-  const { rating, description, createdAt, user } = feedback;
+  const { rating, description, createdAt, user, visitor } = feedback;
 
   return (
     <TouchableOpacity onPress={() => setExpand(!expand)}>
@@ -20,10 +20,11 @@ const FeedbackItem = ({ feedback }) => {
             />
             <View style={styles.userInfo}>
               <Text style={styles.userName}>
-                {user.fName} {user.lName}
+                {user?.fName || visitor.fName} {user.lName || visitor.lName}
               </Text>
               <Text style={styles.userDetails}>
-                {user.userType} • {formatDistanceToNow(new Date(createdAt))} ago
+                {user?.userType || visitor.userType} •{" "}
+                {formatDistanceToNow(new Date(createdAt))} ago
               </Text>
             </View>
           </View>
