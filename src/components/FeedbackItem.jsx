@@ -15,12 +15,12 @@ const FeedbackItem = ({ feedback }) => {
           <View style={styles.header}>
             <Avatar.Text
               size={45}
-              label={`${user.fName[0]}${user.lName[0]}`}
+              label={`${user?.fName || visitor.fName}${user?.lName || visitor.lName}`}
               style={styles.avatar}
             />
             <View style={styles.userInfo}>
               <Text style={styles.userName}>
-                {user?.fName || visitor.fName} {user.lName || visitor.lName}
+                {user?.fName || visitor.fName} {user?.lName || visitor.lName}
               </Text>
               <Text style={styles.userDetails}>
                 {user?.userType || visitor.userType} •{" "}

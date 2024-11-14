@@ -43,7 +43,7 @@ const SignInScreen = ({ navigation }) => {
 
           <TextInput
             mode="outlined"
-            label="Email"
+            label="Phone"
             value={signUp.phone}
             onChangeText={(val) => onInputChange("phone", val)}
             autoCapitalize="none"

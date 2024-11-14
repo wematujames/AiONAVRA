@@ -71,6 +71,18 @@ const actions = {
       console.log(err);
     }
   },
+
+  sendRouteToUser: (dispatch) => async (id) => {
+    try {
+      const res = await officeNavApi.post("/routes/sendroutetouser", {
+        routeId: id,
+      });
+
+      dispatch({ type: "SEND_ROUTE_TO_USER", payload: res.data });
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
 export default actions;

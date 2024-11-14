@@ -83,7 +83,6 @@ const FeedbackForm = ({ onSubmit, visitor, user }) => {
         <Spacer />
         <TouchableOpacity
           onPress={() => {
-            console.log(feedback);
             onSubmit(feedback);
           }}
         >

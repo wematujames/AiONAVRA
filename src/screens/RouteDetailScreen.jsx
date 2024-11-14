@@ -1,11 +1,18 @@
-import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import React, { useContext, useEffect } from "react";
 import ContentAction from "../components/ContentAction";
 import { Context as AuthContext } from "../context/auth/authContext";
 import { Context as RouteContext } from "../context/directions/directionContext";
 import { useIsFocused } from "@react-navigation/native";
 import Spinner from "../components/Spinner";
-import { Chip, Divider, Avatar, Card } from "react-native-paper";
+import { Chip, Divider, Avatar, Card, Button } from "react-native-paper";
 
 const RouteDetail = ({ navigation, route }) => {
   const { id: routeId } = route.params;
@@ -15,7 +22,12 @@ const RouteDetail = ({ navigation, route }) => {
   const routeContext = useContext(RouteContext);
 
   const { state: authState } = authContext;
-  const { deleteRoute, getRoute, state: routeState } = routeContext;
+  const {
+    deleteRoute,
+    getRoute,
+    state: routeState,
+    sendRouteToUser,
+  } = routeContext;
 
   useEffect(() => {
     getRoute(routeId);
@@ -88,6 +100,14 @@ const RouteDetail = ({ navigation, route }) => {
               <Text style={styles.label}>Directions</Text>
               <Text style={styles.text}>{directions}</Text>
             </Card.Content>
+            <TouchableOpacity
+              onPress={() => sendRouteToUser(routeId)}
+              style={{ marginVertical: 15 }}
+            >
+              <Button style={{ borderRadius: 10 }} mode="contained">
+                Send Via SMS
+              </Button>
+            </TouchableOpacity>
           </Card>
         </ScrollView>
 
@@ -111,7 +131,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#faf9f6",
   },
   card: {
-    paddingTop: "10%",
     backgroundColor: "#faf9f6",
     marginBottom: 20,
     padding: 10,
@@ -121,7 +140,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333",
     alignSelf: "center",
-    marginVertical: 20,
+    marginVertical: 10,
   },
   label: {
     fontSize: 16,
